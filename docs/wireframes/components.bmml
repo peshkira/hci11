@@ -105,5 +105,28 @@
         </control>
       </groupChildrenDescriptors>
     </control>
+    <control controlID="50" controlTypeID="__group__" x="265" y="89" w="48" h="48" measuredW="48" measuredH="48" zOrder="7" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="__group__" x="0" y="0" w="48" h="48" measuredW="48" measuredH="48" zOrder="0" locked="false" isInGroup="50">
+          <groupChildrenDescriptors>
+            <control controlID="0" controlTypeID="com.balsamiq.mockups::Canvas" x="0" y="0" w="48" h="48" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="0">
+              <controlProperties>
+                <borderStyle>none</borderStyle>
+              </controlProperties>
+            </control>
+          </groupChildrenDescriptors>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Icon" x="12" y="8" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="1" locked="false" isInGroup="50">
+          <controlProperties>
+            <icon>HelpIcon%7Csmall</icon>
+          </controlProperties>
+        </control>
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::Icon" x="0" y="0" w="-1" h="-1" measuredW="48" measuredH="48" zOrder="2" locked="false" isInGroup="50">
+          <controlProperties>
+            <icon>BaloonIcon%7Clarge</icon>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
   </controls>
 </mockup>
