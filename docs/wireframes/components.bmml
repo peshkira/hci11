@@ -57,7 +57,7 @@
     </control>
     <control controlID="15" controlTypeID="com.balsamiq.mockups::Image" x="605" y="17" w="-1" h="-1" measuredW="221" measuredH="296" zOrder="4" locked="false" isInGroup="-1">
       <controlProperties>
-        <src>../../../../../Desktop/Screen%2520shot%25202011-03-18%2520at%25205.35.31%2520PM.png</src>
+        <src>./map.png</src>
       </controlProperties>
     </control>
     <control controlID="42" controlTypeID="__group__" x="265" y="32" w="32" h="32" measuredW="32" measuredH="32" zOrder="5" locked="false" isInGroup="-1">
