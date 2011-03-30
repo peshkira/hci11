@@ -187,7 +187,7 @@
     <control controlID="9" controlTypeID="com.balsamiq.mockups::Image" x="561" y="208" w="89" h="73" measuredW="96" measuredH="96" zOrder="9" locked="false" isInGroup="-1">
       <controlProperties>
         <filter>true</filter>
-        <src>./knight.jpg</src>
+        <src>./knight_menu.jpg</src>
       </controlProperties>
     </control>
     <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="579" y="281" w="58" h="18" measuredW="54" measuredH="19" zOrder="10" locked="false" isInGroup="-1">
