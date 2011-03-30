@@ -190,7 +190,7 @@
         <src>./knight.jpg</src>
       </controlProperties>
     </control>
-    <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="579" y="281" w="54" h="18" measuredW="54" measuredH="19" zOrder="10" locked="false" isInGroup="-1">
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="579" y="281" w="58" h="18" measuredW="54" measuredH="19" zOrder="10" locked="false" isInGroup="-1">
       <controlProperties>
         <size>10</size>
         <text>Companions</text>
@@ -226,10 +226,10 @@
         <src>./watchtower.png</src>
       </controlProperties>
     </control>
-    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="507" y="383" w="-1" h="-1" measuredW="40" measuredH="19" zOrder="16" locked="false" isInGroup="-1">
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="497" y="383" w="-1" h="-1" measuredW="61" measuredH="19" zOrder="16" locked="false" isInGroup="-1">
       <controlProperties>
         <size>10</size>
-        <text>Lookout</text>
+        <text>Watchtower</text>
       </controlProperties>
     </control>
     <control controlID="18" controlTypeID="com.balsamiq.mockups::Image" x="570" y="314" w="75" h="63" measuredW="128" measuredH="128" zOrder="17" locked="false" isInGroup="-1">
