@@ -1143,12 +1143,12 @@
     </control>
     <control controlID="49" controlTypeID="com.balsamiq.mockups::Button" x="1172" y="1106" w="93" h="38" measuredW="65" measuredH="28" zOrder="35" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Select</text>
+        <text>Cancel</text>
       </controlProperties>
     </control>
     <control controlID="50" controlTypeID="com.balsamiq.mockups::Button" x="1073" y="1106" w="93" h="38" measuredW="65" measuredH="28" zOrder="36" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Cancel</text>
+        <text>Select</text>
       </controlProperties>
     </control>
     <control controlID="51" controlTypeID="com.balsamiq.mockups::Label" x="384" y="82" w="212" h="29" measuredW="262" measuredH="32" zOrder="37" locked="false" isInGroup="-1">
@@ -1388,7 +1388,7 @@
         <text>Reject</text>
       </controlProperties>
     </control>
-    <control controlID="71" controlTypeID="com.balsamiq.mockups::Button" x="403" y="291" w="-1" h="-1" measuredW="67" measuredH="28" zOrder="52" locked="false" isInGroup="-1">
+    <control controlID="71" controlTypeID="com.balsamiq.mockups::Button" x="403" y="291" w="-1" h="-1" measuredW="66" measuredH="28" zOrder="52" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Details</text>
       </controlProperties>
