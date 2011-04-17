@@ -8,5 +8,5 @@
 		android:layout_height="wrap_content" questo:label="Questo!"
 		questo:label_centered="true" />
 	<TextView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="@string/hello" />
+		android:layout_height="wrap_content" android:text="@string/app_name" />
 </LinearLayout>

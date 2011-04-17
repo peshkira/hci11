@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, QuestoHome!</string>
-    <string name="app_name">Questo</string>
+    <string name="app_name">Questo!</string>
     <string name="quests">Quests</string>
     <string name="profile">Profile</string>
     <string name="tournaments">Tournaments</string>
