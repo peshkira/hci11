@@ -2,5 +2,6 @@
 <resources>
   <declare-styleable name="TopBar">
         <attr name="label" format="string" />        
+        <attr name="label_centered" format="boolean" />   
     </declare-styleable>
 </resources>

@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,17 +20,14 @@ public class TopBar extends LinearLayout {
 
 	private static final String TAG = "LabeledNumberInput";
 
-	private TextView labelText;
-	private EditText input;
-	private Button set;
 	private String labelStr;
-
-	private Float current;
+	private boolean labelCentered;
 
 	public TopBar(Context context, AttributeSet attr) {
 		super(context, attr);
 		initializeLayoutBasics(context);
 		retrieveLabelString(context, attr);
+		retrieveLabelCenteredAttr(context, attr);
 	}
 
 	private void initializeLayoutBasics(Context context) {
@@ -38,12 +37,20 @@ public class TopBar extends LinearLayout {
 	}
 
 	private void retrieveLabelString(Context context, AttributeSet attr) {
-		this.labelText = (TextView) findViewById(R.id.label);
+		TextView labelText = (TextView) findViewById(R.id.label);
 		final TypedArray a = context.obtainStyledAttributes(attr, R.styleable.TopBar);
 		this.labelStr = a.getString(R.styleable.TopBar_label);
-		this.labelText.setText(this.labelStr);
+		labelText.setText(this.labelStr);
 	}
 
+	private void retrieveLabelCenteredAttr(Context context, AttributeSet attr) {
+		final TypedArray a = context.obtainStyledAttributes(attr, R.styleable.TopBar);
+		labelCentered = a.getBoolean(R.styleable.TopBar_label_centered, false);
+		if(labelCentered) {
+			TextView labelText = (TextView) findViewById(R.id.label);
+			labelText.setGravity(Gravity.CENTER);
+		}
+	}
 
 	public Button addButtonLeftMost(final Context ctx, String label) {
 		LinearLayout buttonsContainer = (LinearLayout) findViewById(R.id.buttons_container);
@@ -55,27 +62,8 @@ public class TopBar extends LinearLayout {
 		return newButton;
 	}
 
-	public void setInput(Float input) {
-		this.current = input;
-
+	public void setTopBarLabel(String label) {
+		TextView labelView = (TextView) findViewById(R.id.label);
+		labelView.setText(label);
 	}
-
-	public Float getInput(Context ctx) {
-		Float result;
-		final String strValue = this.input.getText().toString();
-		Log.d(TAG, "getInput:strValue=" + strValue);
-		if (strValue != null && !strValue.equals("")) {
-			try {
-				result = Float.parseFloat(strValue);
-			} catch (final NumberFormatException e) {
-				Toast.makeText(ctx, "Failed to parse number", Toast.LENGTH_LONG).show();
-				result = null;
-			}
-		} else {
-			result = new Float(0);
-		}
-		Log.d(TAG, "getInput:result=" + result);
-		return result;
-	}
-
 }

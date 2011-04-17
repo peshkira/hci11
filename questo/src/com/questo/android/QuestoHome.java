@@ -13,6 +13,7 @@ public class QuestoHome extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         TopBar topbar = (TopBar)findViewById(R.id.topbar);
+        topbar.setTopBarLabel("LolCat!");
         topbar.addButtonLeftMost(getApplicationContext(), "+");
     }
 }
