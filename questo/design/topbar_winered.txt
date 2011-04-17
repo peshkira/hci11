@@ -1,0 +1,3 @@
+base color: #741403
+add noise: 2% gaussian
+blur (normal blur)
