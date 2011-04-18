@@ -2,7 +2,8 @@ package com.questo.android.view;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
+
+import com.questo.android.R;
 
 public class ProfileTabPlaces extends Activity{
 	
@@ -10,8 +11,6 @@ public class ProfileTabPlaces extends Activity{
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		
-		TextView textView = new TextView(this);
-		textView.setText("PlacesTab");
-		setContentView(textView);
+		setContentView(R.layout.user_profile_places);
 	}
 }

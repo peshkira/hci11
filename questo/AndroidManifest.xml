@@ -14,8 +14,8 @@
 		</activity>
 		<activity android:name=".UserProfile"></activity>
 		<activity android:name=".view.ProfileTabThrophies"></activity>
-		<activity android:name=".view.ProfileTabPlaces"></activity>
 		<activity android:name=".view.ProfileTabTournaments"></activity>
+		<activity android:name=".view.ProfileTabPlaces"></activity>
 
 	</application>
 </manifest>
