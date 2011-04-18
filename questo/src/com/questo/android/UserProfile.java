@@ -21,14 +21,14 @@ public class UserProfile extends TabActivity{
         Intent intent;
         
         intent = new Intent().setClass(this, ProfileTabThrophies.class);
-        spec = tabHost.newTabSpec("test");
+        spec = tabHost.newTabSpec("ProfileTabThrophies");
         spec.setIndicator("Throphy");
         spec.setContent(intent);
         tabHost.addTab(spec);
         
         intent = new Intent().setClass(this, ProfileTabPlaces.class);
-        spec = tabHost.newTabSpec("tab1");
-        spec.setIndicator("tab1");
+        spec = tabHost.newTabSpec("ProfileTabPlaces");
+        spec.setIndicator("Places");
         spec.setContent(intent);
         tabHost.addTab(spec);        
         
