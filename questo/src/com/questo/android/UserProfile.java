@@ -2,18 +2,25 @@ package com.questo.android;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
-import com.questo.android.view.*;
+import com.questo.android.view.ProfileTabPlaces;
+import com.questo.android.view.ProfileTabThrophies;
+import com.questo.android.view.ProfileTabTournaments;
 
 public class UserProfile extends TabActivity{
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);   
-
+        
+        this.initView();
+    }
+    
+    private void initView(){
         setContentView(R.layout.user_profile);
         
         TabHost tabHost = getTabHost();
@@ -22,7 +29,8 @@ public class UserProfile extends TabActivity{
         
         intent = new Intent().setClass(this, ProfileTabThrophies.class);
         spec = tabHost.newTabSpec("ProfileTabThrophies");
-        spec.setIndicator("Throphy");
+//        spec.setIndicator("Throphy");
+        spec.setIndicator("Throphy", getResources().getDrawable(R.drawable.tab));
         spec.setContent(intent);
         tabHost.addTab(spec);
         
@@ -38,6 +46,6 @@ public class UserProfile extends TabActivity{
         spec.setContent(intent);
         tabHost.addTab(spec);               
         
-        tabHost.setCurrentTab(1);
+        tabHost.setCurrentTab(0);
     }
 }

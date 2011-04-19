@@ -3,10 +3,10 @@
       package="com.questo.android"
       android:versionCode="1"
       android:versionName="1.0">
-
-
-	<application android:icon="@drawable/icon" android:label="@string/app_name">
-		<activity android:name=".QuestoHome" android:label="@string/app_name">
+	<application android:icon="@drawable/icon" android:label="@string/app_name"
+		android:theme="@android:style/Theme.NoTitleBar">
+		<activity android:name=".QuestoHome" android:label="@string/app_name"
+			android:theme="@android:style/Theme.NoTitleBar">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -16,6 +16,7 @@
 		<activity android:name=".view.ProfileTabThrophies"></activity>
 		<activity android:name=".view.ProfileTabTournaments"></activity>
 		<activity android:name=".view.ProfileTabPlaces"></activity>
-
+		<activity android:name=".Throphy"></activity>
 	</application>
+<uses-sdk android:targetSdkVersion="4" android:minSdkVersion="4"></uses-sdk>
 </manifest>

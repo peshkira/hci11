@@ -1,27 +1,88 @@
 package com.questo.android;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.view.View.OnTouchListener;
+import android.widget.ImageView;
 
-public class QuestoHome extends Activity implements View.OnClickListener{
-    /** Called when the activity is first created. */
+public class QuestoHome extends Activity {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        setContentView(R.layout.main);
-        
-        Button showProfile = (Button) findViewById(R.id.profileBtn);
-        showProfile.setOnClickListener(this);
+        setContentView(R.layout.home);
+//        TopBar topbar = (TopBar)findViewById(R.id.topbar);
+//        topbar.setTopBarLabel("LolCat!");
+//        topbar.addButtonLeftMost(getApplicationContext(), "+");
+
+        this.initViews();
+
     }
 
-	@Override
-	public void onClick(View v) {
-		Intent i = new Intent(this, UserProfile.class);
-		startActivity(i);
-	}
+    private void initViews() {
+        int id = R.id.imgQuests;
+        ImageView v = (ImageView) findViewById(R.id.imgQuests);
+        v.setOnTouchListener(new MenuOnTouchListener("quests"));
+
+        id = R.id.imgTournaments;
+        v = (ImageView) findViewById(id);
+        v.setOnTouchListener(new MenuOnTouchListener("tournaments"));
+
+        id = R.id.imgProfile;
+        v = (ImageView) findViewById(id);
+        v.setOnTouchListener(new MenuOnTouchListener("profile"));
+
+        id = R.id.imgCompanions;
+        v = (ImageView) findViewById(id);
+        v.setOnTouchListener(new MenuOnTouchListener("companions"));
+
+        id = R.id.imgTrophies;
+        v = (ImageView) findViewById(id);
+        v.setOnTouchListener(new MenuOnTouchListener("trophies"));
+
+        id = R.id.imgSettings;
+        v = (ImageView) findViewById(id);
+        v.setOnTouchListener(new MenuOnTouchListener("settings"));
+    }
+
+    private void navigate(String to) {
+        System.out.println("NAVIGATE!!! " + to);
+        
+        Intent navTo;
+        
+        if(to.equals("profile")){
+        	navTo = new Intent(this, UserProfile.class);
+        	startActivity(navTo);
+        }
+    }
+
+    private class MenuOnTouchListener implements OnTouchListener {
+        
+        private String comp;
+
+        public MenuOnTouchListener(String comp) {
+            this.comp = comp;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent evt) {
+            ImageView view = (ImageView) v;
+
+            switch (evt.getAction()) {
+            case MotionEvent.ACTION_DOWN: {
+                view.setImageResource(R.drawable.flashget);
+                break;
+            }
+            case MotionEvent.ACTION_UP: {
+                view.setImageResource(R.drawable.games);
+                QuestoHome.this.navigate(comp);
+                break;
+            }
+            }
+            return true;
+        }
+    }
 }

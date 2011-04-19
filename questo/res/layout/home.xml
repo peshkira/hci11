@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:layout_width="match_parent" android:layout_height="match_parent"
+	android:background="#FFF">
+	<com.questo.android.view.TopBar
+		android:id="@+id/topbar" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_marginBottom="20dip"
+		questo:label="@string/app_name" questo:label_centered="true" />
+	<ImageView android:id="@+id/imgQuests" android:layout_width="110dip"
+		android:layout_height="wrap_content" android:layout_alignParentLeft="true"
+		android:layout_below="@id/topbar" android:src="@drawable/games" />
+	<TextView android:id="@+id/lblQuests" android:text="@string/quests"
+		android:layout_below="@id/imgQuests" android:textColor="#000"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:paddingLeft="30dip" />
+	<ImageView android:id="@+id/imgTournaments"
+		android:layout_width="110dip" android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true" android:layout_below="@id/topbar"
+		android:src="@drawable/games" />
+	<TextView android:id="@+id/lblTournaments" android:text="@string/tournaments"
+		android:layout_below="@id/imgTournaments" android:textColor="#000"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:paddingLeft="115dip" />
+	<ImageView android:id="@+id/imgProfile" android:layout_width="110dip"
+		android:layout_height="wrap_content" android:layout_alignParentRight="true"
+		android:layout_below="@id/topbar" android:src="@drawable/games" />
+	<TextView android:id="@+id/lblProfile" android:text="@string/profile"
+		android:layout_below="@id/imgProfile" android:textColor="#000"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:paddingLeft="245dip" />
+	<TextView android:id="@+id/dummy" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_below="@id/lblQuests"
+		android:layout_marginBottom="20dip" />
+	<ImageView android:id="@+id/imgCompanions"
+		android:layout_width="110dip" android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true" android:layout_below="@id/dummy"
+		android:src="@drawable/games" />
+	<TextView android:id="@+id/lblCompanions" android:text="@string/companions"
+		android:layout_below="@id/imgCompanions" android:textColor="#000"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:paddingLeft="10dip" />
+	<ImageView android:id="@+id/imgTrophies"
+		android:layout_width="110dip" android:layout_height="wrap_content"
+		android:layout_below="@id/dummy" android:layout_centerHorizontal="true"
+		android:src="@drawable/games" />
+	<TextView android:id="@+id/lblTrophies" android:text="@string/trophyroom"
+		android:layout_below="@id/imgTrophies" android:textColor="#000"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:paddingLeft="115dip" />
+	<ImageView android:id="@+id/imgSettings"
+		android:layout_width="110dip" android:layout_height="wrap_content"
+		android:layout_alignParentRight="true" android:layout_below="@id/dummy"
+		android:src="@drawable/games" />
+	<TextView android:id="@+id/lblSettings" android:text="@string/settings"
+		android:layout_below="@id/imgSettings" android:textColor="#000"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:paddingLeft="237dip" />
+</RelativeLayout>
