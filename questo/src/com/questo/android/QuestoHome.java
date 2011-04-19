@@ -1,6 +1,7 @@
 package com.questo.android;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,6 +50,13 @@ public class QuestoHome extends Activity {
 
     private void navigate(String to) {
         System.out.println("NAVIGATE!!! " + to);
+        
+        Intent navTo;
+        
+        if(to.equals("profile")){
+        	navTo = new Intent(this, UserProfile.class);
+        	startActivity(navTo);
+        }
     }
 
     private class MenuOnTouchListener implements OnTouchListener {
