@@ -55,4 +55,8 @@
 		android:layout_below="@id/imgSettings" android:textColor="#000"
 		android:layout_height="wrap_content" android:layout_width="wrap_content"
 		android:paddingLeft="237dip" />
+	<ListView android:id="@+id/watchtower" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:layout_below="@id/lblCompanions"
+		android:layout_marginTop="20dip" android:background="@color/winered_dark"/>
+	
 </RelativeLayout>

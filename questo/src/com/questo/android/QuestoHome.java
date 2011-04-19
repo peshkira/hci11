@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
+
+import com.questo.android.R;
 
 public class QuestoHome extends Activity {
 
@@ -19,7 +23,6 @@ public class QuestoHome extends Activity {
 //        topbar.addButtonLeftMost(getApplicationContext(), "+");
 
         this.initViews();
-
     }
 
     private void initViews() {
@@ -46,6 +49,12 @@ public class QuestoHome extends Activity {
         id = R.id.imgSettings;
         v = (ImageView) findViewById(id);
         v.setOnTouchListener(new MenuOnTouchListener("settings"));
+        
+        ListView watchtower = (ListView) findViewById(R.id.watchtower);
+        //
+        String lv_arr[]={"Android","iPhone","BlackBerry","AndroidPeople"};
+        watchtower.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1 , lv_arr));
+        
     }
 
     private void navigate(String to) {
