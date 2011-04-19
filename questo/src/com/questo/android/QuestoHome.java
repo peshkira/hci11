@@ -16,7 +16,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.questo.android.model.Notification;
-import com.questo.android.model.StringNotification;
 
 public class QuestoHome extends Activity {
 
@@ -59,12 +58,12 @@ public class QuestoHome extends Activity {
         ListView watchtower = (ListView) findViewById(R.id.watchtower);
         //
         QuestoListAdapter adapt = new QuestoListAdapter();
-        adapt.addItem(new StringNotification("Cato did something"));
-        adapt.addItem(new StringNotification("Nuno did something else"));
-        adapt.addItem(new StringNotification("Notifications suck ass"));
-        adapt.addItem(new StringNotification("Aragorn did something else"));
-        adapt.addItem(new StringNotification("Cato did something"));
-        adapt.addItem(new StringNotification("Gandalf did something"));
+        adapt.addItem(new Notification("Cato did something"));
+        adapt.addItem(new Notification("Nuno did something else"));
+        adapt.addItem(new Notification("Notifications suck ass"));
+        adapt.addItem(new Notification("Aragorn did something else"));
+        adapt.addItem(new Notification("Cato did something"));
+        adapt.addItem(new Notification("Gandalf did something"));
         watchtower.setAdapter(adapt);
 
     }
