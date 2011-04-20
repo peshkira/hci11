@@ -3,6 +3,7 @@ package com.questo.android;
 import android.os.Bundle;
 
 import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapView;
 import com.questo.android.view.TopBar;
 
 public class QuestView extends MapActivity{
@@ -24,9 +25,10 @@ public class QuestView extends MapActivity{
 		setContentView(R.layout.quests);
 		
 		TopBar topBar = (TopBar)findViewById(R.id.topbar);
-		topBar.addButtonLeftMost(this, "-");
 		topBar.addButtonLeftMost(this, "+");
+		topBar.addButtonLeftMost(this, "-");
 		
-		
+	    MapView questMap = (MapView) findViewById(R.id.QuestMap);
+	    questMap.setBuiltInZoomControls(true);
 	}
 }

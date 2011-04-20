@@ -7,7 +7,10 @@
 		questo:label="@string/quests" questo:label_centered="true" />
 
 	<com.google.android.maps.MapView
+		android:id="@+id/QuestMap" 
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
+        android:enabled="true"
+        android:clickable="true"		
 		android:apiKey="0Q5rt_qTX-ZiYIMzKAT2QS7laN8Dlu7OK4KqWyg" 
 		android:layout_below="@id/topbar" />
 </RelativeLayout>
