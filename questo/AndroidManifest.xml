@@ -18,6 +18,7 @@
 		<activity android:name=".view.ProfileTabTournaments"></activity>
 		<activity android:name=".view.ProfileTabPlaces"></activity>
 		<activity android:name=".Throphy"></activity>
+		<activity android:name=".QuestView"></activity>
 	</application>
 <uses-sdk android:targetSdkVersion="4" android:minSdkVersion="4"></uses-sdk>
 </manifest>

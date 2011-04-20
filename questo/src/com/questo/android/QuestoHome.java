@@ -77,6 +77,10 @@ public class QuestoHome extends Activity {
             navTo = new Intent(this, UserProfile.class);
             startActivity(navTo);
         }
+        if (to.equals("quests")) {
+        	navTo = new Intent(this, QuestView.class);
+        	startActivity(navTo);
+        }
     }
 
     private class MenuOnTouchListener implements OnClickListener {
