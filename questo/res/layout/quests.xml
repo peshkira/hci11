@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
 	android:layout_width="match_parent" android:layout_height="match_parent">
@@ -9,8 +8,6 @@
 
 	<com.google.android.maps.MapView
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:apiKey="0Q5rt_qTX-ZiYIMzKAT2QS7laN8Dlu7OK4KqWyg" />
-
-
-
+		android:apiKey="0Q5rt_qTX-ZiYIMzKAT2QS7laN8Dlu7OK4KqWyg" 
+		android:layout_below="@id/topbar" />
 </RelativeLayout>
