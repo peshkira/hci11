@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<color name="winered">#5a0f03</color>
-	<color name="winered_dark">#4b0d03</color>
 	<color name="winered_gone_dark">#2f0000</color>
 	<color name="winered_light">#781c0c</color>
 </resources>
