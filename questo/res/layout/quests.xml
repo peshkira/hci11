@@ -6,5 +6,11 @@
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:layout_marginBottom="20dip"
 		questo:label="@string/quests" questo:label_centered="true" />
-	
+
+	<com.google.android.maps.MapView
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:apiKey="0Q5rt_qTX-ZiYIMzKAT2QS7laN8Dlu7OK4KqWyg" />
+
+
+
 </RelativeLayout>
