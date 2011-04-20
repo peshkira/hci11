@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/topbar_container" android:layout_width="fill_parent"
+	android:layout_height="wrap_content" android:background="#000000"
+	android:orientation="vertical" android:paddingBottom="1dp">
+	<TableLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:stretchColumns="0"
+		android:background="@drawable/bg_topbar">
+		<TableRow android:layout_height="wrap_content" android:id="@+id/layout_row">
+			<TextView android:id="@+id/label" android:textStyle="bold"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				style="@style/TopBarFont" android:paddingTop="7dp"
+				android:paddingBottom="9dp" android:paddingLeft="9dp" />
+			<LinearLayout android:id="@+id/buttons_container"
+				android:orientation="horizontal" android:layout_width="fill_parent"
+				android:layout_height="fill_parent">
+			</LinearLayout>
+		</TableRow>
+	</TableLayout>
+</LinearLayout>
