@@ -73,6 +73,7 @@ public class QuestoHome extends Activity {
         Intent navTo = null;
 
         if (to.equals("quests")) {
+            //just an experiment... feel free to remove this...
           navTo = new Intent(this, PlaceDetails.class);
           navTo.putExtra(Constants.NR_ANSWERED_QUESTIONS, 4);
           navTo.putExtra(Constants.NR_QUESTIONS, 40);
