@@ -7,10 +7,16 @@
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" questo:label_centered="false" />
 	<TextView android:id="@+id/nr_questions" android:layout_width="fill_parent"
-		android:layout_height="wrap_content"  />
-	<Button android:id="@+id/start_quest" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textColor="#000" android:text="Start Quest"/>
-	<TextView android:id="@+id/answered_questions" android:layout_width="fill_parent"
-        android:layout_height="wrap_content"  />
+		android:layout_height="wrap_content" android:textColor="#000"
+		android:layout_marginTop="5dip" />
+	<Button android:id="@+id/start_quest" android:layout_width="200dip"
+		android:layout_height="75dip" android:textColor="#FFF"
+		android:background="@drawable/button_start_quest" android:text="Start Quest"
+		android:textStyle="bold" android:layout_marginTop="10dip"
+		android:layout_marginLeft="60dip"/>
+	<TextView android:id="@+id/answered_questions"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:textColor="#000" android:layout_marginTop="5dip" />
 	<!-- TODO include list -->
 
 </LinearLayout>

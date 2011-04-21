@@ -75,7 +75,7 @@ public class QuestoHome extends Activity {
         if (to.equals("quests")) {
           navTo = new Intent(this, PlaceDetails.class);
           navTo.putExtra(Constants.NR_ANSWERED_QUESTIONS, 4);
-          navTo.putExtra(Constants.NR_QUESTIONS, 10);
+          navTo.putExtra(Constants.NR_QUESTIONS, 40);
           navTo.putExtra(Constants.TOPBAR_LABEL, "Stephansdom");
         } else if (to.equals("profile")) {
             navTo = new Intent(this, UserProfile.class);
