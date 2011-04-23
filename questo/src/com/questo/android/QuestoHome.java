@@ -78,7 +78,7 @@ public class QuestoHome extends Activity {
             startActivity(navTo);
         }
         if (to.equals("quests")) {
-        	navTo = new Intent(this, QuestView.class);
+        	navTo = new Intent(this, QuestMapView.class);
         	startActivity(navTo);
         }
     }
