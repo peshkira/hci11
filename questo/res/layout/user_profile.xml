@@ -11,7 +11,7 @@
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:layout_marginBottom="20dip"
-		questo:label="@string/profile" questo:label_centered="true"/>
+		questo:label="@string/your_profile" questo:label_centered="true"/>
 	<ImageView android:layout_height="wrap_content" 
 		android:layout_width="wrap_content" 
 		android:src="@drawable/icon" 
