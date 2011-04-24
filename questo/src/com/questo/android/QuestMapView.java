@@ -1,6 +1,9 @@
 package com.questo.android;
 
+import java.util.List;
+
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -8,6 +11,8 @@ import android.widget.Button;
 
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
+import com.questo.android.view.QuestoMapOverlay;
 import com.questo.android.view.TopBar;
 
 public class QuestMapView extends MapActivity{
@@ -57,7 +62,16 @@ public class QuestMapView extends MapActivity{
 		showListBtn.setOnClickListener(new ButtonListener());
 		addQuestionBtn.setOnClickListener(new ButtonListener());
 		
+		initMapView();
+	}
+	
+	private void initMapView(){
 	    MapView questMap = (MapView) findViewById(R.id.QuestMap);
 	    questMap.setBuiltInZoomControls(true);
+	    List<Overlay> mapOverlays = questMap.getOverlays();
+	    Drawable target = this.getResources().getDrawable(R.drawable.arrow_target);
+	    
+	    QuestoMapOverlay overlay = new QuestoMapOverlay(target);
+	    mapOverlays.add(overlay);
 	}
 }
