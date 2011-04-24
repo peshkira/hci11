@@ -4,4 +4,7 @@
 	<color name="winered_dark">#4b0d03</color>
 	<color name="winered_gone_dark">#2f0000</color>
 	<color name="winered_light">#781c0c</color>
+	<color name="green">#2cad09</color>
+	<color name="green_dark">#1f7806</color>
+	<color name="grey_light">#ABABAB</color>
 </resources>

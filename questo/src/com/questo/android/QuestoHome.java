@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.questo.android.common.Constants;
 import com.questo.android.model.Notification;
 
 public class QuestoHome extends Activity {
@@ -69,14 +70,21 @@ public class QuestoHome extends Activity {
     }
 
     private void navigate(String to) {
-        System.out.println("NAVIGATE!!! " + to);
+        Intent navTo = null;
 
-        Intent navTo;
-
-        if (to.equals("profile")) {
+        if (to.equals("quests")) {
+            //just an experiment... feel free to remove this...
+          navTo = new Intent(this, PlaceDetails.class);
+          navTo.putExtra(Constants.NR_ANSWERED_QUESTIONS, 4);
+          navTo.putExtra(Constants.NR_QUESTIONS, 40);
+          navTo.putExtra(Constants.TOPBAR_LABEL, "Stephansdom");
+        } else if (to.equals("profile")) {
             navTo = new Intent(this, UserProfile.class);
-            startActivity(navTo);
+        } else {
+            //what to do here?
         }
+        
+        startActivity(navTo);
     }
 
     private class MenuOnTouchListener implements OnClickListener {
