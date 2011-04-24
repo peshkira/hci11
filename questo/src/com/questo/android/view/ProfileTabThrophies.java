@@ -40,7 +40,7 @@ public class ProfileTabThrophies extends Activity{
 		
 		ListView throphyList = (ListView)findViewById(R.id.ProfileThrophyList); 
 		String[] listContent = new String[] {"foo", "bla"};
-		ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.throphy_list_item, listContent);
+		ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.user_profile_throphy_list_item, listContent);
 		throphyList.setAdapter(adapter);
 		throphyList.setOnItemClickListener(new TrophyListener());
 	}
