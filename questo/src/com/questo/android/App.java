@@ -1,26 +1,27 @@
 package com.questo.android;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import android.app.Application;
-import android.app.PendingIntent;
 import android.content.Context;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.android.apptools.OpenHelperManager.SqliteOpenHelperFactory;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
-import com.questo.android.model.Quest;
+import com.questo.android.model.test.TestData;
 
 public class App extends Application {
 
 	private ModelManager modelManager;
-
-	// DEBUG ONLY, DELETE:
-	PendingIntent pi;
+	private Object dbHelperLock = new Object();
+	private DBHelper dbHelper;
 
 	public DBHelper db() {
-		return (DBHelper) OpenHelperManager.getHelper(getApplicationContext());
+		synchronized (dbHelperLock) {
+			if (dbHelper == null)
+				dbHelper = (DBHelper) OpenHelperManager.getHelper(getApplicationContext());
+			return dbHelper;
+		}
 	}
 
 	public ModelManager modelManager() {
@@ -36,17 +37,10 @@ public class App extends Application {
 				return new DBHelper(context);
 			}
 		});
-		
-		try {
-			List<Quest> all = db().daoQuest().queryForAll();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		TestData.generateTestData(modelManager());
 		
 		super.onCreate();
-		modelManager();
-		// modelManager.createTestData();
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.questo.android;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,7 +12,23 @@ import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.questo.android.model.Companionship;
+import com.questo.android.model.ImageResource;
+import com.questo.android.model.Notification;
+import com.questo.android.model.Place;
+import com.questo.android.model.PlaceVisitation;
 import com.questo.android.model.Quest;
+import com.questo.android.model.QuestHasQuestion;
+import com.questo.android.model.Question;
+import com.questo.android.model.QuestionAnswered;
+import com.questo.android.model.Tournament;
+import com.questo.android.model.TournamentInvitation;
+import com.questo.android.model.TournamentMembership;
+import com.questo.android.model.TournamentTask;
+import com.questo.android.model.TournamentTaskDone;
+import com.questo.android.model.Trophy;
+import com.questo.android.model.TrophyForUser;
+import com.questo.android.model.User;
 
 /**
  * Database helper class used to manage the creation and upgrading of your
@@ -22,8 +39,8 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
 
 	private static final String DATABASE_NAME = "questo.db";
 	private static final int DATABASE_VERSION = 1;
-
-	private Dao<Quest, Integer> questDao = null;
+	
+	private HashMap<String, Dao<Object, Integer>> daos = new HashMap<String, Dao<Object,Integer>>();
 
 	public DBHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,11 +55,31 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
 	public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
 		try {
 			Log.i(DBHelper.class.getName(), "onCreate");
-			TableUtils.createTable(connectionSource, Quest.class);
+			createTables(connectionSource);
 		} catch (SQLException e) {
 			Log.e(DBHelper.class.getName(), "Can't create database", e);
 			throw new RuntimeException(e);
 		}
+	}
+	
+	private void createTables(ConnectionSource cs) throws SQLException {
+		TableUtils.createTable(cs, Companionship.class);
+		TableUtils.createTable(cs, ImageResource.class);
+		TableUtils.createTable(cs, Notification.class);
+		TableUtils.createTable(cs, Place.class);
+		TableUtils.createTable(cs, PlaceVisitation.class);
+		TableUtils.createTable(cs, QuestHasQuestion.class);
+		TableUtils.createTable(cs, Question.class);
+		TableUtils.createTable(cs, QuestionAnswered.class);
+		TableUtils.createTable(cs, Tournament.class);
+		TableUtils.createTable(cs, TournamentInvitation.class);
+		TableUtils.createTable(cs, TournamentMembership.class);
+		TableUtils.createTable(cs, TournamentTask.class);
+		TableUtils.createTable(cs, TournamentTaskDone.class);
+		TableUtils.createTable(cs, Trophy.class);
+		TableUtils.createTable(cs, TrophyForUser.class);
+		TableUtils.createTable(cs, User.class);
+		TableUtils.createTable(cs, Quest.class);	
 	}
 
 	/**
@@ -63,18 +100,22 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
 		}
 	}
 
-	public Dao<Quest, Integer> daoQuest() throws SQLException {
-		if (questDao == null)
-			questDao = BaseDaoImpl.createDao(getConnectionSource(), Quest.class);
-		return questDao;
+	@SuppressWarnings("unchecked")
+	public <T> Dao<T, Integer> getCachedDao(Class<T> clazz) throws SQLException {
+		Dao<T, Integer> dao;
+		if ((dao = (Dao<T, Integer>) daos.get(clazz.getSimpleName())) == null) {
+			dao = BaseDaoImpl.createDao(getConnectionSource(), clazz);
+			daos.put(clazz.getSimpleName(), (Dao<Object, Integer>) dao);
+		}
+		return dao;
 	}
-
+	
 	/**
 	 * Close the database connections and clear any cached DAOs.
 	 */
 	@Override
 	public void close() {
 		super.close();
-		questDao = null;
+		daos = null;
 	}
 }
