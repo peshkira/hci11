@@ -3,8 +3,6 @@ package com.questo.android.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 import com.google.android.maps.GeoPoint;
@@ -20,10 +18,9 @@ public class QuestoMapOverlay extends ItemizedOverlay<OverlayItem>{
 		super(boundCenterBottom(defaultMarker));
 		
 		this.items = new ArrayList<OverlayItem>();
-		OverlayItem item = new OverlayItem(new GeoPoint(19240000,-99120000),
-										   "Test", 
-										   "Testtext");
-		this.items.add(item);
+
+		OverlayItem item = new OverlayItem(new GeoPoint(47422005, 16422005), "foo", "bla");
+		this.items.add(item);				
 		
 		this.populate();
 	}
