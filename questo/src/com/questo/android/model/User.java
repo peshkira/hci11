@@ -15,7 +15,7 @@ public class User {
 
 	//private static final String TAG = "ENTITY USER"; // tag for log
 
-	enum Gender {
+	public enum Gender {
 		NONE, FEMALE, MALE
 	}
 

@@ -8,7 +8,7 @@ import com.questo.android.model.json.JSONizer;
 @DatabaseTable
 public class Trophy {
 
-	enum Type {
+	public enum Type {
 		GLOBAL, FOR_PLACE, FOR_QUEST;
 	}
 
