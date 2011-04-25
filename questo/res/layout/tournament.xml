@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android" 
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:layout_width="match_parent" android:layout_height="match_parent" 
+	android:id="@+id/TournamentRelativeLayout" 
+	android:background="#FFFFFF">
+	<com.questo.android.view.TopBar
+		android:id="@+id/topbar" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_marginBottom="20dip"
+		questo:label="@string/tournaments" questo:label_centered="true" />
+	<ListView android:layout_height="wrap_content"
+		android:layout_width="match_parent" android:layout_alignParentLeft="true"
+		android:id="@+id/TournamentTournamentList" android:layout_below="@id/topbar" />
+	<Button 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/TournamentCreateTournamentBtn"
+		android:layout_below="@id/TournamentTournamentList"
+		android:text="Create Tournament"/>
+</RelativeLayout>
