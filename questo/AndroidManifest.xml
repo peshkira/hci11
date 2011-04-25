@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.questo.android"
       android:versionCode="1"
-      android:versionName="1.0">
+      android:versionName="1.0">      
 	<application android:icon="@drawable/icon" android:label="@string/app_name"
-		android:theme="@android:style/Theme.NoTitleBar">
+		android:theme="@android:style/Theme.NoTitleBar">		
+		<uses-library android:name="com.google.android.maps" />
 		<activity android:name=".QuestoHome" android:label="@string/app_name"
 			android:theme="@android:style/Theme.NoTitleBar"
 			android:screenOrientation="portrait">
@@ -19,6 +20,13 @@
 		<activity android:name=".view.ProfileTabPlaces"></activity>
 		<activity android:name=".Throphy"></activity>
 		<activity android:name=".PlaceDetails"></activity>
-	</application>
-<uses-sdk android:targetSdkVersion="4" android:minSdkVersion="4"></uses-sdk>
+		<activity android:name="QuestMapView"></activity>
+		<activity android:name=".QuestListView"></activity>
+	</application>	
+	<uses-permission android:name="android.permission.INTERNET" />	
+	<uses-permission android:name="android.permission.ACCESS_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_GPS"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>	
+	<uses-sdk android:targetSdkVersion="4" android:minSdkVersion="4"></uses-sdk>
 </manifest>

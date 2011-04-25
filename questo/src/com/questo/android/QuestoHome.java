@@ -70,21 +70,18 @@ public class QuestoHome extends Activity {
     }
 
     private void navigate(String to) {
+        System.out.println("NAVIGATE!!! " + to);
         Intent navTo = null;
-
-        if (to.equals("quests")) {
-            //just an experiment... feel free to remove this...
-          navTo = new Intent(this, PlaceDetails.class);
-          navTo.putExtra(Constants.NR_ANSWERED_QUESTIONS, 4);
-          navTo.putExtra(Constants.NR_QUESTIONS, 40);
-          navTo.putExtra(Constants.TOPBAR_LABEL, "Stephansdom");
-        } else if (to.equals("profile")) {
+        if (to.equals("profile")) {
             navTo = new Intent(this, UserProfile.class);
-        } else {
-            //what to do here?
+        }
+        if (to.equals("quests")) {
+        	navTo = new Intent(this, QuestMapView.class);
         }
         
-        startActivity(navTo);
+        if(navTo != null){
+        	startActivity(navTo);
+        }
     }
 
     private class MenuOnTouchListener implements OnClickListener {
