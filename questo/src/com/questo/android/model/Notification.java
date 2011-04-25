@@ -10,7 +10,7 @@ import com.questo.android.model.json.JSONizer;
 @DatabaseTable
 public class Notification {
 
-	enum Type {
+	public enum Type {
 		USER_CREATED_TOURNAMENT, TOURNAMENT_STARTED, USER_COMPLETED_TOURNAMENT, USER_COMPLETED_QUEST,
 		USER_TOURNAMENT_RANKING, TOURNAMENT_STARTS_SOON, TOURNAMENT_ENDS_SOON, COMPANIONSHIP_REQUEST,
 		TOURNAMENT_INVITATION, SYSTEM_EVENT;
@@ -28,6 +28,8 @@ public class Notification {
 	private String jsonifiedContent;
 	@DatabaseField
 	private Date createdAt;
+	@DatabaseField
+	private String text;
 	
 	private Content content;
 
@@ -38,13 +40,14 @@ public class Notification {
 	public Notification() {
 	}
 
-	public Notification(String uuid, Type type, User user, Content content, Date createdAt) {
+	public Notification(String uuid, Type type, String text, User user, Content content, Date createdAt) {
 		super();
 		this.uuid = uuid;
 		this.type = type;
 		this.content = content;
 		this.createdAt = createdAt;
 		this.user = user;
+		this.text = text;
 	}
 
 	public String getUuid() {
@@ -61,6 +64,10 @@ public class Notification {
 
 	public Date getCreatedAt() {
 		return createdAt;
+	}
+	
+	public String getText() {
+		return text;
 	}
 	
 	public User getUser() {
