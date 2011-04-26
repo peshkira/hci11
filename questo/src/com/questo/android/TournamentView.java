@@ -1,6 +1,7 @@
 package com.questo.android;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,7 +30,8 @@ public class TournamentView extends Activity{
 		@Override
 		public void onClick(View v) {
 			if(v.getId()==TournamentView.this.requestsButtonId){
-				
+				Intent tournamentRequest = new Intent(TournamentView.this, TournamentRequestView.class);
+				startActivity(tournamentRequest);
 			}
 		}
 		

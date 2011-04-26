@@ -23,6 +23,7 @@
 		<activity android:name="QuestMapView"></activity>
 		<activity android:name=".QuestListView"></activity>
 		<activity android:name=".TournamentView"></activity>
+		<activity android:name=".TournamentRequestView"></activity>
 	</application>	
 	<uses-permission android:name="android.permission.INTERNET" />	
 	<uses-permission android:name="android.permission.ACCESS_LOCATION"/>
