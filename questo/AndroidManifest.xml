@@ -19,7 +19,8 @@
 		<activity android:name=".view.ProfileTabTournaments"></activity>
 		<activity android:name=".view.ProfileTabPlaces"></activity>
 		<activity android:name=".Throphy"></activity>
-		<activity android:name=".PlaceDetails"></activity>
+		<activity android:name=".PlaceDetailsView"></activity>
+		<activity android:name=".QuestionView"></activity>
 		<activity android:name="QuestMapView"></activity>
 		<activity android:name=".QuestListView"></activity>
 	</application>	

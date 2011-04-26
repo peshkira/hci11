@@ -31,7 +31,7 @@ import com.questo.android.view.TopBar;
  * @author petar
  * 
  */
-public class PlaceDetails extends Activity {
+public class PlaceDetailsView extends Activity {
 
     private TopBar topbar;
 
