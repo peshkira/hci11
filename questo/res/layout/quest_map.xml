@@ -11,6 +11,6 @@
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
         android:enabled="true"
         android:clickable="true"		
-		android:apiKey="0Q5rt_qTX-ZiYIMzKAT2QS7laN8Dlu7OK4KqWyg" 
+		android:apiKey="@string/apikey" 
 		android:layout_below="@id/topbar" />
 </RelativeLayout>

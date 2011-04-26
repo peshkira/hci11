@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -62,12 +63,12 @@ public class QuestoHome extends Activity {
         ListView watchtower = (ListView) findViewById(R.id.watchtower);
         //
         QuestoListAdapter adapt = new QuestoListAdapter();
-        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "Cato completed a quest", null, null, new Date()));
-        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "Nuno completed a quest", null, null, new Date()));
-        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "Lolcat completed a quest", null, null, new Date()));
-        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "Aragorn completed a quest", null, null, new Date()));
-        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "Cato completed a quest", null, null, new Date()));
-        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "Gandalf completed a quest", null, null, new Date()));
+        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "<b>Cato</b> has completed quest <b>Chillhouse of Terror</b>.", null, null, new Date()));
+        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "<b>Nuno</b> completed a quest.", null, null, new Date()));
+        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "<b>Lolcat</b> completed a quest.", null, null, new Date()));
+        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "<b>Aragorn</b> completed a quest.", null, null, new Date()));
+        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "<b>Cato</b> completed a quest.", null, null, new Date()));
+        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "<b>Gandalf</b> completed a quest.", null, null, new Date()));
         watchtower.setAdapter(adapt);
 
     }
@@ -122,7 +123,7 @@ public class QuestoHome extends Activity {
 
         @Override
         public String getItem(int position) {
-            return mData.get(position).toString();
+            return mData.get(position).getText();
         }
 
         @Override
@@ -144,7 +145,7 @@ public class QuestoHome extends Activity {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.textView.setText(this.getItem(position));
+            holder.textView.setText(Html.fromHtml(this.getItem(position)));
             return convertView;
         }
 

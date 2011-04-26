@@ -2,17 +2,13 @@ package com.questo.android.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.questo.android.R;
 
@@ -34,6 +30,9 @@ public class TopBar extends LinearLayout {
 		setOrientation(HORIZONTAL);
 		final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.topbar, this);
+		TextView labelText = (TextView) findViewById(R.id.label);
+		Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/Dearest.ttf");
+		labelText.setTypeface(tf);
 	}
 
 	private void retrieveLabelString(Context context, AttributeSet attr) {
@@ -46,7 +45,7 @@ public class TopBar extends LinearLayout {
 	private void retrieveLabelCenteredAttr(Context context, AttributeSet attr) {
 		final TypedArray a = context.obtainStyledAttributes(attr, R.styleable.TopBar);
 		labelCentered = a.getBoolean(R.styleable.TopBar_label_centered, false);
-		if(labelCentered) {
+		if (labelCentered) {
 			TextView labelText = (TextView) findViewById(R.id.label);
 			labelText.setGravity(Gravity.CENTER);
 		}

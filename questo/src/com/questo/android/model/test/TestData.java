@@ -1,5 +1,7 @@
 package com.questo.android.model.test;
 
+import android.text.Html;
+
 import com.questo.android.ModelManager;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
@@ -26,7 +28,6 @@ public class TestData {
 		manager.create(q_stephansdom_1, Question.class);
 		q_stephansdom_1.setPlace(stephansdom);
 		manager.update(q_stephansdom_1, Question.class);
-		
 		
 		
 	}
