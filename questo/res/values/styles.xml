@@ -9,7 +9,7 @@
     </style>
     <style name="TopBarFont" parent="@style/WhiteShadowedFont">
         <item name="android:typeface">serif</item>
-        <item name="android:textSize">32sp</item>
+        <item name="android:textSize">35sp</item>
     </style>
     <style name="TopBarButtonFont" parent="@style/WhiteShadowedFont">
         <item name="android:typeface">serif</item>
