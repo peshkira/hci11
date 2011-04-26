@@ -11,6 +11,7 @@ public final class Constants {
             + " questions</b> correctly here.";
     public static final String QUESTION_PROGRESS = "Question {} of {}";
     public static final String QUESTIONS = "app.questo.questions.question";
+    public static final String QUESTION_TYPE = "app.questo.question.type";
 
     private Constants() {
 
