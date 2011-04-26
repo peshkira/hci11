@@ -10,11 +10,15 @@
 	<color name="papyrus_end">#d2c08f</color>
 	<color name="papyrus_shadowed_start">#5e4124</color>
 	<color name="papyrus_shadowed_end">#957e5a</color>
-	
+
 	<color name="black_semitransparent">#22000000</color>
 	<color name="transparent">#00000000</color>
-	
+
 	<color name="green">#2cad09</color>
 	<color name="green_dark">#1f7806</color>
 	<color name="grey_light">#ABABAB</color>
+
+	<color name="greenStart">#ff33dd44</color>
+	<color name="greenMid">#ff0A8815</color>
+	<color name="greenEnd">#ff1da130</color>
 </resources>
