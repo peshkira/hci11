@@ -92,7 +92,7 @@ public class QuestMapView extends MapActivity{
 	    this.questMap = (MapView) findViewById(R.id.QuestMap);
 	    questMap.setBuiltInZoomControls(true);
 	    List<Overlay> mapOverlays = questMap.getOverlays();
-	    Drawable target = this.getResources().getDrawable(R.drawable.arrow_target);
+	    Drawable target = this.getResources().getDrawable(R.drawable.questo_q_stand);
 	    
 	    QuestoMapOverlay overlay = new QuestoMapOverlay(target);
 	    mapOverlays.add(overlay);
