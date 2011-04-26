@@ -134,7 +134,6 @@ public class QuestoHome extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            System.out.println("getView " + position + " " + convertView);
             ViewHolder holder = null;
 
             if (convertView == null) {
