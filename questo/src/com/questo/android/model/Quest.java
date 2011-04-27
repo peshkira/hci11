@@ -11,16 +11,16 @@ public class Quest {
 		INITIALIZED, COMPLETED
 	}
 
-	public static final String ACTIVE_FIELD_NAME = "active";
-
 	@DatabaseField(generatedId = true)
 	private Integer id;
 	@DatabaseField
 	private String uuid;
+	@DatabaseField(foreign = true)
+	private Place place;
 	@DatabaseField
 	private Integer answeredCorrectlyCount;
 	@DatabaseField
-	private Completion completed;
+	private Completion completionState;
 	@DatabaseField
 	private Date completedAt;
 
@@ -31,9 +31,10 @@ public class Quest {
 	public Quest() {
 	}
 
-	public Quest(String uuid) {
+	public Quest(String uuid, Place place) {
 		super();
 		this.uuid = uuid;
+		this.place = place;
 	}
 
 	public Integer getAnsweredCorrectlyCount() {
@@ -44,12 +45,12 @@ public class Quest {
 		this.answeredCorrectlyCount = answeredCorrectlyCount;
 	}
 
-	public Completion getCompleted() {
-		return completed;
+	public Completion getCompletionState() {
+		return completionState;
 	}
 
-	public void setCompleted(Completion completed) {
-		this.completed = completed;
+	public void setCompletionState(Completion completed) {
+		this.completionState = completed;
 	}
 
 	public Date getCompletedAt() {
@@ -66,6 +67,10 @@ public class Quest {
 
 	public Integer getId() {
 		return id;
+	}
+	
+	public Place getPlace() {
+		return place;
 	}
 
 	@Override
