@@ -1,70 +1,61 @@
 package com.questo.android;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.questo.android.common.Constants;
+import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Notification;
+import com.questo.android.model.Notification.Type;
 
 public class QuestoHome extends Activity {
+
+    private GridView mainGrid;
+
+    private static final String[] menus = { "Quests", "Tournaments", "Profile", "Companions", "Trophy Room", "Settings" };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-        // TopBar topbar = (TopBar)findViewById(R.id.topbar);
-        // topbar.setTopBarLabel("LolCat!");
-        // topbar.addButtonLeftMost(getApplicationContext(), "+");
 
         this.initViews();
     }
 
     private void initViews() {
-        int id = R.id.imgQuests;
-        ImageView v = (ImageView) findViewById(R.id.imgQuests);
-        v.setOnClickListener(new MenuOnTouchListener("quests"));
 
-        id = R.id.imgTournaments;
-        v = (ImageView) findViewById(id);
-        v.setOnClickListener(new MenuOnTouchListener("tournaments"));
-
-        id = R.id.imgProfile;
-        v = (ImageView) findViewById(id);
-        v.setOnClickListener(new MenuOnTouchListener("profile"));
-
-        id = R.id.imgCompanions;
-        v = (ImageView) findViewById(id);
-        v.setOnClickListener(new MenuOnTouchListener("companions"));
-
-        id = R.id.imgTrophies;
-        v = (ImageView) findViewById(id);
-        v.setOnClickListener(new MenuOnTouchListener("trophies"));
-
-        id = R.id.imgSettings;
-        v = (ImageView) findViewById(id);
-        v.setOnClickListener(new MenuOnTouchListener("settings"));
-
+        this.mainGrid = (GridView) findViewById(R.id.homeGrid);
+        this.mainGrid.setAdapter(new ImageAdapter());
+        
         ListView watchtower = (ListView) findViewById(R.id.watchtower);
         //
         QuestoListAdapter adapt = new QuestoListAdapter();
-        adapt.addItem(new Notification("Cato did something"));
-        adapt.addItem(new Notification("Nuno did something else"));
-        adapt.addItem(new Notification("Notifications suck ass"));
-        adapt.addItem(new Notification("Aragorn did something else"));
-        adapt.addItem(new Notification("Cato did something"));
-        adapt.addItem(new Notification("Gandalf did something"));
+        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST,
+                "<b>Cato</b> has completed quest <b>Chillhouse of Terror</b>.", null, null, new Date()));
+        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "<b>Nuno</b> completed a quest.",
+                null, null, new Date()));
+        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST,
+                "<b>Lolcat</b> completed a quest.", null, null, new Date()));
+        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST,
+                "<b>Aragorn</b> completed a quest.", null, null, new Date()));
+        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "<b>Cato</b> completed a quest.",
+                null, null, new Date()));
+        adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST,
+                "<b>Gandalf</b> completed a quest.", null, null, new Date()));
         watchtower.setAdapter(adapt);
 
     }
@@ -72,18 +63,29 @@ public class QuestoHome extends Activity {
     private void navigate(String to) {
         System.out.println("NAVIGATE!!! " + to);
         Intent navTo = null;
-        if (to.equals("profile")) {
+        if (to.equals(menus[0])) {
+            navTo = new Intent(this, QuestMapView.class);
+        }
+        
+        if (to.equals(menus[1])) {
+
+        }
+        
+        if (to.equals(menus[2])) {
             navTo = new Intent(this, UserProfile.class);
         }
-        if (to.equals("quests")) {
-        	navTo = new Intent(this, QuestMapView.class);
-        }
-        if (to.equals("tournaments")) {
-        	navTo = new Intent(this, TournamentView.class);
-        }        
         
-        if(navTo != null){
-        	startActivity(navTo);
+        if (to.equals(menus[3])) {
+        }
+
+        if (to.equals(menus[4])) {
+        }
+        
+        if (to.equals(menus[5])) {
+        }
+        
+        if (navTo != null) {
+            startActivity(navTo);
         }
     }
 
@@ -122,7 +124,7 @@ public class QuestoHome extends Activity {
 
         @Override
         public String getItem(int position) {
-            return mData.get(position).toString();
+            return mData.get(position).getText();
         }
 
         @Override
@@ -132,7 +134,6 @@ public class QuestoHome extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            System.out.println("getView " + position + " " + convertView);
             ViewHolder holder = null;
 
             if (convertView == null) {
@@ -144,7 +145,7 @@ public class QuestoHome extends Activity {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.textView.setText(this.getItem(position));
+            holder.textView.setText(Html.fromHtml(this.getItem(position)));
             return convertView;
         }
 
@@ -152,5 +153,70 @@ public class QuestoHome extends Activity {
 
     public static class ViewHolder {
         public TextView textView;
+    }
+
+    private class ImageAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return menus.length;
+        }
+
+        @Override
+        public Object getItem(int pos) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int pos) {
+            return pos;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v;
+
+            if (convertView == null) {
+                LayoutInflater li = getLayoutInflater();
+                v = li.inflate(R.layout.homeicon, null);
+                TextView tv = (TextView) v.findViewById(R.id.home_icon_text);
+                tv.setText(menus[position]);
+                ImageView iv = (ImageView) v.findViewById(R.id.home_icon_image);
+                iv.setImageResource(this.getImage(position));
+                iv.setOnClickListener(new MenuOnTouchListener(menus[position]));
+            } else {
+                v = convertView;
+            }
+
+            return v;
+        }
+
+        private int getImage(int pos) {
+            int id = -1;
+            switch (pos) {
+            case 0:
+                id = R.drawable.quests;
+                break;
+            case 1:
+                id = R.drawable.tournaments;
+                break;
+            case 2:
+                id = R.drawable.profiles;
+                break;
+            case 3:
+                id = R.drawable.companions;
+                break;
+            case 4:
+                id = R.drawable.trophies;
+                break;
+            case 5:
+                id = R.drawable.settings;
+                break;
+            default:
+                id = R.drawable.arrow_target;
+                break;
+            }
+
+            return id;
+        }
     }
 }
