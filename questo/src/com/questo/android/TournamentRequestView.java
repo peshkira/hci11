@@ -1,12 +1,24 @@
 package com.questo.android;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 public class TournamentRequestView extends Activity{
+	
+	
+	private class TournamentListAdapter extends ArrayAdapter<String>{
+
+		public TournamentListAdapter(Context context, int textViewResourceId) {
+			super(context, textViewResourceId);
+			
+			
+		}
+		
+	}
 	
 	
 	@Override
