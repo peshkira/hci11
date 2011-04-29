@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal" android:layout_width="fill_parent"
+	android:layout_height="wrap_content" android:background="#ffffff"
+	android:id="@+id/answer_button" android:gravity="bottom|center_horizontal">
+	<Button android:id="@+id/btn_answer" android:background="@drawable/button_start_quest"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:text="Answer" android:textColor="#000" />
+	<Button android:id="@+id/btn_noidea" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="No Idea"
+		android:textColor="#000" />
+
+</LinearLayout>

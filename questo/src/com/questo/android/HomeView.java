@@ -84,10 +84,10 @@ public class HomeView extends Activity {
         }
         
         if (to.equals(menus[5])) {
-//            navTo = new Intent(this, QuestionView.class);
-//            navTo.putExtra(Constants.NR_QUESTIONS, 10);
-//            navTo.putExtra(Constants.QUESTIONS, 3);
-//            navTo.putExtra(Constants.QUESTION_TYPE, Question.Type.MULTIPLE_CHOICE.name());
+            navTo = new Intent(this, QuestionView.class);
+            navTo.putExtra(Constants.NR_QUESTIONS, 10);
+            navTo.putExtra(Constants.QUESTIONS, 3);
+            navTo.putExtra(Constants.QUESTION_TYPE, Question.Type.MULTIPLE_CHOICE.name());
         }
         
         if (navTo != null) {
