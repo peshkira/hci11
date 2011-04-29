@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Questo!</string>
+    <string name="settingsfile">settings</string>
     <string name="quests">Quests</string>
     <string name="profile">Profile</string>
     <string name="tournaments">Tournaments</string>
@@ -8,4 +9,11 @@
     <string name="trophyroom">Trophy Room</string>
     <string name="settings">Settings</string>
     <string name="your_profile">Your Profile</string>
+    <string name="login_email_hint">Email Address</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_pleaselogin">Please log in:</string>
+    <string name="login_signuplabel">If you have not signed up yet:</string>
+    <string name="login_signupbutton">Signup to Questo!</string>
+    <string name="error_login_email_notfound">Sorry, we could not find the email address you provided. Have you signed up already?</string>
+    <string name="error_login_password_wrong">The password you provided is wrong.</string>
 </resources>

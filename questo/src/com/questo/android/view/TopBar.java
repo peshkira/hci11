@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.questo.android.R;
+import com.questo.android.helper.FontHelper;
 
 public class TopBar extends LinearLayout {
 
@@ -31,8 +32,7 @@ public class TopBar extends LinearLayout {
 		final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.topbar, this);
 		TextView labelText = (TextView) findViewById(R.id.label);
-		Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/Dearest.ttf");
-		labelText.setTypeface(tf);
+		labelText.setTypeface(FontHelper.getMedievalFont(context));
 	}
 
 	private void retrieveLabelString(Context context, AttributeSet attr) {

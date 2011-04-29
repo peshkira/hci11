@@ -4,16 +4,15 @@
       android:versionCode="1"
       android:versionName="1.0">      
 	<application android:icon="@drawable/icon" android:label="@string/app_name"
-		android:theme="@android:style/Theme.NoTitleBar">		
+		android:theme="@android:style/Theme.NoTitleBar" android:name="App">		
 		<uses-library android:name="com.google.android.maps" />
-		<activity android:name=".QuestoHome" android:label="@string/app_name"
-			android:theme="@android:style/Theme.NoTitleBar"
-			android:screenOrientation="portrait">
+		<activity android:name=".Launcher">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+		<activity android:name=".QuestoHome" android:screenOrientation="portrait"></activity>
 		<activity android:name=".UserProfile"></activity>
 		<activity android:name=".view.ProfileTabThrophies"></activity>
 		<activity android:name=".view.ProfileTabTournaments"></activity>
@@ -21,8 +20,11 @@
 		<activity android:name=".Throphy"></activity>
 		<activity android:name=".PlaceDetailsView"></activity>
 		<activity android:name=".QuestionView"></activity>
-		<activity android:name="QuestMapView"></activity>
+		<activity android:name=".QuestMapView"></activity>
 		<activity android:name=".QuestListView"></activity>
+		<activity android:name=".Login"></activity>
+		
+		
 	</application>	
 	<uses-permission android:name="android.permission.INTERNET" />	
 	<uses-permission android:name="android.permission.ACCESS_LOCATION"/>

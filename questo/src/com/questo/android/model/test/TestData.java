@@ -1,18 +1,27 @@
 package com.questo.android.model.test;
 
-import android.text.Html;
+import java.util.Date;
 
 import com.questo.android.ModelManager;
+import com.questo.android.helper.Security;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
 import com.questo.android.model.PossibleAnswer;
 import com.questo.android.model.PossibleAnswerMultipleChoice;
 import com.questo.android.model.Question;
 import com.questo.android.model.Question.Type;
+import com.questo.android.model.User;
 
 public class TestData {
 
 	public static void generateTestData(ModelManager manager) {
+		User mainuser = new User(UUIDgen.getUUID(), new Date());
+		mainuser.setEmail("questo@questo.me");
+		mainuser.setPasswordSalt("lolcat");
+		mainuser.setPasswordHash(Security.md5("questololcat")); // pw = questo ;)
+		mainuser.setName("landocalrissian");
+		manager.create(mainuser, User.class);
+		
 		Place stephansdom = new Place(UUIDgen.getUUID(), "Stephansdom");
 		manager.create(stephansdom, Place.class);
 		Place peterskirche = new Place(UUIDgen.getUUID(), "Peterskirche");

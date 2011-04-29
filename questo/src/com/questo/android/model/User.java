@@ -13,6 +13,7 @@ import com.questo.android.model.json.JSONizer;
 @DatabaseTable
 public class User {
 
+	public static final String EMAIL = "EMAIL";
 	//private static final String TAG = "ENTITY USER"; // tag for log
 
 	public enum Gender {
@@ -23,10 +24,14 @@ public class User {
 	private Integer id;
 	@DatabaseField
 	private String uuid;
-	@DatabaseField
+	@DatabaseField(columnName=EMAIL)
 	private String email;
 	@DatabaseField
 	private String name;
+	@DatabaseField
+	private String passwordHash;
+	@DatabaseField
+	private String passwordSalt;
 	@DatabaseField
 	private Gender gender;
 	@ForeignCollectionField(eager = false)
@@ -79,6 +84,22 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+
+	public String getPasswordSalt() {
+		return passwordSalt;
+	}
+
+	public void setPasswordSalt(String passwordSalt) {
+		this.passwordSalt = passwordSalt;
+	}
 
 	public Gender getGender() {
 		return gender;
@@ -130,7 +151,6 @@ public class User {
 
 	public class Profile extends JSONKeyValueStore {
 		
-		public static final String PASSWORD_HASH = "PASSWORD_HASH";
 		public static final String PROFILE_PIC = "PROFILE_PIC";
 		//TODO Add your own values!
 

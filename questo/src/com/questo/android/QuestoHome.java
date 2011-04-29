@@ -94,6 +94,13 @@ public class QuestoHome extends Activity {
             startActivity(navTo);
         }
     }
+    
+	
+	@Override
+	public void onBackPressed() {
+		// Similar result as pressing home button, but app lives on:
+		moveTaskToBack(true);
+	}
 
     private class MenuOnTouchListener implements OnClickListener {
 

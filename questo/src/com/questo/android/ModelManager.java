@@ -1,11 +1,14 @@
 package com.questo.android;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 
-import com.questo.android.model.Place;
-import com.questo.android.model.Question;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.questo.android.model.User;
 
 public class ModelManager {
 
@@ -17,10 +20,11 @@ public class ModelManager {
 	}
 
 	private DBHelper db() {
-		return app.db();
+		return app.getDB();
 	}
 
-	private void handleException(Exception e) {
+	private void handleException(SQLException e) {
+		Log.e(TAG, "Problem with the database!");
 		e.printStackTrace();
 	}
 
@@ -40,6 +44,20 @@ public class ModelManager {
 			int result = db().getCachedDao(clazz).update(o);
 			if (result == 1)
 				return o;
+		} catch (SQLException e) {
+			handleException(e);
+		}
+		return null;
+	}
+
+	public User getUserByEmail(String email) {
+		try {
+			QueryBuilder<User, Integer> userQBuilder = db().getCachedDao(User.class).queryBuilder();
+			userQBuilder.where().eq(User.EMAIL, email);
+			PreparedQuery<User> preparedQuery = userQBuilder.prepare();
+			List<User> users = db().getCachedDao(User.class).query(preparedQuery);
+			if (users.size() > 0)
+				return users.get(0);
 		} catch (SQLException e) {
 			handleException(e);
 		}

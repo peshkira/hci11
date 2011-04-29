@@ -2,6 +2,8 @@
 <resources>
 	<color name="winered">#5a0f03</color>
 	<color name="winered_shadowed">#4e0d02</color>
+	<color name="winered_lightened">#7d4238</color>
+	<color name="winered_verylight">#c0857d</color>
 	<color name="winered_dark">#4b0d03</color>
 	<color name="winered_verydark">#330902</color>
 	<color name="winered_gone_dark">#2f0000</color>
@@ -10,6 +12,7 @@
 	<color name="papyrus_end">#d2c08f</color>
 	<color name="papyrus_shadowed_start">#5e4124</color>
 	<color name="papyrus_shadowed_end">#957e5a</color>
+	
 
 	<color name="black_semitransparent">#22000000</color>
 	<color name="transparent">#00000000</color>

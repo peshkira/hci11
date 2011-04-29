@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<com.questo.android.view.TopBar
+		android:id="@+id/topbar" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" questo:label="Login"
+		questo:label_centered="true" />
+	<!-- Dummy item to prevent Email field from receiving focus -->
+	<LinearLayout android:focusable="true"
+		android:focusableInTouchMode="true" android:layout_width="0px"
+		android:layout_height="0px" />
+	<ScrollView android:fillViewport="true"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:fadingEdge="none">
+		<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/homeGrid" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:background="@drawable/bg_papyrus"
+			android:padding="20dp" android:orientation="vertical"
+			android:gravity="left">
+			<TextView android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:text="Welcome to Questo!"
+				style="@style/BlackShadowedFont" android:textSize="35sp" android:id="@+id/welcome"
+				android:layout_marginBottom="15dp" />
+			<TextView android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:text="@string/login_pleaselogin"
+				style="@style/BlackShadowedFont" android:textSize="15sp" android:id="@+id/pleaselogin"
+				android:layout_below="@+id/welcome" android:layout_marginBottom="10dp" />
+			<EditText android:id="@+id/login_email"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:hint="@string/login_email_hint" android:layout_below="@+id/pleaselogin" />
+			<EditText android:id="@+id/login_password"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:password="true" android:hint="@string/login_password_hint"
+				android:layout_below="@+id/login_email" />
+			<Button android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/login_button"
+				android:text="Login" style="@style/MediumRoundButton"
+				android:layout_below="@+id/login_password"
+				android:layout_marginBottom="30dp" />
+			<TextView android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:text="@string/login_signuplabel"
+				style="@style/BlackShadowedFont" android:textSize="15sp" android:id="@+id/signuplabel"
+				android:layout_below="@+id/login_button" android:layout_marginBottom="10dp" />
+			<Button android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:id="@+id/login_register"
+				android:text="@string/login_signupbutton" style="@style/BigRoundButton"
+				android:layout_below="@+id/signuplabel" />
+		</RelativeLayout>
+	</ScrollView>
+</LinearLayout>
