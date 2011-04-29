@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
 	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:background="#ffffff" android:id="@+id/question_layout">
+	android:layout_height="fill_parent" android:background="@drawable/bg_papyrus" android:id="@+id/question_layout">
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" questo:label_centered="false">
