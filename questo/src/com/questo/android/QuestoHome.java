@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.questo.android.common.Constants;
+import com.questo.android.helper.UUIDgen;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Notification;
 import com.questo.android.model.Notification.Type;
@@ -70,7 +70,7 @@ public class QuestoHome extends Activity {
         }
         
         if (to.equals(menus[1])) {
-
+        	navTo = new Intent(this, TournamentView.class);
         }
         
         if (to.equals(menus[2])) {
