@@ -68,7 +68,7 @@ public class QuestoHome extends Activity {
         }
         
         if (to.equals(menus[1])) {
-
+        	navTo = new Intent(this, TournamentView.class);
         }
         
         if (to.equals(menus[2])) {

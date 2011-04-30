@@ -8,6 +8,8 @@ import com.questo.android.model.Place;
 import com.questo.android.model.PossibleAnswer;
 import com.questo.android.model.PossibleAnswerMultipleChoice;
 import com.questo.android.model.Question;
+import com.questo.android.model.Tournament;
+import com.questo.android.model.TournamentTask;
 import com.questo.android.model.Question.Type;
 
 public class TestData {
@@ -30,6 +32,11 @@ public class TestData {
 		manager.update(q_stephansdom_1, Question.class);
 		
 		
+		Tournament crazyTournament = new Tournament();
+		crazyTournament.setName("Crazy Tournament");
+		TournamentTask crazyParcourTask1 = new TournamentTask(UUIDgen.getUUID(), crazyTournament, stephansdom);
+		manager.create(crazyTournament, Tournament.class);
+		manager.create(crazyParcourTask1, TournamentTask.class);
 	}
 	
 }
