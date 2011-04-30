@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-  
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:layout_width="match_parent" android:layout_height="match_parent">
+
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:layout_marginBottom="20dip"
-		questo:label="@string/quests" questo:label_centered="true" />  
-	<ListView android:layout_height="wrap_content"
-		android:layout_width="match_parent" android:layout_alignParentLeft="true"
-		android:id="@+id/QuestList"
-		android:layout_below="@id/topbar"/>		
+		questo:label="@string/quests" questo:label_centered="true" />
+	<ListView android:layout_width="match_parent"
+		android:layout_height="wrap_content" android:layout_alignParentLeft="true"
+		android:id="@+id/QuestList" android:layout_below="@id/topbar" />
 </RelativeLayout>

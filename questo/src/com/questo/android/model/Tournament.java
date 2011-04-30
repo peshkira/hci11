@@ -48,13 +48,12 @@ public class Tournament {
 	public Tournament() {
 	}
 
-	public Tournament(String uuid, Date createdAt, String name, Type type, Extras extras) {
+	public Tournament(String uuid, Date createdAt, String name, Type type) {
 		super();
 		this.uuid = uuid;
 		this.createdAt = createdAt;
 		this.name = name;
 		this.type = type;
-		this.extras = extras;
 	}
 
 	public String getName() {

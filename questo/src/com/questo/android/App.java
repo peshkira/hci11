@@ -58,9 +58,9 @@ public class App extends Application {
 	// TODO: Remove if needed - deletes database on every app start (not
 	// every main activity start!):
 	private void deleteDatabase() {
-		File dbFile = new File("/data/data/com.questo.android/databases/questo.db");
-		if (dbFile.exists() && dbFile.canWrite())
-			dbFile.delete();
+//		File dbFile = new File("/data/data/com.questo.android/databases/questo.db");
+//		if (dbFile.exists() && dbFile.canWrite())
+//			dbFile.delete();
 	}
 
 	// TODO: delete this later - only for initial debugging & testing:

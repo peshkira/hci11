@@ -96,8 +96,6 @@ public class TournamentView extends Activity{
 		requestsButtonId = requestButton.getId();
 		requestButton.setOnClickListener(new TournamentListener());
 		
-		
-		
 		ListView tournamentList = (ListView)this.findViewById(R.id.TournamentTournamentList);
 		tournamentList.setOnItemClickListener(new TournamentListener());
 		TournamentListAdapter adapter = new TournamentListAdapter(this, R.layout.user_profile_throphy_list_item);		

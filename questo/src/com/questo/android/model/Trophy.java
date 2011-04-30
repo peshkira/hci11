@@ -32,12 +32,11 @@ public class Trophy {
 	public Trophy() {
 	}
 
-	public Trophy(String uuid, String name, Type type, Extras extras) {
+	public Trophy(String uuid, String name, Type type) {
 		super();
 		this.uuid = uuid;
 		this.name = name;
 		this.type = type;
-		this.extras = extras;
 	}
 
 	public String getName() {

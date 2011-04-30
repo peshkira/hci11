@@ -9,9 +9,11 @@ import com.questo.android.model.Place;
 import com.questo.android.model.PossibleAnswer;
 import com.questo.android.model.PossibleAnswerMultipleChoice;
 import com.questo.android.model.Question;
+import com.questo.android.model.Question.Type;
 import com.questo.android.model.Tournament;
 import com.questo.android.model.TournamentTask;
-import com.questo.android.model.Question.Type;
+import com.questo.android.model.Trophy;
+import com.questo.android.model.Trophy.Extras;
 import com.questo.android.model.User;
 
 public class TestData {
@@ -46,6 +48,11 @@ public class TestData {
 		TournamentTask crazyParcourTask1 = new TournamentTask(UUIDgen.getUUID(), crazyTournament, stephansdom);
 		manager.create(crazyTournament, Tournament.class);
 		manager.create(crazyParcourTask1, TournamentTask.class);
+		
+		Trophy threeHeadedMonkey = new Trophy(UUIDgen.getUUID(),  "Three Headed Monkey", com.questo.android.model.Trophy.Type.GLOBAL);
+		manager.create(threeHeadedMonkey, Trophy.class);
+		
+		
 	}
 	
 }

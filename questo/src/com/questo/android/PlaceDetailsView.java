@@ -80,8 +80,8 @@ public class PlaceDetailsView extends Activity {
 
         ListView throphyList = (ListView) findViewById(R.id.placetrophies);
         PlaceTrophyAdapter adapt = new PlaceTrophyAdapter();
-        adapt.addItem(new Trophy(UUIDgen.getUUID(), "The One Ring", Type.FOR_PLACE, null));
-        adapt.addItem(new Trophy(UUIDgen.getUUID(), "The Light of Elendil", Type.FOR_PLACE, null));
+        adapt.addItem(new Trophy(UUIDgen.getUUID(), "The One Ring", Type.FOR_PLACE));
+        adapt.addItem(new Trophy(UUIDgen.getUUID(), "The Light of Elendil", Type.FOR_PLACE));
         throphyList.setAdapter(adapt);
         // throphyList.setOnItemClickListener(new TrophyListener());
     }
