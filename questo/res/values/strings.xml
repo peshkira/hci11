@@ -16,4 +16,5 @@
     <string name="login_signupbutton">Signup to Questo!</string>
     <string name="error_login_email_notfound">Sorry, we could not find the email address you provided. Have you signed up already?</string>
     <string name="error_login_password_wrong">The password you provided is wrong.</string>
+    <string name="tournament_request">Tournament Requests</string>
 </resources>
