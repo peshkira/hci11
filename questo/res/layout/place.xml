@@ -11,7 +11,7 @@
 		android:layout_marginTop="5dip" />
 	<Button android:id="@+id/start_quest" android:layout_width="200dip"
 		android:layout_height="85dip" android:textColor="#FFF"
-		android:background="@drawable/button_start_quest" android:layout_marginTop="20dip"
+		android:background="@drawable/btnstate_quest" android:layout_marginTop="20dip"
 		android:layout_gravity="center_horizontal" android:gravity="center|bottom"/>
 	<TextView android:id="@+id/answered_questions"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
