@@ -16,9 +16,9 @@ public class Launcher extends Activity {
 		App app = (App) getApplication();
 		TestData.generateTestData(app.getModelManager());
 		if (!app.tryAutomaticLogin())
-			startActivity(new Intent(this, Login.class));
+			startActivity(new Intent(this, LoginView.class));
 		else {
-			startActivity(new Intent(this, QuestoHome.class));
+			startActivity(new Intent(this, HomeView.class));
 		}
 	}
 	
