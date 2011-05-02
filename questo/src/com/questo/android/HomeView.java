@@ -24,7 +24,7 @@ import com.questo.android.model.Notification;
 import com.questo.android.model.Notification.Type;
 import com.questo.android.model.Question;
 
-public class QuestoHome extends Activity {
+public class HomeView extends Activity {
 
     private GridView mainGrid;
 
@@ -74,7 +74,7 @@ public class QuestoHome extends Activity {
         }
         
         if (to.equals(menus[2])) {
-            navTo = new Intent(this, UserProfile.class);
+            navTo = new Intent(this, ProfileView.class);
         }
         
         if (to.equals(menus[3])) {
@@ -112,7 +112,7 @@ public class QuestoHome extends Activity {
 
         @Override
         public void onClick(View v) {
-            QuestoHome.this.navigate(comp);
+            HomeView.this.navigate(comp);
         }
     }
 

@@ -12,8 +12,8 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".QuestoHome" android:screenOrientation="portrait"></activity>
-		<activity android:name=".UserProfile"></activity>
+		<activity android:name="HomeView" android:screenOrientation="portrait"></activity>
+		<activity android:name="ProfileView"></activity>
 		<activity android:name=".view.ProfileTabThrophies"></activity>
 		<activity android:name=".view.ProfileTabTournaments"></activity>
 		<activity android:name=".view.ProfileTabPlaces"></activity>
@@ -22,7 +22,7 @@
 		<activity android:name=".QuestionView"></activity>
 		<activity android:name=".QuestMapView"></activity>
 		<activity android:name=".QuestListView"></activity>
-		<activity android:name=".Login"></activity>
+		<activity android:name="LoginView"></activity>
 		<activity android:name=".TournamentView"></activity>
 		<activity android:name=".TournamentRequestView"></activity>
 	</application>	

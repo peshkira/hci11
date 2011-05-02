@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.questo.android.error.LoginError;
 import com.questo.android.helper.FontHelper;
 
-public class Login extends Activity {
+public class LoginView extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class Login extends Activity {
 	
 	
 	private void gotoHomeScreen() {
-		startActivity(new Intent(getBaseContext(), QuestoHome.class));
+		startActivity(new Intent(getBaseContext(), HomeView.class));
 	}
 	
 }

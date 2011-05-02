@@ -9,7 +9,7 @@ import android.widget.TabHost.TabSpec;
 import com.questo.android.view.ProfileTabPlaces;
 import com.questo.android.view.ProfileTabThrophies;
 
-public class UserProfile extends TabActivity{
+public class ProfileView extends TabActivity{
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
