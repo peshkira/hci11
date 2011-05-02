@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.questo.android.common.Constants;
 import com.questo.android.helper.UUIDgen;
+import com.questo.android.model.Question;
 import com.questo.android.model.Trophy;
 import com.questo.android.model.Trophy.Type;
 import com.questo.android.view.TopBar;
@@ -101,7 +103,12 @@ public class PlaceDetailsView extends Activity {
         @Override
         public void onClick(View v) {
             System.out.println("Start Quest");
-
+            Intent navTo = new Intent(PlaceDetailsView.this, QuestionView.class);
+            navTo.putExtra(Constants.NR_QUESTIONS, 10);
+            navTo.putExtra(Constants.QUESTIONS, 3);
+            navTo.putExtra(Constants.QUESTION_TYPE, Question.Type.NUMBERS_GUESSING.name());
+            startActivity(navTo);
+            
         }
 
     }

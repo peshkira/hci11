@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.questo.android.helper.UUIDgen;
+import com.questo.android.common.Constants;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Notification;
 import com.questo.android.model.Notification.Type;
@@ -84,10 +84,10 @@ public class HomeView extends Activity {
         }
         
         if (to.equals(menus[5])) {
-            navTo = new Intent(this, QuestionView.class);
-            navTo.putExtra(Constants.NR_QUESTIONS, 10);
-            navTo.putExtra(Constants.QUESTIONS, 3);
-            navTo.putExtra(Constants.QUESTION_TYPE, Question.Type.MULTIPLE_CHOICE.name());
+            navTo = new Intent(this, PlaceDetailsView.class);
+            navTo.putExtra(Constants.TOPBAR_LABEL, "Stephansplatz");
+            navTo.putExtra(Constants.NR_QUESTIONS, 40);
+            navTo.putExtra(Constants.NR_ANSWERED_QUESTIONS, 4);
         }
         
         if (navTo != null) {
