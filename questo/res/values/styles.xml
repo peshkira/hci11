@@ -28,7 +28,7 @@
 	</style>
 	<style name="RoundButton" parent="@style/WhiteShadowedFont">
 		<item name="android:typeface">sans</item>
-		<item name="android:background">@drawable/buttonstate_biground</item>
+		<item name="android:background">@drawable/btnstate_biground</item>
 	</style>
 	<style name="BigRoundButton" parent="@style/RoundButton">
 		<item name="android:textSize">18sp</item>

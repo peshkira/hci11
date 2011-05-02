@@ -150,7 +150,7 @@ public class HomeView extends Activity {
             ViewHolder holder = null;
 
             if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.listitem, null);
+                convertView = mInflater.inflate(R.layout.home_listitem, null);
                 holder = new ViewHolder();
                 holder.textView = (TextView) convertView.findViewById(R.id.item);
                 convertView.setTag(holder);
@@ -190,7 +190,7 @@ public class HomeView extends Activity {
 
             if (convertView == null) {
                 LayoutInflater li = getLayoutInflater();
-                v = li.inflate(R.layout.homeicon, null);
+                v = li.inflate(R.layout.home_icon, null);
                 TextView tv = (TextView) v.findViewById(R.id.home_icon_text);
                 tv.setText(menus[position]);
                 ImageView iv = (ImageView) v.findViewById(R.id.home_icon_image);
@@ -207,25 +207,25 @@ public class HomeView extends Activity {
             int id = -1;
             switch (pos) {
             case 0:
-                id = R.drawable.quests;
+                id = R.drawable.imgstate_quests;
                 break;
             case 1:
-                id = R.drawable.tournaments;
+                id = R.drawable.imgstate_tournaments;
                 break;
             case 2:
-                id = R.drawable.profiles;
+                id = R.drawable.imgstate_profiles;
                 break;
             case 3:
-                id = R.drawable.companions;
+                id = R.drawable.imgstate_companions;
                 break;
             case 4:
-                id = R.drawable.trophies;
+                id = R.drawable.imgstate_trophies;
                 break;
             case 5:
-                id = R.drawable.settings;
+                id = R.drawable.imgstate_settings;
                 break;
             default:
-                id = R.drawable.arrow_target;
+                id = R.drawable.img_arrow_target;
                 break;
             }
 

@@ -14,7 +14,7 @@
 		questo:label="@string/your_profile" questo:label_centered="true"/>
 	<ImageView android:layout_height="wrap_content" 
 		android:layout_width="wrap_content" 
-		android:src="@drawable/profile_img" 
+		android:src="@drawable/img_profile_img" 
 		android:id="@+id/UserProfileImg" 
 		android:layout_below="@id/topbar"/>
 	<TextView android:layout_height="wrap_content" 

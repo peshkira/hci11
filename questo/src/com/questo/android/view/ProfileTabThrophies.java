@@ -57,7 +57,7 @@ public class ProfileTabThrophies extends Activity{
 				
 				if(throphyIcon!=null){
 					//setting the default throphy thumb image for all throphies without an icon
-					throphyIcon.setImageDrawable(getResources().getDrawable(R.drawable.throphy_img_thumb));
+					throphyIcon.setImageDrawable(getResources().getDrawable(R.drawable.img_throphy_img_thumb));
 				}
 				
 			}
