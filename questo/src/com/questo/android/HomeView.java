@@ -3,28 +3,21 @@ package com.questo.android;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.crypto.spec.PSource;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.questo.android.helper.DisplayHelper;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Notification;
 import com.questo.android.model.Notification.Type;
@@ -34,6 +27,7 @@ public class HomeView extends Activity {
 
 	private GridView iconsGrid;
 
+	// Set displayed homescreen icons and their target activity class here:
 	private static final Wrap[] icons = {
 			new Wrap(R.drawable.imgstate_quests, R.string.homeicon_quests, QuestMapView.class),
 			new Wrap(R.drawable.imgstate_tournaments, R.string.homeicon_tournaments, TournamentView.class),
@@ -41,9 +35,6 @@ public class HomeView extends Activity {
 			new Wrap(R.drawable.imgstate_companions, R.string.homeicon_companions, null),
 			new Wrap(R.drawable.imgstate_trophies, R.string.homeicon_trophies, null),
 			new Wrap(R.drawable.imgstate_settings, R.string.homeicon_settings, null) };
-
-	private static final int ICON_COLUMNS = 3;
-	private static final int ICON_ROWS = (int) Math.ceil(((double) icons.length) / ((double) ICON_COLUMNS));
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,15 +45,6 @@ public class HomeView extends Activity {
 
 	private void initViews() {
 		iconsGrid = (GridView) findViewById(R.id.homeGrid);
-		/*
-		 * for (int currentIconRowIndex = 0; currentIconRowIndex < ICON_ROWS;
-		 * currentIconRowIndex++) { Wrap[] currentIconRow = new
-		 * Wrap[ICON_COLUMNS]; for (int i = 0; i < ICON_COLUMNS; i++) { if
-		 * (icons.length >= currentIconRowIndex * ICON_COLUMNS + i)
-		 * currentIconRow[i] = icons[currentIconRowIndex * ICON_COLUMNS + i];
-		 * else currentIconRow[i] = new Wrap(null, null, null); }
-		 * addIconAndTextRow(currentIconRow, iconsGrid, 100); }
-		 */
 		iconsGrid.setAdapter(new ImageAdapter());
 
 		ListView watchtower = (ListView) findViewById(R.id.watchtower);
@@ -83,35 +65,6 @@ public class HomeView extends Activity {
 		watchtower.setAdapter(adapt);
 
 	}
-
-	/*
-	 * private void addIconAndTextRow(Wrap[] iconWrappers, GridView grid, int
-	 * id) { TableRow iconRow = new TableRow(this); TableRow textRow = new
-	 * TableRow(this); iconRow.setId(id); textRow.setId(id + 1); int idinc = 2;
-	 * for (Wrap iconWrapper : iconWrappers) {
-	 * addIconToRow(getResources().getDrawable(iconWrapper.getIconResource()),
-	 * iconRow, id + idinc); idinc++;
-	 * addTextToRow(getString(iconWrapper.getTextResource()), textRow, id +
-	 * idinc); textRow.setLayoutParams(new
-	 * LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-	 * idinc++; } grid.addView(iconRow, new
-	 * TableLayout.LayoutParams(LayoutParams.FILL_PARENT,
-	 * LayoutParams.WRAP_CONTENT)); grid.addView(textRow, new
-	 * TableLayout.LayoutParams(LayoutParams.FILL_PARENT,
-	 * LayoutParams.WRAP_CONTENT)); }
-	 * 
-	 * private void addTextToRow(String text, TableRow row, int id) { TextView
-	 * tV = new TextView(this); tV.setId(id); tV.setText(text);
-	 * tV.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-	 * LayoutParams.WRAP_CONTENT)); row.addView(tV); }
-	 * 
-	 * private void addIconToRow(Drawable drawable, TableRow row, int id) {
-	 * HomeIcon iV = new HomeIcon(this, drawable); iV.setId(id); LayoutParams lp
-	 * = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-	 * lp.setMargins(20, 20, 20, 20); iV.setLayoutParams(lp);
-	 * 
-	 * row.addView(iV); }
-	 */
 
 	private void navigate(Wrap to) {
 		System.out.println("NAVIGATE!!! " + to);
@@ -240,41 +193,13 @@ public class HomeView extends Activity {
 			View v;
 
 			if (convertView == null) {
-				/*
-				RelativeLayout rl = new RelativeLayout(HomeView.this);
-				rl.setLayoutParams(new GridView.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-				rl.setMinimumHeight(DisplayHelper.dpToPixel(105, HomeView.this));
-				rl.setId(100);
-
-				HomeIcon icon = new HomeIcon(HomeView.this, getResources().getDrawable(
-						icons[position].getIconResource()));
-				icon.setId(101);
-				android.widget.RelativeLayout.LayoutParams iconparams = new android.widget.RelativeLayout.LayoutParams(
-						android.widget.RelativeLayout.LayoutParams.FILL_PARENT,
-						android.widget.RelativeLayout.LayoutParams.FILL_PARENT);
-				int sideMarginPx = DisplayHelper.dpToPixel(10, HomeView.this);
-				iconparams.setMargins(sideMarginPx, 0, sideMarginPx, 0);
-				icon.setLayoutParams(iconparams);
-				rl.addView(icon);
-
-				TextView tv = new TextView(HomeView.this, null, R.style.TopBarButtonFont);
-				tv.setText(getString(icons[position].getTextResource()));
-				tv.setGravity(Gravity.CENTER);
-				tv.setId(102);
-
-				android.widget.RelativeLayout.LayoutParams params = new android.widget.RelativeLayout.LayoutParams(
-						android.widget.RelativeLayout.LayoutParams.FILL_PARENT,
-						android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT);
-				params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-				params.addRule(RelativeLayout.BELOW, 101);
-				tv.setLayoutParams(params);
-				rl.addView(tv);*/
-				final LayoutInflater infl = (LayoutInflater) HomeView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				RelativeLayout layout = (RelativeLayout)infl.inflate(R.layout.home_icon, null);
-				HomeIcon icon = (HomeIcon)layout.findViewById(R.id.home_icon_image);
+				final LayoutInflater infl = (LayoutInflater) HomeView.this
+						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				RelativeLayout layout = (RelativeLayout) infl.inflate(R.layout.home_icon, null);
+				HomeIcon icon = (HomeIcon) layout.findViewById(R.id.home_icon_image);
 				icon.setBackgroundResource(icons[position].getIconResource());
 				icon.setOnClickListener(new MenuOnTouchListener(icons[position]));
-				TextView tv = (TextView)layout.findViewById(R.id.home_icon_text);
+				TextView tv = (TextView) layout.findViewById(R.id.home_icon_text);
 				tv.setText(getString(icons[position].getTextResource()));
 				v = layout;
 			} else {
