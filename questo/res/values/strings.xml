@@ -14,6 +14,12 @@
     <string name="login_pleaselogin">Please log in:</string>
     <string name="login_signuplabel">If you have not signed up yet:</string>
     <string name="login_signupbutton">Signup to Questo!</string>
+    <string name="homeicon_quests">Quests</string>
+    <string name="homeicon_tournaments">Tournaments</string>
+    <string name="homeicon_profile">Profile</string>
+    <string name="homeicon_companions">Companions</string>
+    <string name="homeicon_trophies">Trophy Room</string>
+    <string name="homeicon_settings">Settings</string>
     <string name="error_login_email_notfound">Sorry, we could not find the email address you provided. Have you signed up already?</string>
     <string name="error_login_password_wrong">The password you provided is wrong.</string>
     <string name="tournament_request">Tournament Requests</string>

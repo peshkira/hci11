@@ -9,7 +9,7 @@
 	</style>
 	<style name="BlackShadowedFont" parent="@android:style/TextAppearance.Medium">
 		<item name="android:textColor">@android:color/black</item>
-		<item name="android:shadowColor">#ccccca</item>
+		<item name="android:shadowColor">#ffeded</item>
 		<item name="android:shadowDx">1</item>
 		<item name="android:shadowDy">1</item>
 		<item name="android:shadowRadius">1</item>
@@ -21,6 +21,9 @@
 	<style name="TopBarButtonFont" parent="@style/WhiteShadowedFont">
 		<item name="android:typeface">serif</item>
 		<item name="android:textSize">20sp</item>
+	</style>
+	<style name="HomeIconFont" parent="@style/BlackShadowedFont">
+		<item name="android:textSize">14sp</item>
 	</style>
 	<style name="NotificationZoneFont" parent="@style/WhiteShadowedFont">
 		<item name="android:typeface">sans</item>

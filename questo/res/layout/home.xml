@@ -13,7 +13,7 @@
 		android:paddingLeft="10dp" android:paddingRight="10dp"
 		android:verticalSpacing="30dp" android:horizontalSpacing="10dp"
 		android:numColumns="3" android:columnWidth="60dp" android:stretchMode="columnWidth"
-		android:gravity="center" android:listSelector="@android:color/transparent">
+		android:gravity="fill" android:listSelector="@android:color/transparent">
 	</GridView>
 	<ListView android:id="@+id/watchtower" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:background="@color/winered_verydark"
