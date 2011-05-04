@@ -8,12 +8,13 @@ import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
 import com.questo.android.model.PossibleAnswer;
 import com.questo.android.model.PossibleAnswerMultipleChoice;
+import com.questo.android.model.PossibleAnswerNumberGuessing;
 import com.questo.android.model.Question;
+import com.questo.android.model.Question.CorrectAnswer;
 import com.questo.android.model.Question.Type;
 import com.questo.android.model.Tournament;
 import com.questo.android.model.TournamentTask;
 import com.questo.android.model.Trophy;
-import com.questo.android.model.Trophy.Extras;
 import com.questo.android.model.User;
 
 public class TestData {
@@ -42,7 +43,15 @@ public class TestData {
 		q_stephansdom_1.setPlace(stephansdom);
 		manager.update(q_stephansdom_1, Question.class);
 		
-		
+		Question q_stephansdom_2 = new Question(UUIDgen.getUUID(), Type.NUMBERS_GUESSING, "During which year was the St. Stephen Cathedral in Vienna built?");
+        PossibleAnswer[] q_stephansdom_2_answers = new PossibleAnswer[]{};
+        PossibleAnswer q_stephansdom_2_answer = new PossibleAnswerNumberGuessing(1147);
+        q_stephansdom_2.getPossibleAnswers().setAll(q_stephansdom_2_answers);
+        q_stephansdom_2.getCorrectAnswer().set(q_stephansdom_2_answer);
+        manager.create(q_stephansdom_2, Question.class);
+        q_stephansdom_2.setPlace(stephansdom);
+        manager.update(q_stephansdom_2, Question.class);
+        
 		Tournament crazyTournament = new Tournament();
 		crazyTournament.setName("Crazy Tournament");
 		TournamentTask crazyParcourTask1 = new TournamentTask(UUIDgen.getUUID(), crazyTournament, stephansdom);

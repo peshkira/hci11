@@ -45,7 +45,7 @@
 			<Button android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:id="@+id/login_register"
 				android:text="@string/login_signupbutton" style="@style/BigRoundButton"
-				android:layout_below="@+id/signuplabel" />
+				android:layout_below="@+id/signuplabel" /> 
 		</RelativeLayout>
 	</ScrollView>
 </LinearLayout>

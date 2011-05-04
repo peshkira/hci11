@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.questo.android.model.Place;
 import com.questo.android.model.User;
 
 public class ModelManager {
@@ -63,5 +64,37 @@ public class ModelManager {
 		}
 		return null;
 	}
+	
+	public Object getGenericObjectById(Integer id, Class clazz) {
+	    try {
+            QueryBuilder<?, Integer> genericQBuilder = db().getCachedDao(clazz).queryBuilder();
+            genericQBuilder.where().eq("id", id);
+            PreparedQuery<?> preparedQuery = genericQBuilder.prepare();
+            List<?> objects = db().getCachedDao(clazz).query(preparedQuery);
+            if (objects.size() > 0) {
+                return objects.get(0);
+            }
+        } catch (SQLException e) {
+            handleException(e);
+        }
+        
+        return null;
+	}
+	
+	   public Object getGenericObjectByUuid(String uuid, Class clazz) {
+	        try {
+	            QueryBuilder<?, String> genericQBuilder = db().getCachedDao(clazz).queryBuilder();
+	            genericQBuilder.where().eq("uuid", uuid);
+	            PreparedQuery<?> preparedQuery = genericQBuilder.prepare();
+	            List<?> objects = db().getCachedDao(clazz).query(preparedQuery);
+	            if (objects.size() > 0) {
+	                return objects.get(0);
+	            }
+	        } catch (SQLException e) {
+	            handleException(e);
+	        }
+	        
+	        return null;
+	    }
 
 }

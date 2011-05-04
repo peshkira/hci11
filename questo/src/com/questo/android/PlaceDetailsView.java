@@ -18,8 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.j256.ormlite.dao.CloseableIterator;
 import com.questo.android.common.Constants;
 import com.questo.android.helper.UUIDgen;
+import com.questo.android.model.Place;
+import com.questo.android.model.Quest;
+import com.questo.android.model.QuestHasQuestion;
 import com.questo.android.model.Question;
 import com.questo.android.model.Trophy;
 import com.questo.android.model.Trophy.Type;
@@ -36,6 +40,10 @@ import com.questo.android.view.TopBar;
 public class PlaceDetailsView extends Activity {
 
     private TopBar topbar;
+    
+    private Place place;
+    
+    private ModelManager mngr;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,33 +51,38 @@ public class PlaceDetailsView extends Activity {
         setContentView(R.layout.place);
         this.topbar = (TopBar) findViewById(R.id.topbar);
         this.topbar.addButtonLeftMost(getApplicationContext(), "+");
+        this.mngr = ((App) getApplicationContext()).getModelManager();
 
         this.init(this.getIntent().getExtras());
 
     }
 
     private void init(Bundle extras) {
+        String id = "";
+        Object object;
+
         if (extras != null) {
-            String lbl = extras.getString(Constants.TOPBAR_LABEL);
-            if (lbl != null) {
-                this.topbar.setTopBarLabel(lbl);
-            }
-
-            // TODO check questions
-            int questions = extras.getInt(Constants.NR_QUESTIONS);
-            TextView v = (TextView) findViewById(R.id.nr_questions);
-            v.setText(Html.fromHtml(Constants.NR_QUESTIONS_LABEL.replace(Constants.PLACEHOLDER, questions + "")));
-
-            questions = extras.getInt(Constants.NR_ANSWERED_QUESTIONS);
-            v = (TextView) findViewById(R.id.answered_questions);
-            v.setText(Html.fromHtml(Constants.NR_ANSWERED_QUESTIONS_LABEL
-                    .replace(Constants.PLACEHOLDER, questions + "")));
-
+            id = extras.getString(Constants.TRANSITION_OBJECT_UUID);
+            object = mngr.getGenericObjectByUuid(id, Place.class);
         } else {
-            // TODO handle error.
-            // show popup and go back on ok...
-            this.topbar.setTopBarLabel("Some Place");
+            object = mngr.getGenericObjectById(1, Place.class);
+        }
+        
+        if (object != null) {
+            if (object instanceof Place) {
+                this.place = (Place) object;
+                this.topbar.setTopBarLabel(place.getName());
+                TextView v = (TextView) findViewById(R.id.nr_questions);
+                v.setText(Html.fromHtml(Constants.NR_QUESTIONS_LABEL.replace(Constants.PLACEHOLDER, ""
+                        + place.getQuestions().size())));
 
+                v = (TextView) findViewById(R.id.answered_questions);
+                // TODO
+                v.setText(Html.fromHtml(Constants.NR_ANSWERED_QUESTIONS_LABEL.replace(Constants.PLACEHOLDER, "" + 0)));
+            }
+        } else {
+            // fetch test place for now...
+            this.topbar.setTopBarLabel("Fetch failed");
         }
 
         // init + button...
@@ -85,7 +98,6 @@ public class PlaceDetailsView extends Activity {
         adapt.addItem(new Trophy(UUIDgen.getUUID(), "The One Ring", Type.FOR_PLACE));
         adapt.addItem(new Trophy(UUIDgen.getUUID(), "The Light of Elendil", Type.FOR_PLACE));
         throphyList.setAdapter(adapt);
-        // throphyList.setOnItemClickListener(new TrophyListener());
     }
 
     private class AddQuestionListener implements OnClickListener {
@@ -103,12 +115,30 @@ public class PlaceDetailsView extends Activity {
         @Override
         public void onClick(View v) {
             System.out.println("Start Quest");
-            Intent navTo = new Intent(PlaceDetailsView.this, QuestionView.class);
-            navTo.putExtra(Constants.NR_QUESTIONS, 10);
-            navTo.putExtra(Constants.QUESTIONS, 3);
-            navTo.putExtra(Constants.QUESTION_TYPE, Question.Type.NUMBERS_GUESSING.name());
-            startActivity(navTo);
+            Quest quest = new Quest(UUIDgen.getUUID(), PlaceDetailsView.this.place);
+            quest.setCompletionState(Quest.Completion.INITIALIZED);
+            mngr.create(quest, Quest.class);
             
+            if (place.getQuestions().size() > 10) {
+                CloseableIterator<Question> iter = place.getQuestions().iterator();
+                int i = 10;
+                while (iter.hasNext() && i > 0) {
+                    Question next = iter.next();
+                    QuestHasQuestion qq = new QuestHasQuestion(quest, next, null);
+                    mngr.create(qq, QuestHasQuestion.class);
+                }
+            } else {
+                for (Question q : place.getQuestions()) {
+                    QuestHasQuestion qq = new QuestHasQuestion(quest, q, null);
+                    mngr.create(qq, QuestHasQuestion.class);
+                }
+            }
+            
+            Intent navTo = new Intent(PlaceDetailsView.this, QuestionView.class);
+            navTo.putExtra(Constants.TRANSITION_OBJECT_UUID, quest.getUuid());
+            navTo.putExtra(Constants.NR_ANSWERED_QUESTIONS, 0);
+            startActivity(navTo);
+
         }
 
     }
@@ -149,7 +179,7 @@ public class PlaceDetailsView extends Activity {
             LinearLayout view = (LinearLayout) mInflater.inflate(R.layout.place_trophy_listitem, null, false);
 
             ImageView image = (ImageView) view.findViewById(R.id.trophy_img);
-            //image.setImageResource(trophy.getImgUrl);
+            // image.setImageResource(trophy.getImgUrl);
 
             TextView name = (TextView) view.findViewById(R.id.trophy_name);
             name.setText(Html.fromHtml("<big>" + trophy.getName() + "</big>"));
@@ -157,21 +187,20 @@ public class PlaceDetailsView extends Activity {
             return view;
         }
     }
-    
+
     private class TrophyClickListener implements OnClickListener {
 
         private Trophy trophy;
-        
+
         public TrophyClickListener(Trophy t) {
             this.trophy = t;
         }
-        
+
         @Override
         public void onClick(View v) {
-            System.out.println(trophy.getName() + " clicked");
-            //TODO navigate to trhophyview...
-            
+            startActivity(new Intent(PlaceDetailsView.this, TrophyView.class));
+
         }
-        
+
     }
 }

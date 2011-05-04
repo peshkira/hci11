@@ -1,17 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/widget44" android:layout_width="wrap_content"
+	android:id="@+id/home_icon_layout" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:orientation="vertical"
-	android:gravity="center_horizontal" 
-	android:minHeight="90dp">
-	<ImageView android:id="@+id/home_icon_image"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:scaleType="fitCenter" android:adjustViewBounds="true"
-		android:paddingLeft="15dp" android:paddingRight="15dp" />
-	<RelativeLayout android:id="@+id/InnerRelativeLayout"
+	android:gravity="center_horizontal">
+	<com.questo.android.view.HomeIcon
+		android:id="@+id/home_icon_image" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:layout_marginLeft="15dp"
+		android:layout_marginRight="15dp" android:maxHeight="128px" />
+	<TextView android:id="@+id/home_icon_text"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true" android:gravity="center_horizontal">
-		<TextView android:id="@+id/home_icon_text"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:textColor="#000" android:gravity="center_horizontal"/>
-	</RelativeLayout>
+		style="@style/HomeIconFont" android:gravity="center_horizontal"
+		android:layout_alignParentBottom="true" android:layout_below="@+id/home_icon_image" />
 </RelativeLayout>

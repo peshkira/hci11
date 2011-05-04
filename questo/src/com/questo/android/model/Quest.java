@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
 public class Quest {
-	enum Completion {
+	public enum Completion {
 		INITIALIZED, COMPLETED
 	}
 
