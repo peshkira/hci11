@@ -7,30 +7,26 @@ import android.view.View;
 
 public class HomeIcon extends View {
 
-	//private final Drawable icon;
-
 	public HomeIcon(Context context) {
 		super(context);
-		/*this.icon = icon;
-		setBackgroundDrawable(icon);*/
 	}
 
 	public HomeIcon(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		/*this.icon = icon;
-		setBackgroundDrawable(icon);*/
 	}
 
 	public HomeIcon(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		/*this.icon = icon;
-		setBackgroundDrawable(icon);*/
 	}
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		int width = MeasureSpec.getSize(widthMeasureSpec);
-		int height = width * getBackground().getIntrinsicHeight() / getBackground().getIntrinsicWidth();
-		setMeasuredDimension(width, height);
+		if (getBackground() != null) {
+			int height = width * getBackground().getIntrinsicHeight() / getBackground().getIntrinsicWidth();
+			setMeasuredDimension(width, height);
+		}
+		else
+			setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec));
 	}
 }
