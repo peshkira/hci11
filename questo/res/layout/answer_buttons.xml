@@ -3,7 +3,7 @@
 	android:orientation="horizontal" android:layout_width="fill_parent"
 	android:layout_height="wrap_content" android:id="@+id/answer_button"
 	android:gravity="bottom|center_horizontal" android:background="@android:color/transparent">
-	<Button android:id="@+id/btn_answer" android:background="@drawable/button_start_quest"
+	<Button android:id="@+id/btn_answer" android:background="@drawable/btnstate_quest"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:text="Answer" android:textColor="#000" />
 	<Button android:id="@+id/btn_noidea" android:layout_width="wrap_content"
