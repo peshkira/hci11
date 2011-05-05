@@ -1,15 +1,14 @@
 package com.questo.android.model;
 
-public class PossibleAnswerMultipleChoice implements PossibleAnswer {
+public class PossibleAnswerMultipleChoice extends PossibleAnswerImpl {
 
 	private Integer order;
-	private String text;
 	private boolean correct; // is this possible answer a correct answer to the associated question?
 	
 	public PossibleAnswerMultipleChoice(Integer order, String text, boolean correct) {
 		super();
 		this.order = order;
-		this.text = text;
+		this.answer = text;
 		this.correct = correct;
 	}
 
@@ -17,14 +16,10 @@ public class PossibleAnswerMultipleChoice implements PossibleAnswer {
 		return order;
 	}
 	
-	public String getText() {
-		return text;
-	}
-
 	public boolean isCorrect() {
 		return correct;
 	}
-
+	
 	@Override
 	public int compareTo(PossibleAnswer another) {
 		if (!(another instanceof PossibleAnswerMultipleChoice))

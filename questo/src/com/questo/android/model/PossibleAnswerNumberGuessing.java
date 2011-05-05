@@ -1,29 +1,21 @@
 package com.questo.android.model;
 
-public class PossibleAnswerNumberGuessing implements PossibleAnswer {
-
-    private Integer answer;
+public class PossibleAnswerNumberGuessing extends PossibleAnswerImpl {
     
-    public PossibleAnswerNumberGuessing(Integer number) {
+    public PossibleAnswerNumberGuessing(String number) {
         super();
         this.answer = number;
     }
     
     public int getGuessDistance(int guess) {
-        return Math.abs(answer - guess);
+        return Math.abs(Integer.valueOf(answer) - Integer.valueOf(guess));
     }
     
     @Override
     public int compareTo(PossibleAnswer another) {
+        //TODO
         return 0;
     }
 
-    public void setNumber(Integer number) {
-        this.answer = number;
-    }
-
-    public Integer getNumber() {
-        return answer;
-    }
 
 }
