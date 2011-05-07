@@ -80,7 +80,7 @@ public class QuestionView extends Activity {
                 .replace("{}", count + ""));
 
         ProgressBar bar = (ProgressBar) findViewById(R.id.progressbar);
-        bar.setProgressDrawable(getResources().getDrawable(R.drawable.green_progress));
+        bar.setProgressDrawable(getResources().getDrawable(R.drawable.bg_progressbar));
         bar.setProgress(this.calcProgress(currentQuestion + 1, count));
 
         final Button counter = this.topbar.addButtonLeftMost(getApplicationContext(), "30");

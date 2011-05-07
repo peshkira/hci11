@@ -91,7 +91,7 @@ public class PlaceDetailsView extends Activity {
 
         b = (Button) findViewById(R.id.start_quest);
         b.setOnClickListener(new StartQuestListener());
-        b.setText(Html.fromHtml("<big><b>Start Quest</b></big><br/><br/><small>10 questions</small>"));
+        b.setText(Html.fromHtml("<big><b>Start Quest</b></big><small><br/><br/>10 questions</small>"));
 
         ListView throphyList = (ListView) findViewById(R.id.placetrophies);
         PlaceTrophyAdapter adapt = new PlaceTrophyAdapter();

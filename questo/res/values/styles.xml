@@ -31,9 +31,19 @@
 	</style>
 	<style name="RoundButton" parent="@style/WhiteShadowedFont">
 		<item name="android:typeface">sans</item>
-		<item name="android:background">@drawable/btnstate_biground</item>
+		<item name="android:background">@drawable/btnstate_round</item>
+		<item name="android:gravity">center_vertical|center_horizontal</item>
+	</style>
+	<style name="RoundButtonAlternative" parent="@style/WhiteShadowedFont">
+		<item name="android:typeface">sans</item>
+		<item name="android:background">@drawable/btnstate_round_altern</item>
 	</style>
 	<style name="BigRoundButton" parent="@style/RoundButton">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:padding">20dp</item>
+	</style>
+	<style name="BigRoundButtonAlternative" parent="@style/RoundButtonAlternative">
 		<item name="android:textSize">18sp</item>
 		<item name="android:textStyle">bold</item>
 		<item name="android:padding">20dp</item>
@@ -45,5 +55,20 @@
 		<item name="android:paddingRight">30dp</item>
 		<item name="android:paddingTop">12dp</item>
 		<item name="android:paddingBottom">12dp</item>
+	</style>
+	<style name="MediumRoundButtonAlternative" parent="@style/RoundButtonAlternative">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:paddingLeft">30dp</item>
+		<item name="android:paddingRight">30dp</item>
+		<item name="android:paddingTop">12dp</item>
+		<item name="android:paddingBottom">12dp</item>
+	</style>
+	<style name="GreenProgressbar">
+		<item name="android:indeterminateDrawable">@drawable/bg_progressbar</item>
+		<item name="android:minWidth">8dp</item>
+		<item name="android:maxWidth">8dp</item>
+		<item name="android:minHeight">8dp</item>
+		<item name="android:maxHeight">8dp</item>
 	</style>
 </resources>
