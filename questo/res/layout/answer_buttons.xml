@@ -3,11 +3,11 @@
 	android:orientation="horizontal" android:layout_width="fill_parent"
 	android:layout_height="wrap_content" android:id="@+id/answer_button"
 	android:gravity="bottom|center_horizontal" android:background="@android:color/transparent">
-	<Button android:id="@+id/btn_answer" android:background="@drawable/btnstate_quest"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:text="Answer" style="@style/WhiteShadowedFont" />
+	<Button android:id="@+id/btn_answer" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Answer"
+		style="@style/MediumRoundButton" />
 	<Button android:id="@+id/btn_noidea" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:text="No Idea"
-		android:textColor="#000" />
+		style="@style/MediumRoundButtonAlternative" android:layout_marginLeft="10dp"/>
 
 </LinearLayout>

@@ -54,7 +54,7 @@ public class QuestionResult extends Activity {
                 .replace("{}", count + ""));
 
         ProgressBar bar = (ProgressBar) findViewById(R.id.progressbar);
-        bar.setProgressDrawable(getResources().getDrawable(R.drawable.green_progress));
+        bar.setProgressDrawable(getResources().getDrawable(R.drawable.bg_progressbar));
         bar.setProgress(this.calcProgress(currentQuestion + 1, count));
 
         ImageView imgAnswer = (ImageView) findViewById(R.id.img_answer);
