@@ -88,7 +88,7 @@ public class QuestionResult extends Activity {
                 intent.putExtra(Constants.TRANSITION_OBJECT_UUID, QuestionResult.this.questUuid);
                 intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, QuestionResult.this.currentQuestion + 1);
             } else {
-                intent = new Intent(QuestionResult.this, HomeView.class);
+                intent = new Intent(QuestionResult.this, QuestCompleteView.class);
             }
             
             startActivity(intent);

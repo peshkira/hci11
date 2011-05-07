@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="@drawable/bg_papyrus"
+	android:id="@+id/quest_complete">
+	<com.questo.android.view.TopBar
+		android:id="@+id/topbar" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" questo:label_centered="true">
+	</com.questo.android.view.TopBar>
+	<ScrollView android:id="@+id/scroll_view"
+		android:layout_width="fill_parent" android:layout_height="fill_parent">
+		<TextView android:id="@+id/txt_congrats"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:text="Congratulations!" style="@style/BlackShadowedFont" />
+		<TextView android:id="@+id/txt_congrats_details"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:textColor="@color/grey_light" />
+		<TextView android:id="@+id/txt_points" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+			android:textColor="#000" />
+		<Button android:id="@+id/btn_quest_complete"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal" android:text="Finish Quest!"
+			style="@style/WhiteShadowedFont" />
+	</ScrollView>
+</LinearLayout>    
