@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
 	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:background="@drawable/bg_papyrus" android:id="@+id/question_layout">
+	android:layout_height="fill_parent" android:background="@drawable/bg_papyrus"
+	android:id="@+id/question_layout">
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" questo:label_centered="false">
@@ -10,8 +11,15 @@
 	<ProgressBar android:layout_width="fill_parent"
 		android:layout_height="wrap_content" style="?android:attr/progressBarStyleHorizontal"
 		android:id="@+id/progressbar" android:max="100" />
-	<TextView android:id="@+id/question" android:layout_width="fill_parent"
-		android:paddingTop="20dip" android:layout_height="wrap_content"
-		android:layout_gravity="center_horizontal" android:gravity="center_horizontal" android:textColor="#000"/>
-
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		<LinearLayout android:id="@+id/qtn_scroll"
+			android:layout_width="match_parent" android:layout_height="match_parent"
+			android:orientation="vertical">
+			<TextView android:id="@+id/question" android:layout_width="fill_parent"
+				android:paddingTop="20dip" android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal" android:gravity="center_horizontal"
+				android:textColor="#000" />
+		</LinearLayout>
+	</ScrollView>
 </LinearLayout>

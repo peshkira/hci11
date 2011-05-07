@@ -24,9 +24,6 @@ import com.questo.android.common.Constants;
 import com.questo.android.model.Place;
 import com.questo.android.model.PossibleAnswer;
 import com.questo.android.model.PossibleAnswerImpl;
-import com.questo.android.model.PossibleAnswerMultipleChoice;
-import com.questo.android.model.PossibleAnswerNumberGuessing;
-import com.questo.android.model.PossibleAnswerPlainText;
 import com.questo.android.model.Quest;
 import com.questo.android.model.Question;
 import com.questo.android.model.Question.PossibleAnswers;
@@ -90,7 +87,7 @@ public class QuestionView extends Activity {
         TextView question = (TextView) findViewById(R.id.question);
         question.setText(Html.fromHtml("<h1>" + qtn.getQuestion() + "</h1>"));
 
-        LinearLayout layout = (LinearLayout) findViewById(R.id.question_layout);
+        LinearLayout layout = (LinearLayout) findViewById(R.id.qtn_scroll);
 
         if (type.equals(Question.Type.MULTIPLE_CHOICE.name())) {
             PossibleAnswers answers = qtn.getPossibleAnswers();
@@ -208,8 +205,8 @@ public class QuestionView extends Activity {
                     selected = false;
                 } else {
                     RadioButton btn = (RadioButton) findViewById(sel);
-                    //contains because of the &nbsp; characters...
-                    if (btn.getText().toString().contains(ca.getAnswer().toString())) { 
+                    // contains because of the &nbsp; characters...
+                    if (btn.getText().toString().contains(ca.getAnswer().toString())) {
                         correct = true;
                     }
                 }
@@ -226,22 +223,14 @@ public class QuestionView extends Activity {
                 }
             }
 
-            if (selected && correct) {
-                System.out.println("CORRECT");
-                Intent intent;
-
-                // TODO change to correct or wrong
-                if (QuestionView.this.place.getQuestions().size() > currentQuestion + 1) {
-                    intent = new Intent(QuestionView.this, QuestionView.class);
-                    intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion + 1);
-                    intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
-                } else {
-                    // TODO change to QuestCompleteView...
-                    intent = new Intent(QuestionView.this, HomeView.class);
-                }
+            if (selected) {
+                Intent intent = new Intent(QuestionView.this, QuestionResult.class);
+                intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
+                intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
+                intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
+                intent.putExtra(Constants.CORRECT_ANSWER, question.getCorrectAnswer().get().getAnswer());
+                intent.putExtra(Constants.BOOL_CORRECT_ANSWER, correct);
                 startActivity(intent);
-            } else {
-                System.out.println("INCORRECT");
             }
 
         }

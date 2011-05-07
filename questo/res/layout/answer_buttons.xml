@@ -5,7 +5,7 @@
 	android:gravity="bottom|center_horizontal" android:background="@android:color/transparent">
 	<Button android:id="@+id/btn_answer" android:background="@drawable/btnstate_quest"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:text="Answer" android:textColor="#000" />
+		android:text="Answer" style="@style/WhiteShadowedFont" />
 	<Button android:id="@+id/btn_noidea" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:text="No Idea"
 		android:textColor="#000" />

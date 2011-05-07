@@ -6,4 +6,6 @@ package com.questo.android.model;
  *
  */
 public interface PossibleAnswer extends Comparable<PossibleAnswer>{
+    
+    public String getAnswer();
 }

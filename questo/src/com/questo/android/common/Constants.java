@@ -12,6 +12,9 @@ public final class Constants {
     public static final String QUESTION_TYPE = "app.questo.question.type";
     public static final String TRANSITION_OBJECT_UUID = "app.questo.transition.object.uuid";
     public static final String NR_ANSWERED_QUESTIONS = "app.questo.questions.answered";
+    public static final String QUEST_SIZE = "app.questo.questions.size";
+    public static final String CORRECT_ANSWER = "app.questo.questions.correct";
+    public static final String BOOL_CORRECT_ANSWER = "app.questo.questions.correct.bool";
 
     private Constants() {
 
