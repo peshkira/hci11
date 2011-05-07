@@ -1,10 +1,12 @@
 package com.questo.android;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.text.Html;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -110,13 +112,15 @@ public class QuestionView extends Activity {
         Button btnNoIdea = (Button) findViewById(R.id.btn_noidea);
         btnNoIdea.setOnClickListener(new NoIdeaClickListener(qtn));
 
-        this.startCounter(counter);
+        this.startCounter(counter, qtn.getCorrectAnswer().get().getAnswer());
     }
 
-    private void startCounter(final Button counter) {
+    private void startCounter(final Button counter, final String answer) {
 
         new CountDownTimer(30000, 1000) {
-
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            long[] secPattern = {0, 200, 100};
+            long[] endPattern = {0, 300, 100, 200, 100};
             public void onTick(long millisUntilFinished) {
                 long sec = (millisUntilFinished / 1000);
                 counter.setTextColor(this.calcColor(sec));
@@ -131,13 +135,32 @@ public class QuestionView extends Activity {
                 } else if (sec <= 5) {
                     color = Color.RED;
                 }
+                
+                
+                if (sec == 3) {
+                    v.vibrate(secPattern, -1);
+                } else if (sec == 2) {
+                    v.vibrate(secPattern, -1);
+                } else if (sec == 1) {
+                    v.vibrate(secPattern, -1);
+                }
 
                 return color;
             }
 
             public void onFinish() {
+                v.vibrate(endPattern, -1);
                 counter.setText("0");
-                // TODO end activity
+                Toast.makeText(QuestionView.this, "Time is up!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(QuestionView.this, QuestionResult.class);
+                intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
+                intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
+                intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
+                intent.putExtra(Constants.CORRECT_ANSWER, answer);
+                intent.putExtra(Constants.BOOL_CORRECT_ANSWER, false);
+                startActivity(intent);
+
             }
         }.start();
     }
