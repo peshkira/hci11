@@ -108,6 +108,7 @@ public class QuestionView extends Activity {
         Button btnAnswer = (Button) findViewById(R.id.btn_answer);
         btnAnswer.setOnClickListener(new AnswerClickListener(qtn));
         Button btnNoIdea = (Button) findViewById(R.id.btn_noidea);
+        btnNoIdea.setOnClickListener(new NoIdeaClickListener(qtn));
 
         this.startCounter(counter);
     }
@@ -247,20 +248,13 @@ public class QuestionView extends Activity {
 
         @Override
         public void onClick(View v) {
-            Intent intent;
-            if (QuestionView.this.place.getQuestions().size() > currentQuestion) {
-                intent = new Intent(QuestionView.this, QuestionView.class); // TODO
-                                                                            // change
-                                                                            // to
-                                                                            // wrong
-                intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion + 1);
-                intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
-            } else {
-                intent = new Intent(QuestionView.this, HomeView.class); // TODO
-                                                                        // change
-                                                                        // to
-                                                                        // QuestCompleteView...
-            }
+            Intent intent = new Intent(QuestionView.this, QuestionResult.class);
+            intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
+            intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
+            intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
+            intent.putExtra(Constants.CORRECT_ANSWER, question.getCorrectAnswer().get().getAnswer());
+            intent.putExtra(Constants.BOOL_CORRECT_ANSWER, false);
+            startActivity(intent);
 
         }
 
