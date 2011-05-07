@@ -46,6 +46,8 @@ public class QuestionView extends Activity {
     private Place place;
 
     private EditText input;
+    
+    private QuestionTimer timer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,57 +114,9 @@ public class QuestionView extends Activity {
         Button btnNoIdea = (Button) findViewById(R.id.btn_noidea);
         btnNoIdea.setOnClickListener(new NoIdeaClickListener(qtn));
 
-        this.startCounter(counter, qtn.getCorrectAnswer().get().getAnswer());
-    }
-
-    private void startCounter(final Button counter, final String answer) {
-
-        new CountDownTimer(30000, 1000) {
-            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            long[] secPattern = {0, 200, 100};
-            long[] endPattern = {0, 300, 100, 200, 100};
-            public void onTick(long millisUntilFinished) {
-                long sec = (millisUntilFinished / 1000);
-                counter.setTextColor(this.calcColor(sec));
-                counter.setText("" + sec);
-            }
-
-            private int calcColor(long sec) {
-                int color = Color.GREEN;
-
-                if (sec < 15 && sec > 5) {
-                    color = Color.YELLOW;
-                } else if (sec <= 5) {
-                    color = Color.RED;
-                }
-                
-                
-                if (sec == 3) {
-                    v.vibrate(secPattern, -1);
-                } else if (sec == 2) {
-                    v.vibrate(secPattern, -1);
-                } else if (sec == 1) {
-                    v.vibrate(secPattern, -1);
-                }
-
-                return color;
-            }
-
-            public void onFinish() {
-                v.vibrate(endPattern, -1);
-                counter.setText("0");
-                Toast.makeText(QuestionView.this, "Time is up!", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(QuestionView.this, QuestionResult.class);
-                intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
-                intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
-                intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
-                intent.putExtra(Constants.CORRECT_ANSWER, answer);
-                intent.putExtra(Constants.BOOL_CORRECT_ANSWER, false);
-                startActivity(intent);
-
-            }
-        }.start();
+        this.timer = new QuestionTimer(30000, 1000, counter, qtn.getCorrectAnswer().get().getAnswer());
+        this.timer.start();
+        
     }
 
     private void createNumberGuessView(LinearLayout layout) {
@@ -254,6 +208,7 @@ public class QuestionView extends Activity {
                 intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
                 intent.putExtra(Constants.CORRECT_ANSWER, question.getCorrectAnswer().get().getAnswer());
                 intent.putExtra(Constants.BOOL_CORRECT_ANSWER, correct);
+                QuestionView.this.timer.cancel();
                 startActivity(intent);
             }
 
@@ -277,10 +232,73 @@ public class QuestionView extends Activity {
             intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
             intent.putExtra(Constants.CORRECT_ANSWER, question.getCorrectAnswer().get().getAnswer());
             intent.putExtra(Constants.BOOL_CORRECT_ANSWER, false);
+            QuestionView.this.timer.cancel();
             startActivity(intent);
 
         }
 
     }
+    
+    private class QuestionTimer extends CountDownTimer {
+        
+        private long[] secPattern = {0, 200, 100};
+        private long[] endPattern = {0, 300, 100, 200, 100};
+        private Vibrator v;
+        private Button counter;
+        private String answer;
+        
+        public QuestionTimer(long time, long thick, Button counter, String answer) {
+            super(time, thick);
+            this.v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            this.counter = counter;
+            this.answer = answer;
+        }
 
+        @Override
+        public void onFinish() {
+            v.vibrate(endPattern, -1);
+            counter.setText("0");
+            Toast.makeText(QuestionView.this, "Time is up!", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(QuestionView.this, QuestionResult.class);
+            intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
+            intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
+            intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
+            intent.putExtra(Constants.CORRECT_ANSWER, answer);
+            intent.putExtra(Constants.BOOL_CORRECT_ANSWER, false);
+            startActivity(intent);
+            
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            long sec = (millisUntilFinished / 1000);
+            counter.setTextColor(this.calcColor(sec));
+            counter.setText("" + sec);
+            
+        }
+        
+        private int calcColor(long sec) {
+            int color = Color.GREEN;
+
+            if (sec < 15 && sec > 5) {
+                color = Color.YELLOW;
+            } else if (sec <= 5) {
+                color = Color.RED;
+            }
+            
+            
+            if (sec == 3) {
+                v.vibrate(secPattern, -1);
+            } else if (sec == 2) {
+                v.vibrate(secPattern, -1);
+            } else if (sec == 1) {
+                v.vibrate(secPattern, -1);
+            }
+
+            return color;
+        }
+
+    
+    }
 }
