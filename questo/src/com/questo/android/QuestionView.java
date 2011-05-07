@@ -56,6 +56,12 @@ public class QuestionView extends Activity {
         this.init(this.getIntent().getExtras());
 
     }
+    
+    public void onBackPressed() {
+        // TODO show popup and ask
+        // or show toast and ask to push back again
+        startActivity(new Intent(this, HomeView.class));
+    }
 
     private void init(Bundle extras) {
         mngr = ((App) getApplicationContext()).getModelManager();

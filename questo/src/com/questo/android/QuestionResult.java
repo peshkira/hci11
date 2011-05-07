@@ -18,8 +18,6 @@ public class QuestionResult extends Activity {
 
     private TopBar topbar;
 
-    private ModelManager mngr;
-
     private int currentQuestion;
 
     private String questUuid;
@@ -36,11 +34,15 @@ public class QuestionResult extends Activity {
 
     }
 
-    private void init(Bundle extras) {
-        mngr = ((App) getApplicationContext()).getModelManager();
+    public void onBackPressed() {
+        // TODO show popup and ask
+        // or show toast and ask to push back again
+        startActivity(new Intent(this, HomeView.class));
+    }
 
-        size = extras.getInt(Constants.QUEST_SIZE);
+    private void init(Bundle extras) {
         boolean correct = extras.getBoolean(Constants.BOOL_CORRECT_ANSWER);
+        size = extras.getInt(Constants.QUEST_SIZE);
         questUuid = extras.getString(Constants.TRANSITION_OBJECT_UUID);
         currentQuestion = extras.getInt(Constants.NR_ANSWERED_QUESTIONS);
         correctAnswer = extras.getString(Constants.CORRECT_ANSWER);
@@ -65,8 +67,8 @@ public class QuestionResult extends Activity {
             txtAnswer.setText(Html.fromHtml("<big>Your answer is correct!</big>"));
         } else {
             imgAnswer.setImageResource(R.drawable.img_cross);
-            txtAnswer.setText(Html
-                    .fromHtml("<big>Your answer is incorrect!<br/>The correct answer is:<br/><b>" + correctAnswer + "</b></big>"));
+            txtAnswer.setText(Html.fromHtml("<big>Your answer is incorrect!<br/>The correct answer is:<br/><b>"
+                    + correctAnswer + "</b></big>"));
         }
 
         Button btnNext = (Button) findViewById(R.id.btn_next_question);
@@ -90,7 +92,7 @@ public class QuestionResult extends Activity {
             } else {
                 intent = new Intent(QuestionResult.this, QuestCompleteView.class);
             }
-            
+
             startActivity(intent);
         }
 
