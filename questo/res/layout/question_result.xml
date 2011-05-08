@@ -12,15 +12,14 @@
 		android:layout_height="8dp" style="?android:attr/progressBarStyleHorizontal"
 		android:id="@+id/progressbar" android:max="100" android:layout_below="@id/topbar" />
 	<ScrollView android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:layout_weight="1">
+		android:layout_height="fill_parent" android:fillViewport="true">
 		<LinearLayout android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:layout_gravity="top"
-			android:layout_marginTop="40dp" android:gravity="center_vertical|center_horizontal"
+			android:layout_height="fill_parent" android:gravity="center_vertical|center_horizontal"
 			android:orientation="vertical">
 			<LinearLayout android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:orientation="vertical"
-				android:background="@drawable/img_boxborder" android:gravity="center_vertical|center_horizontal"
-				android:padding="20dp">
+				android:layout_height="wrap_content" android:layout_marginTop="40dp"
+				android:orientation="vertical" android:background="@drawable/img_boxborder"
+				android:gravity="center_vertical|center_horizontal" android:padding="20dp">
 				<com.questo.android.view.FlexibleImageView
 					android:id="@+id/img_answer" android:layout_width="100dp"
 					android:layout_height="100dp" android:layout_centerInParent="true" />
@@ -28,14 +27,23 @@
 					android:layout_height="wrap_content" android:layout_width="wrap_content"
 					android:layout_centerInParent="true" android:gravity="center_horizontal"
 					android:textColor="#000" style="@style/BlackShadowedFont"
-					android:textSize="16sp" android:layout_marginTop="10dp"/>
+					android:textSize="16sp" android:layout_marginTop="10dp" />
 			</LinearLayout>
 			<Button android:id="@+id/btn_next_question"
 				android:layout_height="wrap_content" android:layout_width="wrap_content"
 				android:layout_marginTop="30dip" style="@style/BigRoundButton"
 				android:text="Next Question" />
-			<ImageView android:id="@+id/btn_report"
-				android:layout_width="wrap_content" android:layout_height="wrap_content" />
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="fill_parent" android:layout_gravity="bottom"
+				android:gravity="center_horizontal|bottom" android:layout_marginTop="30dip"
+				android:layout_marginBottom="10dip">
+				<ImageView android:id="@+id/btn_report"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:background="@drawable/imgstate_report" />
+				<TextView android:id="@+id/txt_report_btn" android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:text=" report this question"
+					android:textColor="#000" />
+			</LinearLayout>
 		</LinearLayout>
 	</ScrollView>
 </LinearLayout>

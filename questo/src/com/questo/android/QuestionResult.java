@@ -77,6 +77,12 @@ public class QuestionResult extends Activity {
 
         Button btnNext = (Button) findViewById(R.id.btn_next_question);
         btnNext.setOnClickListener(new NextQuestionClickListener());
+        
+        ImageView flag = (ImageView) findViewById(R.id.btn_report);
+        flag.setOnClickListener(new ReportClickListener());
+        
+        TextView report = (TextView) findViewById(R.id.txt_report_btn);
+        report.setOnClickListener(new ReportClickListener());
 
     }
 
@@ -103,5 +109,15 @@ public class QuestionResult extends Activity {
             startActivity(intent);
         }
 
+    }
+    
+    private class ReportClickListener implements OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(QuestionResult.this, ReportQuestionView.class));
+            overridePendingTransition(R.anim.push_up_in, R.anim.no_change_out);
+        }
+        
     }
 }

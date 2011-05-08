@@ -39,7 +39,7 @@ public class QuestCompleteView extends Activity {
         cngrtDetails.setText(Constants.CONGRATS_DETAILS.replaceFirst("\\{\\}", correctAns +"").replace("{}", size + ""));
         
         TextView points = (TextView) findViewById(R.id.txt_points);
-        points.setText(Html.fromHtml("<big><b>+ " + correctAns + "points!</b></big>"));
+        points.setText(Html.fromHtml("<big><b>+ " + correctAns + " points!</b></big>"));
         
         Button complete = (Button) findViewById(R.id.btn_quest_complete);
         complete.setOnClickListener(new QuestCompleteClickListener());
