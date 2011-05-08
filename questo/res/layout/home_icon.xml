@@ -2,7 +2,7 @@
 	android:id="@+id/home_icon_layout" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:orientation="vertical"
 	android:gravity="center_horizontal">
-	<com.questo.android.view.HomeIcon
+	<com.questo.android.view.FlexibleImageView
 		android:id="@+id/home_icon_image" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:layout_marginLeft="15dp"
 		android:layout_marginRight="15dp" android:maxHeight="128px" />

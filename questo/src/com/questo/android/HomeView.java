@@ -21,7 +21,8 @@ import android.widget.TextView;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Notification;
 import com.questo.android.model.Notification.Type;
-import com.questo.android.view.HomeIcon;
+import com.questo.android.view.FlexibleImageView;
+import com.questo.android.view.TopBar;
 
 public class HomeView extends Activity {
 
@@ -47,6 +48,9 @@ public class HomeView extends Activity {
 		iconsGrid = (GridView) findViewById(R.id.homeGrid);
 		iconsGrid.setAdapter(new ImageAdapter());
 
+		TopBar topbar = (TopBar) findViewById(R.id.topbar);
+		topbar.setSpecialFont(true, this);
+		
 		ListView watchtower = (ListView) findViewById(R.id.watchtower);
 
 		QuestoListAdapter adapt = new QuestoListAdapter();
@@ -195,7 +199,7 @@ public class HomeView extends Activity {
 				final LayoutInflater infl = (LayoutInflater) HomeView.this
 						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				RelativeLayout layout = (RelativeLayout) infl.inflate(R.layout.home_icon, null);
-				HomeIcon icon = (HomeIcon) layout.findViewById(R.id.home_icon_image);
+				FlexibleImageView icon = (FlexibleImageView) layout.findViewById(R.id.home_icon_image);
 				icon.setBackgroundResource(icons[position].getIconResource());
 				icon.setOnClickListener(new MenuOnTouchListener(icons[position]));
 				TextView tv = (TextView) layout.findViewById(R.id.home_icon_text);

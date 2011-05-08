@@ -31,8 +31,6 @@ public class TopBar extends LinearLayout {
 		setOrientation(HORIZONTAL);
 		final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.topbar, this);
-		TextView labelText = (TextView) findViewById(R.id.label);
-		labelText.setTypeface(FontHelper.getMedievalFont(context));
 	}
 
 	private void retrieveLabelString(Context context, AttributeSet attr) {
@@ -47,7 +45,15 @@ public class TopBar extends LinearLayout {
 		labelCentered = a.getBoolean(R.styleable.TopBar_label_centered, false);
 		if (labelCentered) {
 			TextView labelText = (TextView) findViewById(R.id.label);
-			labelText.setGravity(Gravity.CENTER);
+			labelText.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+		}
+	}
+
+	public void setSpecialFont(boolean specialFont, Context context) {
+		if (specialFont) {
+			TextView labelText = (TextView) findViewById(R.id.label);
+			labelText.setTypeface(FontHelper.getMedievalFont(context));
+			labelText.setTextSize(35.0f);
 		}
 	}
 

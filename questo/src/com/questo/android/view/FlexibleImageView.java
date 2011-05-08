@@ -5,17 +5,17 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class HomeIcon extends View {
+public class FlexibleImageView extends View {
 
-	public HomeIcon(Context context) {
+	public FlexibleImageView(Context context) {
 		super(context);
 	}
 
-	public HomeIcon(Context context, AttributeSet attrs) {
+	public FlexibleImageView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public HomeIcon(Context context, AttributeSet attrs, int defStyle) {
+	public FlexibleImageView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 

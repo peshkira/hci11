@@ -93,11 +93,12 @@ public class PlaceDetailsView extends Activity {
         b.setOnClickListener(new StartQuestListener());
         b.setText(Html.fromHtml("<big><b>Start Quest</b></big><small><br/><br/>10 questions</small>"));
 
-        ListView throphyList = (ListView) findViewById(R.id.placetrophies);
+        ListView trophyList = (ListView) findViewById(R.id.placetrophies);
+        trophyList.setEmptyView(findViewById(R.id.empty_trophylist_text));
         PlaceTrophyAdapter adapt = new PlaceTrophyAdapter();
         adapt.addItem(new Trophy(UUIDgen.getUUID(), "The One Ring", Type.FOR_PLACE));
         adapt.addItem(new Trophy(UUIDgen.getUUID(), "The Light of Elendil", Type.FOR_PLACE));
-        throphyList.setAdapter(adapt);
+        trophyList.setAdapter(adapt);
     }
 
     private class AddQuestionListener implements OnClickListener {
@@ -182,7 +183,7 @@ public class PlaceDetailsView extends Activity {
             // image.setImageResource(trophy.getImgUrl);
 
             TextView name = (TextView) view.findViewById(R.id.trophy_name);
-            name.setText(Html.fromHtml("<big>" + trophy.getName() + "</big>"));
+            name.setText(trophy.getName());
             view.setOnClickListener(new TrophyClickListener(trophy));
             return view;
         }
