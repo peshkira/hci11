@@ -36,6 +36,12 @@ public class ReportQuestionView extends Activity {
         spinner.setAdapter(adapter);
     }
     
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.no_change_out, R.anim.push_down_in);
+    }
+    
     private class SubmitReportClickListener implements OnClickListener {
 
         @Override
