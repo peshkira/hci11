@@ -41,7 +41,7 @@ public class ReportQuestionView extends Activity {
         @Override
         public void onClick(View v) {
             finish();
-            overridePendingTransition(R.anim.push_down_in, R.anim.no_change_out);
+            overridePendingTransition(R.anim.no_change_out, R.anim.push_down_in);
         }
         
     }
