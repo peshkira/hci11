@@ -19,9 +19,9 @@ public class QuestionResult extends Activity {
 
     private TopBar topbar;
 
-    private ModelManager mngr;
-
     private int currentQuestion;
+    
+    private int correctQtnAnswer;
 
     private String questUuid;
 
@@ -37,13 +37,18 @@ public class QuestionResult extends Activity {
 
     }
 
-    private void init(Bundle extras) {
-        mngr = ((App) getApplicationContext()).getModelManager();
+    public void onBackPressed() {
+        // TODO show popup and ask
+        // or show toast and ask to push back again
+        startActivity(new Intent(this, HomeView.class));
+    }
 
-        size = extras.getInt(Constants.QUEST_SIZE);
+    private void init(Bundle extras) {
         boolean correct = extras.getBoolean(Constants.BOOL_CORRECT_ANSWER);
+        size = extras.getInt(Constants.QUEST_SIZE);
         questUuid = extras.getString(Constants.TRANSITION_OBJECT_UUID);
         currentQuestion = extras.getInt(Constants.NR_ANSWERED_QUESTIONS);
+        correctQtnAnswer = extras.getInt(Constants.NR_ANSWERED_QUESTIONS_CORRECT);
         correctAnswer = extras.getString(Constants.CORRECT_ANSWER);
         int count = 10;
         if (size < 10) {
@@ -88,10 +93,13 @@ public class QuestionResult extends Activity {
                 intent = new Intent(QuestionResult.this, QuestionView.class);
                 intent.putExtra(Constants.TRANSITION_OBJECT_UUID, QuestionResult.this.questUuid);
                 intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, QuestionResult.this.currentQuestion + 1);
+                intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, QuestionResult.this.correctQtnAnswer);
             } else {
-                intent = new Intent(QuestionResult.this, HomeView.class);
+                intent = new Intent(QuestionResult.this, QuestCompleteView.class);
+                intent.putExtra(Constants.QUEST_SIZE, size);
+                intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, QuestionResult.this.correctQtnAnswer);
             }
-            
+
             startActivity(intent);
         }
 

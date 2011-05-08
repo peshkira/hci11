@@ -1,5 +1,7 @@
 package com.questo.android;
 
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -24,12 +26,14 @@ import android.widget.Toast;
 
 import com.questo.android.common.Constants;
 import com.questo.android.helper.DisplayHelper;
+import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
 import com.questo.android.model.PossibleAnswer;
 import com.questo.android.model.PossibleAnswerImpl;
 import com.questo.android.model.Quest;
 import com.questo.android.model.Question;
 import com.questo.android.model.Question.PossibleAnswers;
+import com.questo.android.model.QuestionAnswered;
 import com.questo.android.view.TopBar;
 
 public class QuestionView extends Activity {
@@ -41,6 +45,8 @@ public class QuestionView extends Activity {
     private RadioGroup rg;
 
     private int currentQuestion;
+    
+    private int correctQtnAnswer;
 
     private String questUuid;
 
@@ -50,6 +56,8 @@ public class QuestionView extends Activity {
     
     private QuestionTimer timer;
 
+    private App app;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +65,21 @@ public class QuestionView extends Activity {
         this.init(this.getIntent().getExtras());
 
     }
+    
+    public void onBackPressed() {
+        // TODO show popup and ask
+        // or show toast and ask to push back again
+        timer.cancel();
+        startActivity(new Intent(this, HomeView.class));
+    }
 
     private void init(Bundle extras) {
-        mngr = ((App) getApplicationContext()).getModelManager();
+        this.app = ((App) getApplicationContext());
+        this.mngr = app.getModelManager();
 
         questUuid = extras.getString(Constants.TRANSITION_OBJECT_UUID);
+        currentQuestion = extras.getInt(Constants.NR_ANSWERED_QUESTIONS);
+        correctQtnAnswer = extras.getInt(Constants.NR_ANSWERED_QUESTIONS_CORRECT);
 
         Quest quest = (Quest) mngr.getGenericObjectByUuid(questUuid, Quest.class);
 
@@ -69,7 +87,6 @@ public class QuestionView extends Activity {
         mngr.refresh(place, Place.class);
 
         int size = place.getQuestions().size();
-        currentQuestion = extras.getInt(Constants.NR_ANSWERED_QUESTIONS);
         int count = 10;
         if (size < 10) {
             count = size;
@@ -197,7 +214,6 @@ public class QuestionView extends Activity {
                 if (QuestionView.this.input.getText().toString().equals(ca.getAnswer().toString())) {
                     correct = true;
                 }
-                System.out.println(ca.getAnswer());
 
             } else if (this.question.getType().equals(Question.Type.PLAINTEXT)) {
                 if (QuestionView.this.input.getText().toString().toLowerCase().equals(ca.getAnswer().toLowerCase())) {
@@ -206,8 +222,16 @@ public class QuestionView extends Activity {
             }
 
             if (selected) {
+                
+                if (correct) {
+                    QuestionAnswered qa = new QuestionAnswered(UUIDgen.getUUID(), app.getLoggedinUser(), this.question, new Date());
+                    mngr.create(qa, QuestionAnswered.class);
+                    correctQtnAnswer++;
+                }
+                
                 Intent intent = new Intent(QuestionView.this, QuestionResult.class);
                 intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
+                intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, correctQtnAnswer);
                 intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
                 intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
                 intent.putExtra(Constants.CORRECT_ANSWER, question.getCorrectAnswer().get().getAnswer());
@@ -232,6 +256,7 @@ public class QuestionView extends Activity {
         public void onClick(View v) {
             Intent intent = new Intent(QuestionView.this, QuestionResult.class);
             intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
+            intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, correctQtnAnswer);
             intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
             intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
             intent.putExtra(Constants.CORRECT_ANSWER, question.getCorrectAnswer().get().getAnswer());
@@ -266,6 +291,7 @@ public class QuestionView extends Activity {
 
             Intent intent = new Intent(QuestionView.this, QuestionResult.class);
             intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
+            intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, correctQtnAnswer);
             intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
             intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
             intent.putExtra(Constants.CORRECT_ANSWER, answer);
