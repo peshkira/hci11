@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="report_prompt">Report Reason</string>
+	<string-array name="report_array">
+		<item>Incorrect Answer</item>
+		<item>Too Hard</item>
+		<item>Too Easy</item>
+		<item>Explicit Content</item>
+		<item>Just Dumb</item>
+		<item>Other</item>
+	</string-array>
+</resources>

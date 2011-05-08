@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" android:background="@drawable/bg_papyrus">
+	<com.questo.android.view.TopBar
+		android:id="@+id/topbar" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" questo:label="Report Question"
+		questo:label_centered="true" />
+	<!-- Dummy item to prevent Email field from receiving focus -->
+	<LinearLayout android:focusable="true"
+		android:focusableInTouchMode="true" android:layout_width="0px"
+		android:layout_height="0px" />
+	<ScrollView android:id="@+id/scrl_report"
+		android:layout_width="fill_parent" android:layout_height="fill_parent">
+		<LinearLayout android:id="@+id/scroll_layout"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:orientation="vertical">
+			<TextView android:id="@+id/txt_question"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_marginTop="20dip" android:layout_gravity="center_horizontal"
+				android:textColor="#000" />
+			<TextView android:id="@+id/txt_report" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_marginTop="35dip"
+				android:layout_marginLeft="10dip" android:text="Reason:"
+				android:textColor="#000" />
+			<Spinner android:id="@+id/spinner_reason"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:layout_marginLeft="10dip" android:layout_marginRight="10dip"
+				android:prompt="@string/report_prompt" />
+			<TextView android:id="@+id/txt_report" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_marginTop="20dip"
+				android:layout_marginLeft="10dip" android:text="Report:"
+				android:textColor="#000" />
+			<EditText android:id="@+id/txt_area_report"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:lines="5" android:layout_marginRight="10dip"
+				android:layout_marginLeft="10dip" />
+			<Button android:id="@+id/btn_submit_report"
+				android:layout_height="wrap_content" android:layout_width="wrap_content"
+				android:layout_marginTop="20dip" android:layout_gravity="center_horizontal"
+				style="@style/BigRoundButtonAlternative" android:text="Submit Report" />
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>

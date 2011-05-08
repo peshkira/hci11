@@ -24,6 +24,7 @@
 		<activity android:name=".QuestCompleteView"></activity>
 		<activity android:name=".QuestMapView"></activity>
 		<activity android:name=".QuestListView"></activity>
+		<activity android:name=".ReportQuestionView"></activity>
 		<activity android:name="LoginView"></activity>
 		<activity android:name=".TournamentView"></activity>
 		<activity android:name=".TournamentRequestView"></activity>
