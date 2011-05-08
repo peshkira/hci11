@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.questo.android.common.Constants;
+import com.questo.android.view.FlexibleImageView;
 import com.questo.android.view.TopBar;
 
 public class QuestionResult extends Activity {
@@ -62,16 +63,16 @@ public class QuestionResult extends Activity {
         bar.setProgressDrawable(getResources().getDrawable(R.drawable.bg_progressbar));
         bar.setProgress(this.calcProgress(currentQuestion + 1, count));
 
-        ImageView imgAnswer = (ImageView) findViewById(R.id.img_answer);
+        FlexibleImageView imgAnswer = (FlexibleImageView) findViewById(R.id.img_answer);
         TextView txtAnswer = (TextView) findViewById(R.id.txt_answer);
 
         if (correct) {
-            imgAnswer.setImageResource(R.drawable.img_check);
+            imgAnswer.setBackgroundResource(R.drawable.img_check);
             txtAnswer.setText(Html.fromHtml("<big>Your answer is correct!</big>"));
         } else {
-            imgAnswer.setImageResource(R.drawable.img_cross);
-            txtAnswer.setText(Html.fromHtml("<big>Your answer is incorrect!<br/>The correct answer is:<br/><b>"
-                    + correctAnswer + "</b></big>"));
+            imgAnswer.setBackgroundResource(R.drawable.img_cross);
+            txtAnswer.setText(Html
+                    .fromHtml("<big><b>Your answer is incorrect!</b></big><br/><br/>The correct answer is:<br/><b>" + correctAnswer + "</b>"));
         }
 
         Button btnNext = (Button) findViewById(R.id.btn_next_question);

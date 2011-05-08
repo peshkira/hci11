@@ -17,9 +17,18 @@
 			android:layout_width="match_parent" android:layout_height="match_parent"
 			android:orientation="vertical">
 			<TextView android:id="@+id/question" android:layout_width="fill_parent"
-				android:paddingTop="20dip" android:layout_height="wrap_content"
+				android:layout_marginLeft="10dip" android:layout_marginRight="10dip" 
+				android:layout_marginTop="20dip" android:layout_marginBottom="10dip" android:layout_height="wrap_content"
 				android:layout_gravity="center_horizontal" android:gravity="center_horizontal"
-				android:textColor="#000" />
+				android:textColor="#000"
+				style="@style/QuestionHeader" />
+			<LinearLayout android:id="@+id/qtn_questioncontent"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:orientation="vertical" android:padding="10dp" android:background="@drawable/img_boxborder"
+				android:layout_margin="10dp"/>
+			<LinearLayout android:id="@+id/qtn_answerbuttons"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:orientation="vertical" android:layout_marginTop="20dp" />
 		</LinearLayout>
 	</ScrollView>
 </LinearLayout>

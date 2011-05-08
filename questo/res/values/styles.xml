@@ -9,14 +9,14 @@
 	</style>
 	<style name="BlackShadowedFont" parent="@android:style/TextAppearance.Medium">
 		<item name="android:textColor">@android:color/black</item>
-		<item name="android:shadowColor">#ffeded</item>
+		<item name="android:shadowColor">@color/light_text_shadow</item>
 		<item name="android:shadowDx">1</item>
 		<item name="android:shadowDy">1</item>
 		<item name="android:shadowRadius">1</item>
 	</style>
 	<style name="TopBarFont" parent="@style/WhiteShadowedFont">
-		<item name="android:typeface">serif</item>
-		<item name="android:textSize">35sp</item>
+		<item name="android:typeface">sans</item>
+		<item name="android:textSize">23sp</item>
 	</style>
 	<style name="TopBarButtonFont" parent="@style/WhiteShadowedFont">
 		<item name="android:typeface">serif</item>
@@ -24,6 +24,16 @@
 	</style>
 	<style name="HomeIconFont" parent="@style/BlackShadowedFont">
 		<item name="android:textSize">14sp</item>
+	</style>
+	<style name="QuestionHeader" parent="@style/BlackShadowedFont">
+		<item name="android:textSize">20sp</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="PlaceDetails" parent="@style/BlackShadowedFont">
+		<item name="android:textSize">15sp</item>
+	</style>
+	<style name="QuestionContent" parent="@style/BlackShadowedFont">
+		<item name="android:textSize">16sp</item>
 	</style>
 	<style name="NotificationZoneFont" parent="@style/WhiteShadowedFont">
 		<item name="android:typeface">sans</item>

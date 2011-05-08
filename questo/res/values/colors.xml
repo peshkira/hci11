@@ -13,13 +13,13 @@
 	<color name="papyrus_shadowed_start">#5e4124</color>
 	<color name="papyrus_shadowed_end">#957e5a</color>
 	
-
+	<color name="light_text_shadow">#ffeded</color>
 	<color name="black_semitransparent">#22000000</color>
 	<color name="transparent">#00000000</color>
 
 	<color name="green">#7cbc32</color>
-	<color name="green_shadowed">#6fa92d</color>
-	<color name="green_dark">#5a8924</color>
+	<color name="green_shadowed">#689732</color>
+	<color name="green_dark">#3d6c00</color>
 	<color name="green_verydark">#003800</color>
 	<color name="grey_light">#ABABAB</color>
 

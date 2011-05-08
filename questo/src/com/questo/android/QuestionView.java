@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.questo.android.common.Constants;
+import com.questo.android.helper.DisplayHelper;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
 import com.questo.android.model.PossibleAnswer;
@@ -106,9 +107,9 @@ public class QuestionView extends Activity {
         counter.setClickable(false);
 
         TextView question = (TextView) findViewById(R.id.question);
-        question.setText(Html.fromHtml("<h1>" + qtn.getQuestion() + "</h1>"));
+        question.setText(qtn.getQuestion());
 
-        LinearLayout layout = (LinearLayout) findViewById(R.id.qtn_scroll);
+        LinearLayout layout = (LinearLayout) findViewById(R.id.qtn_questioncontent);
 
         if (type.equals(Question.Type.MULTIPLE_CHOICE.name())) {
             PossibleAnswers answers = qtn.getPossibleAnswers();
@@ -123,8 +124,9 @@ public class QuestionView extends Activity {
 
         LayoutInflater li = getLayoutInflater();
 
+        LinearLayout buttonsLayout = (LinearLayout)findViewById(R.id.qtn_answerbuttons);
         View buttons = li.inflate(R.layout.answer_buttons, null);
-        layout.addView(buttons);
+        buttonsLayout.addView(buttons);
 
         Button btnAnswer = (Button) findViewById(R.id.btn_answer);
         btnAnswer.setOnClickListener(new AnswerClickListener(qtn));
@@ -157,22 +159,24 @@ public class QuestionView extends Activity {
 
     }
 
-    private void createMultipleChoiceView(LinearLayout layout, PossibleAnswer[] answers) {
-        final RadioButton[] rb = new RadioButton[5];
-        rg = new RadioGroup(this);
-        rg.setOrientation(RadioGroup.VERTICAL);// or RadioGroup.VERTICAL
-        for (int i = 0; i < answers.length; i++) {
-            rb[i] = new RadioButton(this);
-            rg.addView(rb[i]); // the RadioButtons are added to the radioGroup
-                               // instead of the layout
-            rb[i].setText(Html.fromHtml("<big><b> &nbsp;&nbsp;" + ((PossibleAnswerImpl) answers[i]).getAnswer()
-                    + "</b></big>"));
-            rb[i].setTextColor(Color.BLACK);
-        }
-        layout.addView(rg);// you add the whole RadioGroup to the layout
-        // layout.addView(submit);
-
-    }
+	private void createMultipleChoiceView(LinearLayout layout, PossibleAnswer[] answers) {
+		final RadioButton[] rb = new RadioButton[5];
+		rg = new RadioGroup(this);
+		rg.setOrientation(RadioGroup.VERTICAL);
+		for (int i = 0; i < answers.length; i++) {
+			rb[i] = new RadioButton(this);
+			rg.addView(rb[i]);
+			//TODO for some reason, the shadow is always grey! wtf?
+			//rb[i].setShadowLayer(1.0f, 1.0f, 1.0f, R.color.light_text_shadow);
+			rb[i].setText(Html.fromHtml("<big>" + ((PossibleAnswerImpl) answers[i]).getAnswer() + "</big>"));
+			rb[i].setTextColor(Color.BLACK);
+			
+			int paddingTopAndBottom = DisplayHelper.dpToPixel(5, this);
+			int paddingLeft = DisplayHelper.dpToPixel(50, this);
+			rb[i].setPadding(paddingLeft, paddingTopAndBottom, 0, paddingTopAndBottom);
+		}
+		layout.addView(rg);
+	}
 
     private int calcProgress(int q, int count) {
         return (int) ((q * 100) / count);
