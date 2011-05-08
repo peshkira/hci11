@@ -23,16 +23,23 @@ public class QuestCompleteView extends Activity {
 
         this.init(this.getIntent().getExtras());
     }
+    
+    public void onBackPressed() {
+        startActivity(new Intent(this, HomeView.class));
+    }
 
     private void init(Bundle extras) {
         this.topbar = (TopBar) findViewById(R.id.topbar);
         this.topbar.setTopBarLabel("Quest Complete");
+        
+        int size = extras.getInt(Constants.QUEST_SIZE);
+        int correctAns = extras.getInt(Constants.NR_ANSWERED_QUESTIONS_CORRECT);
 
         TextView cngrtDetails = (TextView) findViewById(R.id.txt_congrats_details);
-        cngrtDetails.setText(Constants.CONGRATS_DETAILS.replaceFirst("\\{\\}", 8+"").replace("{}", 10 + ""));
+        cngrtDetails.setText(Constants.CONGRATS_DETAILS.replaceFirst("\\{\\}", correctAns +"").replace("{}", size + ""));
         
         TextView points = (TextView) findViewById(R.id.txt_points);
-        points.setText(Html.fromHtml("<big><b>+ 8 points!</b></big>"));
+        points.setText(Html.fromHtml("<big><b>+ " + correctAns + "points!</b></big>"));
         
         Button complete = (Button) findViewById(R.id.btn_quest_complete);
         complete.setOnClickListener(new QuestCompleteClickListener());

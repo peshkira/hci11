@@ -137,6 +137,7 @@ public class PlaceDetailsView extends Activity {
             Intent navTo = new Intent(PlaceDetailsView.this, QuestionView.class);
             navTo.putExtra(Constants.TRANSITION_OBJECT_UUID, quest.getUuid());
             navTo.putExtra(Constants.NR_ANSWERED_QUESTIONS, 0);
+            navTo.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, 0);
             startActivity(navTo);
 
         }
