@@ -83,6 +83,8 @@ public class PlaceDetailsView extends Activity {
         } else {
             // fetch test place for now...
             this.topbar.setTopBarLabel("Fetch failed");
+            System.out.println("Fetch failed");
+            finishActivity(RESULT_CANCELED);
         }
 
         // init + button...

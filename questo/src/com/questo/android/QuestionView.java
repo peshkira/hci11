@@ -133,7 +133,7 @@ public class QuestionView extends Activity {
         Button btnNoIdea = (Button) findViewById(R.id.btn_noidea);
         btnNoIdea.setOnClickListener(new NoIdeaClickListener(qtn));
 
-        this.timer = new QuestionTimer(30000, 1000, counter, qtn.getCorrectAnswer().get().getAnswer());
+        this.timer = new QuestionTimer(30000, 1000, counter, qtn);
         this.timer.start();
         
     }
@@ -234,6 +234,7 @@ public class QuestionView extends Activity {
                 intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, correctQtnAnswer);
                 intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
                 intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
+                intent.putExtra(Constants.QUESTION, question.getQuestion());
                 intent.putExtra(Constants.CORRECT_ANSWER, question.getCorrectAnswer().get().getAnswer());
                 intent.putExtra(Constants.BOOL_CORRECT_ANSWER, correct);
                 QuestionView.this.timer.cancel();
@@ -259,6 +260,7 @@ public class QuestionView extends Activity {
             intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, correctQtnAnswer);
             intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
             intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
+            intent.putExtra(Constants.QUESTION, question.getQuestion());
             intent.putExtra(Constants.CORRECT_ANSWER, question.getCorrectAnswer().get().getAnswer());
             intent.putExtra(Constants.BOOL_CORRECT_ANSWER, false);
             QuestionView.this.timer.cancel();
@@ -274,13 +276,13 @@ public class QuestionView extends Activity {
         private long[] endPattern = {0, 300, 100, 200, 100};
         private Vibrator v;
         private Button counter;
-        private String answer;
+        private Question question;
         
-        public QuestionTimer(long time, long thick, Button counter, String answer) {
+        public QuestionTimer(long time, long thick, Button counter, Question qtn) {
             super(time, thick);
             this.v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             this.counter = counter;
-            this.answer = answer;
+            this.question = qtn;
         }
 
         @Override
@@ -294,7 +296,8 @@ public class QuestionView extends Activity {
             intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, correctQtnAnswer);
             intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
             intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
-            intent.putExtra(Constants.CORRECT_ANSWER, answer);
+            intent.putExtra(Constants.QUESTION, this.question.getQuestion());
+            intent.putExtra(Constants.CORRECT_ANSWER, this.question.getCorrectAnswer().get().getAnswer());
             intent.putExtra(Constants.BOOL_CORRECT_ANSWER, false);
             startActivity(intent);
             

@@ -7,9 +7,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.questo.android.common.Constants;
 
 public class ReportQuestionView extends Activity {
 
@@ -21,10 +22,10 @@ public class ReportQuestionView extends Activity {
     }
 
     private void init(Bundle extras) {
+        String qtn = extras.getString(Constants.QUESTION);
+       
         TextView question = (TextView) findViewById(R.id.txt_question);
-        question.setText(Html.fromHtml("<big><b>This is a dummy question?</b></big>"));
-
-        EditText area = (EditText) findViewById(R.id.txt_area_report);
+        question.setText(Html.fromHtml("<big><b>" + qtn + "</b></big>"));
 
         Button submit = (Button) findViewById(R.id.btn_submit_report);
         submit.setOnClickListener(new SubmitReportClickListener());
