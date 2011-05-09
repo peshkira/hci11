@@ -61,7 +61,10 @@ public class TestData {
 		Trophy threeHeadedMonkey = new Trophy(UUIDgen.getUUID(),  "Three Headed Monkey", com.questo.android.model.Trophy.Type.GLOBAL);
 		manager.create(threeHeadedMonkey, Trophy.class);
 		
-		
+		Place placeStephansdom = new Place(UUIDgen.getUUID(), "Stephansdom");
+		placeStephansdom.setLatitude(47422005 / 1e6);
+		placeStephansdom.setLongitude(16422005 / 1e6);
+		manager.create(placeStephansdom, Place.class);
 	}
 	
 }
