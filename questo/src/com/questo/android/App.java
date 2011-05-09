@@ -97,6 +97,10 @@ public class App extends Application {
 		}
 	}
 	
+	public Settings getSettings() {
+	    return this.settings;
+	}
+	
 
 	private class Settings extends Properties {
 		private static final long serialVersionUID = -7551836747366493766L;
