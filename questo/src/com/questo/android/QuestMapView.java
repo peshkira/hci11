@@ -141,7 +141,7 @@ public class QuestMapView extends MapActivity {
 				LayoutInflater inflater = (LayoutInflater) QuestMapView.this
 						.getApplicationContext().getSystemService(
 								Context.LAYOUT_INFLATER_SERVICE);
-				RelativeLayout place = (RelativeLayout) inflater.inflate(
+				this.placeDetails = (RelativeLayout) inflater.inflate(
 						R.layout.quest_map_item, null);
 			}
 
