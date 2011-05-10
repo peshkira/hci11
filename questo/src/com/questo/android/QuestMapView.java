@@ -39,7 +39,7 @@ public class QuestMapView extends MapActivity {
 	private App application;
 	private MapOverlay overlay;
 	private MyLocationOverlay myLocationOverlay;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,7 +48,7 @@ public class QuestMapView extends MapActivity {
 		this.modelManager = application.getModelManager();
 		initView();
 		this.currentLocation = this.questMap.getMapCenter();
-		refreshMap();		
+		refreshMap();
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class QuestMapView extends MapActivity {
 		addQuestionBtnId = addQuestionBtn.getId();
 		showListBtn.setOnClickListener(new MapListener());
 		addQuestionBtn.setOnClickListener(new MapListener());
-		
+
 		initMapView();
 	}
 
@@ -89,6 +89,8 @@ public class QuestMapView extends MapActivity {
 				.getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
 				0, new MapListener());
+
+		this.questMap.getController().setZoom(18);
 	}
 
 	public void onBackPressed() {
@@ -97,8 +99,8 @@ public class QuestMapView extends MapActivity {
 
 	private void refreshMap() {
 		this.nearbyPlaces = QuestMapView.this.modelManager.getPlacesNearby(
-				this.currentLocation.getLatitudeE6()/1e6,
-				this.currentLocation.getLongitudeE6()/1e6);
+				this.currentLocation.getLatitudeE6() / 1e6,
+				this.currentLocation.getLongitudeE6() / 1e6);
 		this.overlay.refreshOverlayItems();
 		this.questMap.invalidate();
 	}
@@ -113,17 +115,20 @@ public class QuestMapView extends MapActivity {
 
 			this.items = new ArrayList<OverlayItem>();
 		}
-		
-		private synchronized void refreshOverlayItems(){
+
+		private synchronized void refreshOverlayItems() {
 			this.items.clear();
-			for(Place place : QuestMapView.this.nearbyPlaces){
-				GeoPoint placeLocation = new GeoPoint((int)(place.getLatitude() * 1E6), (int)(place.getLongitude() * 1E6));
-				OverlayItem overlayItem = new OverlayItem(placeLocation, place.getName(), "");
+			for (Place place : QuestMapView.this.nearbyPlaces) {
+				GeoPoint placeLocation = new GeoPoint(
+						(int) (place.getLatitude() * 1E6),
+						(int) (place.getLongitude() * 1E6));
+				OverlayItem overlayItem = new OverlayItem(placeLocation,
+						place.getName(), "");
 				this.items.add(overlayItem);
 			}
-			
-		    setLastFocusedIndex(-1);
-		    populate();			
+
+			setLastFocusedIndex(-1);
+			populate();
 		}
 
 		@Override
@@ -140,26 +145,31 @@ public class QuestMapView extends MapActivity {
 		protected boolean onTap(int index) {
 			OverlayItem item = items.get(index);
 			Place place = QuestMapView.this.nearbyPlaces.get(index);
-			int questionCount = place.getQuestions().size();
-			
+			int questionCount = 0;
+			if (place.getQuestions() != null) {
+				questionCount = place.getQuestions().size();
+			}
+
 			if (this.placeDetails == null) {
 				LayoutInflater inflater = (LayoutInflater) QuestMapView.this
 						.getApplicationContext().getSystemService(
 								Context.LAYOUT_INFLATER_SERVICE);
 				this.placeDetails = (RelativeLayout) inflater.inflate(
 						R.layout.quest_map_item, null);
-				QuestMapView.this.questMap.addView(this.placeDetails,
-						new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
-								MapView.LayoutParams.WRAP_CONTENT, item.getPoint(),
-								MapView.LayoutParams.BOTTOM_CENTER));				
 			}
-			
-			TextView placeNameText = (TextView)this.placeDetails.findViewById(R.id.QuestMapPlaceDetailsName);
-			TextView questionCountText = (TextView)this.placeDetails.findViewById(R.id.QuestMapPlaceDetailsQuestionCount);
+			QuestMapView.this.questMap.removeView(this.placeDetails);
+			QuestMapView.this.questMap.addView(this.placeDetails,
+					new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
+							MapView.LayoutParams.WRAP_CONTENT, item.getPoint(),
+							MapView.LayoutParams.BOTTOM_CENTER));
+
+			TextView placeNameText = (TextView) this.placeDetails
+					.findViewById(R.id.QuestMapPlaceDetailsName);
+			TextView questionCountText = (TextView) this.placeDetails
+					.findViewById(R.id.QuestMapPlaceDetailsQuestionCount);
 			placeNameText.setText(place.getName());
-			questionCountText.setText("Questions: " + Integer.toString(questionCount));
-
-
+			questionCountText.setText("Questions: "
+					+ Integer.toString(questionCount));
 
 			return true;
 		}
