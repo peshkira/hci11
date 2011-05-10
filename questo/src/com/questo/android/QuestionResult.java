@@ -58,7 +58,7 @@ public class QuestionResult extends Activity {
         }
 
         this.topbar = (TopBar) findViewById(R.id.topbar);
-        this.topbar.setTopBarLabel(Constants.QUESTION_PROGRESS.replaceFirst("\\{\\}", currentQuestion + 1 + "")
+        this.topbar.setLabel(Constants.QUESTION_PROGRESS.replaceFirst("\\{\\}", currentQuestion + 1 + "")
                 .replace("{}", count + ""));
 
         ProgressBar bar = (ProgressBar) findViewById(R.id.progressbar);

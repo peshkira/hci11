@@ -8,13 +8,16 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable
 public class TournamentMembership {
 
+	public static final String USER = "USER";
+	public static final String TOURNAMENT = "TOURNAMENT";
+	
 	@DatabaseField(generatedId = true)
 	private Integer id;
 	@DatabaseField
 	private String uuid;
-	@DatabaseField(foreign = true)
+	@DatabaseField(foreign = true, columnName=TOURNAMENT)
 	private Tournament tournament;
-	@DatabaseField(foreign = true)
+	@DatabaseField(foreign = true, columnName=USER)
 	private User user;
 	@DatabaseField
 	private Date joinedAt;

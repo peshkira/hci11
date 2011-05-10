@@ -25,8 +25,9 @@
 		<activity android:name=".QuestListView"></activity>
 		<activity android:name=".ReportQuestionView"></activity>
 		<activity android:name="LoginView"></activity>
-		<activity android:name=".TournamentView"></activity>
+		<activity android:name="TournamentsView"></activity>
 		<activity android:name=".TournamentRequestView"></activity>
+		<activity android:name=".TournamentDetailsView"></activity>
 		<supports-screens android:largeScreens="true"
 			android:normalScreens="true" android:smallScreens="true"
 			android:anyDensity="true" />

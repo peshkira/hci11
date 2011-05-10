@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="@drawable/listitemstate_darklist" android:padding="10dp"
+	android:orientation="horizontal">
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="vertical"
+		android:gravity="left" android:layout_weight="1">
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:id="@+id/tournament_name"
+			style="@style/TournamentListFont" android:layout_marginBottom="5dp" android:textSize="18sp" />
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:layout_below="@+id/tournament_name"
+			android:id="@+id/tournament_location" style="@style/TournamentListFont" />
+	</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="vertical"
+		android:gravity="center_horizontal" android:layout_weight="2">
+		<ProgressBar android:layout_width="fill_parent"
+			style="?android:attr/progressBarStyleHorizontal"
+			android:layout_height="20dp" android:id="@+id/tournament_questcount"
+			android:minWidth="100dp" android:layout_alignParentRight="true"
+			android:layout_marginBottom="5dp" android:layout_marginTop="4dp"/>
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_below="@+id/tournament_questcount"
+			android:layout_alignParentRight="true" android:id="@+id/tournament_questcount_bar"
+			style="@style/TournamentListFont" />
+	</LinearLayout>
+</LinearLayout>

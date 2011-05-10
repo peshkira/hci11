@@ -14,7 +14,7 @@
 	</item>
 	<item android:left="2dp" android:top="1dp">
 		<shape android:shape="rectangle">
-			<gradient android:startColor="@color/winered_gone_dark" android:endColor="@color/winered_light"
+			<gradient android:startColor="@color/winered_gone_dark" android:endColor="@color/winered_verydark"
 				android:type="linear" android:angle="270" android:dither="true" />
 		</shape>
 	</item>
