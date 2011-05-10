@@ -30,7 +30,7 @@ public class QuestCompleteView extends Activity {
 
     private void init(Bundle extras) {
         this.topbar = (TopBar) findViewById(R.id.topbar);
-        this.topbar.setTopBarLabel("Quest Complete");
+        this.topbar.setLabel("Quest Complete");
         
         int size = extras.getInt(Constants.QUEST_SIZE);
         int correctAns = extras.getInt(Constants.NR_ANSWERED_QUESTIONS_CORRECT);

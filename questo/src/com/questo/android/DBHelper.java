@@ -2,6 +2,7 @@ package com.questo.android;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.concurrent.Callable;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +11,7 @@ import android.util.Log;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.misc.TransactionManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.questo.android.model.Companionship;
@@ -22,7 +24,7 @@ import com.questo.android.model.QuestHasQuestion;
 import com.questo.android.model.Question;
 import com.questo.android.model.QuestionAnswered;
 import com.questo.android.model.Tournament;
-import com.questo.android.model.TournamentInvitation;
+import com.questo.android.model.TournamentRequest;
 import com.questo.android.model.TournamentMembership;
 import com.questo.android.model.TournamentTask;
 import com.questo.android.model.TournamentTaskDone;
@@ -72,7 +74,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
 		TableUtils.createTable(cs, Question.class);
 		TableUtils.createTable(cs, QuestionAnswered.class);
 		TableUtils.createTable(cs, Tournament.class);
-		TableUtils.createTable(cs, TournamentInvitation.class);
+		TableUtils.createTable(cs, TournamentRequest.class);
 		TableUtils.createTable(cs, TournamentMembership.class);
 		TableUtils.createTable(cs, TournamentTask.class);
 		TableUtils.createTable(cs, TournamentTaskDone.class);
@@ -108,6 +110,10 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
 			daos.put(clazz.getSimpleName(), (Dao<Object, Integer>) dao);
 		}
 		return dao;
+	}
+	
+	public void executeInTransaction(Callable<Void> callable) throws SQLException {
+		TransactionManager.callInTransaction(getConnectionSource(),callable);
 	}
 	
 	/**

@@ -12,11 +12,11 @@ import com.questo.android.model.json.JSONizer;
 @DatabaseTable
 public class Tournament {
 
-	enum Type {
+	public enum Type {
 		COOP, DEATHMATCH, ONE_ON_ONE, KING_OF_THE_HILL;
 	}
 	
-	enum Visibility {
+	public enum Visibility {
 		PUBLIC, PRIVATE;
 	}
 
@@ -34,6 +34,8 @@ public class Tournament {
 	private Date startedAt;
 	@DatabaseField
 	private Type type;
+	@DatabaseField
+	private String location;
 	@ForeignCollectionField(eager = false)
 	ForeignCollection<TournamentTask> tasks;
 	@DatabaseField
@@ -48,11 +50,12 @@ public class Tournament {
 	public Tournament() {
 	}
 
-	public Tournament(String uuid, Date createdAt, String name, Type type) {
+	public Tournament(String uuid, Date createdAt, String name, String location, Type type) {
 		super();
 		this.uuid = uuid;
 		this.createdAt = createdAt;
 		this.name = name;
+		this.location = location;
 		this.type = type;
 	}
 
@@ -94,6 +97,14 @@ public class Tournament {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	/**

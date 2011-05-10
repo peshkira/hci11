@@ -64,9 +64,8 @@ public class App extends Application {
 	}
 
 	// TODO: delete this later - only for initial debugging & testing:
-	private void setCurrentUserForDebugging() {
-		settings.setEmail("questo@questo.me");
-		settings.setPassword("questo");
+	public void setUserForDebugging(User user) {
+		this.loggedinUser = user;
 	}
 
 	public boolean tryAutomaticLogin() {

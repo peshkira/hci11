@@ -2,13 +2,13 @@ package com.questo.android.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.questo.android.R;
 import com.questo.android.helper.FontHelper;
@@ -57,17 +57,19 @@ public class TopBar extends LinearLayout {
 		}
 	}
 
-	public Button addButtonLeftMost(final Context ctx, String label) {
+	public Button addButtonLeftMost(final Context ctx, String label, boolean checked) {
 		LinearLayout buttonsContainer = (LinearLayout) findViewById(R.id.buttons_container);
-		Button newButton = (Button) LayoutInflater.from(ctx).inflate(R.layout.topbar_button, null);
-		newButton.setText(label);
+		ToggleButton newButton = (ToggleButton) LayoutInflater.from(ctx).inflate(R.layout.topbar_button, null);
+		newButton.setTextOn(label);
+		newButton.setTextOff(label);
+		newButton.setChecked(checked);
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
 				LinearLayout.LayoutParams.FILL_PARENT);
 		buttonsContainer.addView(newButton, 0, lp);
 		return newButton;
 	}
 
-	public void setTopBarLabel(String label) {
+	public void setLabel(String label) {
 		TextView labelView = (TextView) findViewById(R.id.label);
 		labelView.setText(label);
 	}

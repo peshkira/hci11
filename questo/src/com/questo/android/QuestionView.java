@@ -96,14 +96,14 @@ public class QuestionView extends Activity {
         String type = qtn.getType().name();
 
         this.topbar = (TopBar) findViewById(R.id.topbar);
-        this.topbar.setTopBarLabel(Constants.QUESTION_PROGRESS.replaceFirst("\\{\\}", currentQuestion + 1 + "")
+        this.topbar.setLabel(Constants.QUESTION_PROGRESS.replaceFirst("\\{\\}", currentQuestion + 1 + "")
                 .replace("{}", count + ""));
 
         ProgressBar bar = (ProgressBar) findViewById(R.id.progressbar);
         bar.setProgressDrawable(getResources().getDrawable(R.drawable.bg_progressbar));
         bar.setProgress(this.calcProgress(currentQuestion + 1, count));
 
-        final Button counter = this.topbar.addButtonLeftMost(getApplicationContext(), "30");
+        final Button counter = this.topbar.addButtonLeftMost(getApplicationContext(), "30", false);
         counter.setClickable(false);
 
         TextView question = (TextView) findViewById(R.id.question);

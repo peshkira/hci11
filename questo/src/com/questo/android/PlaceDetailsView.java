@@ -50,7 +50,7 @@ public class PlaceDetailsView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.place);
         this.topbar = (TopBar) findViewById(R.id.topbar);
-        this.topbar.addButtonLeftMost(getApplicationContext(), "+");
+        this.topbar.addButtonLeftMost(getApplicationContext(), "+", false);
         this.mngr = ((App) getApplicationContext()).getModelManager();
 
         this.init(this.getIntent().getExtras());
@@ -71,7 +71,7 @@ public class PlaceDetailsView extends Activity {
         if (object != null) {
             if (object instanceof Place) {
                 this.place = (Place) object;
-                this.topbar.setTopBarLabel(place.getName());
+                this.topbar.setLabel(place.getName());
                 TextView v = (TextView) findViewById(R.id.nr_questions);
                 v.setText(Html.fromHtml(Constants.NR_QUESTIONS_LABEL.replace(Constants.PLACEHOLDER, ""
                         + place.getQuestions().size())));
@@ -82,7 +82,7 @@ public class PlaceDetailsView extends Activity {
             }
         } else {
             // fetch test place for now...
-            this.topbar.setTopBarLabel("Fetch failed");
+            this.topbar.setLabel("Fetch failed");
             System.out.println("Fetch failed");
             finishActivity(RESULT_CANCELED);
         }

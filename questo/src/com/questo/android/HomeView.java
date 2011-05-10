@@ -31,7 +31,7 @@ public class HomeView extends Activity {
 	// Set displayed homescreen icons and their target activity class here:
 	private static final Wrap[] icons = {
 			new Wrap(R.drawable.imgstate_quests, R.string.homeicon_quests, QuestMapView.class),
-			new Wrap(R.drawable.imgstate_tournaments, R.string.homeicon_tournaments, TournamentView.class),
+			new Wrap(R.drawable.imgstate_tournaments, R.string.homeicon_tournaments, TournamentsView.class),
 			new Wrap(R.drawable.imgstate_profiles, R.string.homeicon_profile, ProfileView.class),
 			new Wrap(R.drawable.imgstate_companions, R.string.homeicon_companions, null),
 			new Wrap(R.drawable.imgstate_trophies, R.string.homeicon_trophies, null),

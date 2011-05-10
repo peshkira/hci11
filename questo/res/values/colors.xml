@@ -13,6 +13,8 @@
 	<color name="papyrus_shadowed_start">#5e4124</color>
 	<color name="papyrus_shadowed_end">#957e5a</color>
 	
+	<color name="text_greyed_out">#afafaf</color>
+	
 	<color name="light_text_shadow">#ffeded</color>
 	<color name="black_semitransparent">#22000000</color>
 	<color name="transparent">#00000000</color>

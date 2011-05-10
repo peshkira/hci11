@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:id="@+id/TournamentRelativeLayout" android:orientation="vertical"
+	android:background="@drawable/bg_papyrus">
+	<com.questo.android.view.TopBar
+		android:id="@+id/topbar" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" questo:label_centered="true"
+		questo:label="" />
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:gravity="left"
+			android:padding="10dp" android:orientation="vertical">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" style="@style/NormalBlackFont"
+				android:id="@+id/description"
+				android:text="Participants have to complete quests at the following places:" />
+			<ListView android:layout_height="fill_parent"
+				android:layout_width="fill_parent" android:id="@+id/tournament_questlist"
+				android:background="@color/winered_verydark" android:dividerHeight="1px"
+				android:cacheColorHint="#00000000" android:divider="#2b0201"
+				android:fadingEdge="vertical" android:fadingEdgeLength="10dp" />
+			<ListView android:layout_height="fill_parent"
+				android:layout_width="fill_parent" android:id="@+id/tournament_contestantslist"
+				android:background="@color/winered_verydark" android:dividerHeight="1px"
+				android:cacheColorHint="#00000000" android:divider="#2b0201"
+				android:fadingEdge="vertical" android:fadingEdgeLength="10dp" />
+			<Button android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/participate_in_tournament"
+				android:text="Participate!" style="@style/MediumRoundButton"
+				android:layout_gravity="center_horizontal" android:visibility="gone"/>
+			<Button android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/cancel_tournament"
+				android:text="Cancel Participation" style="@style/MediumRoundButtonAlternative"
+				android:layout_gravity="center_horizontal" android:visibility="gone"/>
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>
