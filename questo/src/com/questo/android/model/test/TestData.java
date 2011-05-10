@@ -28,7 +28,9 @@ public class TestData {
 		manager.create(mainuser, User.class);
 		
 		Place stephansdom = new Place(UUIDgen.getUUID(), "Stephansdom");
-		manager.create(stephansdom, Place.class);
+		stephansdom.setLatitude(47422005 / 1e6);
+		stephansdom.setLongitude(16422005 / 1e6);
+		manager.create(stephansdom, Place.class);		
 		Place peterskirche = new Place(UUIDgen.getUUID(), "Peterskirche");
 		manager.create(peterskirche, Place.class);
 		
@@ -60,11 +62,6 @@ public class TestData {
 		
 		Trophy threeHeadedMonkey = new Trophy(UUIDgen.getUUID(),  "Three Headed Monkey", com.questo.android.model.Trophy.Type.GLOBAL);
 		manager.create(threeHeadedMonkey, Trophy.class);
-		
-		Place placeStephansdom = new Place(UUIDgen.getUUID(), "Stephansdom");
-		placeStephansdom.setLatitude(47422005 / 1e6);
-		placeStephansdom.setLongitude(16422005 / 1e6);
-		manager.create(placeStephansdom, Place.class);
 	}
 	
 }

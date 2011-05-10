@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
@@ -24,6 +25,7 @@ import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 import com.questo.android.model.Place;
+import com.questo.android.model.Question;
 import com.questo.android.view.TopBar;
 
 public class QuestMapView extends MapActivity {
@@ -137,18 +139,27 @@ public class QuestMapView extends MapActivity {
 		@Override
 		protected boolean onTap(int index) {
 			OverlayItem item = items.get(index);
+			Place place = QuestMapView.this.nearbyPlaces.get(index);
+			int questionCount = place.getQuestions().size();
+			
 			if (this.placeDetails == null) {
 				LayoutInflater inflater = (LayoutInflater) QuestMapView.this
 						.getApplicationContext().getSystemService(
 								Context.LAYOUT_INFLATER_SERVICE);
 				this.placeDetails = (RelativeLayout) inflater.inflate(
 						R.layout.quest_map_item, null);
+				QuestMapView.this.questMap.addView(this.placeDetails,
+						new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
+								MapView.LayoutParams.WRAP_CONTENT, item.getPoint(),
+								MapView.LayoutParams.BOTTOM_CENTER));				
 			}
+			
+			TextView placeNameText = (TextView)this.placeDetails.findViewById(R.id.QuestMapPlaceDetailsName);
+			TextView questionCountText = (TextView)this.placeDetails.findViewById(R.id.QuestMapPlaceDetailsQuestionCount);
+			placeNameText.setText(place.getName());
+			questionCountText.setText("Questions: " + Integer.toString(questionCount));
 
-			QuestMapView.this.questMap.addView(this.placeDetails,
-					new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
-							MapView.LayoutParams.WRAP_CONTENT, item.getPoint(),
-							MapView.LayoutParams.BOTTOM_CENTER));
+
 
 			return true;
 		}
