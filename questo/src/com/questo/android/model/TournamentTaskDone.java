@@ -8,12 +8,13 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable
 public class TournamentTaskDone {
 	
+	public static final String UUID = "UUID";
 	public static final String USER = "USER";
 	public static final String TOURNAMENT_TASK_UUID = "TOURNAMENT_TASK_UUID";
 
 	@DatabaseField(generatedId = true)
 	private Integer id;
-	@DatabaseField
+	@DatabaseField(columnName=UUID)
 	private String uuid;
 	@DatabaseField(columnName=TOURNAMENT_TASK_UUID)
 	private String tournamentTaskUUID;

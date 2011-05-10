@@ -116,7 +116,7 @@ public class ModelManager {
 	public <T> T getGenericObjectByUuid(String uuid, Class<T> clazz) {
 		try {
 			QueryBuilder<T, Integer> genericQBuilder = queryBuilder(clazz);
-			genericQBuilder.where().eq("uuid", uuid);
+			genericQBuilder.where().eq("UUID", uuid);
 			PreparedQuery<T> preparedQuery = genericQBuilder.prepare();
 			List<T> objects = db().getCachedDao(clazz).query(preparedQuery);
 			if (objects.size() > 0) {
@@ -131,20 +131,15 @@ public class ModelManager {
 
 	public List<Tournament> getTournamentsForUser(User user, boolean initializeObjects) {
 		try {
-			Dao<TournamentMembership, Integer> membershipDao = db().getCachedDao(TournamentMembership.class);
-			PreparedQuery<TournamentMembership> membershipQuery = membershipDao.queryBuilder().where()
-					.eq(TournamentMembership.USER, user).prepare();
-			List<TournamentMembership> memberships = membershipDao.query(membershipQuery);
-			List<Tournament> tournaments = new ArrayList<Tournament>();
-			for (TournamentMembership membership : memberships) {
-				if (!tournaments.contains(membership.getTournament()))
-					tournaments.add(membership.getTournament());
-			}
-			if (initializeObjects) {
-				for (Tournament tournament : tournaments)
-					refresh(tournament, Tournament.class);
-			}
-			return tournaments;
+			QueryBuilder<TournamentMembership, Integer> tournamentUUIDs = queryBuilder(TournamentMembership.class);
+			tournamentUUIDs.selectColumns(TournamentMembership.TOURNAMENT_UUID);
+			tournamentUUIDs.distinct();
+			tournamentUUIDs.where().eq(TournamentMembership.USER_UUID, user.getUuid()).prepare();
+			
+			QueryBuilder<Tournament, Integer> tournaments = queryBuilder(Tournament.class);
+			tournaments.where().in(Tournament.UUID, tournamentUUIDs);
+			
+			return db().getCachedDao(Tournament.class).query(tournaments.prepare());
 		} catch (SQLException e) {
 			handleException(e);
 		}
@@ -152,14 +147,34 @@ public class ModelManager {
 	}
 	
 	public List<Place> getPlacesForTournament(Tournament tournament) {
-		
-		
+		try {
+			QueryBuilder<TournamentTask, Integer> placeUUIDs = queryBuilder(TournamentTask.class);
+			placeUUIDs.selectColumns(TournamentTask.PLACE_UUID);
+			placeUUIDs.where().eq(TournamentTask.TOURNAMENT, tournament);
+			
+			QueryBuilder<Place, Integer> places = queryBuilder(Place.class);
+			places.where().in(Place.UUID, placeUUIDs);
+			
+			return db().getCachedDao(Place.class).query(places.prepare());	
+		} catch (SQLException e) {
+			handleException(e);
+		}
 		return new ArrayList<Place>();
 	}
 	
 	public List<User> getContestantsForTournament(Tournament tournament) {
-		
-		
+		try {
+			QueryBuilder<TournamentMembership, Integer> userUUIDs = queryBuilder(TournamentMembership.class);
+			userUUIDs.selectColumns(TournamentMembership.USER_UUID);
+			userUUIDs.where().eq(TournamentMembership.TOURNAMENT_UUID, tournament.getUuid());
+			
+			QueryBuilder<User, Integer> users = queryBuilder(User.class);
+			users.where().in(User.UUID, userUUIDs);
+			
+			return db().getCachedDao(User.class).query(users.prepare());
+		} catch (SQLException e) {
+			handleException(e);
+		}
 		return new ArrayList<User>();
 	}
 	
@@ -167,7 +182,7 @@ public class ModelManager {
 		try {
 			User user = app.getLoggedinUser();
 			QueryBuilder<TournamentMembership, Integer> membership = queryBuilder(TournamentMembership.class);
-			membership.where().eq(TournamentMembership.USER, user).and().eq(TournamentMembership.TOURNAMENT, tournament);
+			membership.where().eq(TournamentMembership.USER_UUID, user.getUuid()).and().eq(TournamentMembership.TOURNAMENT_UUID, tournament.getUuid());
 			List<TournamentMembership> membershipList = db().getCachedDao(TournamentMembership.class).query(membership.prepare());
 			if (membershipList.size() > 0) {
 				delete(membershipList.get(0), TournamentMembership.class);
@@ -242,7 +257,9 @@ public class ModelManager {
 	}
 
 	public void addTournamentMembership(Tournament tournament, User user) {
-		TournamentMembership membership = new TournamentMembership(UUIDgen.getUUID(), user, tournament,
+		refresh(tournament, Tournament.class);
+		refresh(user, User.class);
+		TournamentMembership membership = new TournamentMembership(UUIDgen.getUUID(), user.getUuid(), tournament.getUuid(),
 				new Date());
 		create(membership, TournamentMembership.class);
 	}

@@ -6,6 +6,8 @@ import com.questo.android.model.json.JSONizer;
 
 @DatabaseTable
 public class Question {
+	
+	public static final String UUID = "UUID";
 
 	public enum Type {
 		MULTIPLE_CHOICE, PLAINTEXT, NUMBERS_GUESSING;
@@ -13,7 +15,7 @@ public class Question {
 
 	@DatabaseField(generatedId = true)
 	private Integer id;
-	@DatabaseField
+	@DatabaseField(columnName=UUID)
 	private String uuid;
 	@DatabaseField
 	private Type type;

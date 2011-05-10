@@ -15,26 +15,42 @@
 			android:padding="10dp" android:orientation="vertical">
 			<TextView android:layout_width="wrap_content"
 				android:layout_height="wrap_content" style="@style/NormalBlackFont"
-				android:id="@+id/description"
-				android:text="Participants have to complete quests at the following places:" />
-			<ListView android:layout_height="fill_parent"
+				android:id="@+id/description_places" />
+			<ListView android:layout_height="110dp"
 				android:layout_width="fill_parent" android:id="@+id/tournament_questlist"
-				android:background="@color/winered_verydark" android:dividerHeight="1px"
-				android:cacheColorHint="#00000000" android:divider="#2b0201"
-				android:fadingEdge="vertical" android:fadingEdgeLength="10dp" />
-			<ListView android:layout_height="fill_parent"
+				android:background="@drawable/img_boxborder" android:dividerHeight="1px"
+				android:cacheColorHint="#00000000" android:divider="#20000000"
+				android:fadingEdge="none" android:layout_marginTop="10dp"
+				android:layout_marginBottom="20dp" android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp" />
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" style="@style/NormalBlackFont"
+				android:id="@+id/description_participants" />
+			<ListView android:layout_height="110dp"
 				android:layout_width="fill_parent" android:id="@+id/tournament_contestantslist"
-				android:background="@color/winered_verydark" android:dividerHeight="1px"
-				android:cacheColorHint="#00000000" android:divider="#2b0201"
-				android:fadingEdge="vertical" android:fadingEdgeLength="10dp" />
-			<Button android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/participate_in_tournament"
-				android:text="Participate!" style="@style/MediumRoundButton"
-				android:layout_gravity="center_horizontal" android:visibility="gone"/>
-			<Button android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/cancel_tournament"
-				android:text="Cancel Participation" style="@style/MediumRoundButtonAlternative"
-				android:layout_gravity="center_horizontal" android:visibility="gone"/>
+				android:background="@drawable/img_boxborder" android:dividerHeight="1px"
+				android:cacheColorHint="#00000000" android:divider="#20000000"
+				android:fadingEdge="none" android:layout_marginTop="10dp"
+				android:layout_marginBottom="10dp" android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp" />
+			<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:padding="10dp"
+			android:orientation="vertical">
+				<Button android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:id="@+id/invite"
+					android:text="Challenge a companion!" style="@style/MediumRoundButton"
+					android:layout_gravity="center_horizontal" android:layout_weight="2"
+					android:layout_margin="10dp" />
+				<Button android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:id="@+id/participate_in_tournament"
+					android:text="Participate!" style="@style/MediumRoundButton"
+					android:layout_gravity="center_horizontal" android:visibility="gone"
+					android:layout_margin="10dp" />
+				<Button android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:id="@+id/cancel_tournament"
+					android:text="Cancel Participation" style="@style/MediumRoundButtonAlternative"
+					android:layout_gravity="center_horizontal" android:visibility="gone"
+					android:layout_margin="10dp" />
+			</LinearLayout>
 		</LinearLayout>
 	</ScrollView>
 </LinearLayout>

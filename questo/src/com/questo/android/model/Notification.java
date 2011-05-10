@@ -10,6 +10,8 @@ import com.questo.android.model.json.JSONizer;
 @DatabaseTable
 public class Notification {
 
+	public static final String UUID = "UUID";
+	
 	public enum Type {
 		USER_CREATED_TOURNAMENT, TOURNAMENT_STARTED, USER_COMPLETED_TOURNAMENT, USER_COMPLETED_QUEST,
 		USER_TOURNAMENT_RANKING, TOURNAMENT_STARTS_SOON, TOURNAMENT_ENDS_SOON, COMPANIONSHIP_REQUEST,
@@ -18,7 +20,7 @@ public class Notification {
 
 	@DatabaseField(generatedId = true)
 	private Integer id;
-	@DatabaseField
+	@DatabaseField(columnName=UUID)
 	private String uuid;
 	@DatabaseField
 	private Type type;

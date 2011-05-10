@@ -12,6 +12,8 @@ import com.questo.android.model.json.JSONizer;
 @DatabaseTable
 public class Tournament {
 
+	public static final String UUID = "UUID";
+	
 	public enum Type {
 		COOP, DEATHMATCH, ONE_ON_ONE, KING_OF_THE_HILL;
 	}
@@ -22,7 +24,7 @@ public class Tournament {
 
 	@DatabaseField(generatedId = true)
 	private Integer id;
-	@DatabaseField
+	@DatabaseField(columnName=UUID)
 	private String uuid;
 	@DatabaseField
 	private String name;

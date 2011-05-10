@@ -7,18 +7,19 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
 public class TournamentMembership {
-
-	public static final String USER = "USER";
-	public static final String TOURNAMENT = "TOURNAMENT";
+	
+	public static final String UUID = "UUID";
+	public static final String USER_UUID = "USER_UUID";
+	public static final String TOURNAMENT_UUID = "TOURNAMENT_UUID";
 	
 	@DatabaseField(generatedId = true)
 	private Integer id;
-	@DatabaseField
+	@DatabaseField(columnName=UUID)
 	private String uuid;
-	@DatabaseField(foreign = true, columnName=TOURNAMENT)
-	private Tournament tournament;
-	@DatabaseField(foreign = true, columnName=USER)
-	private User user;
+	@DatabaseField(columnName=TOURNAMENT_UUID)
+	private String tournamentUUID;
+	@DatabaseField(columnName=USER_UUID)
+	private String userUUID;
 	@DatabaseField
 	private Date joinedAt;
 
@@ -29,11 +30,11 @@ public class TournamentMembership {
 	public TournamentMembership() {
 	}
 
-	public TournamentMembership(String uuid, User user, Tournament tournament, Date joinedAt) {
+	public TournamentMembership(String uuid, String userUUID, String tournamentUUID, Date joinedAt) {
 		super();
 		this.uuid = uuid;
-		this.user = user;
-		this.tournament = tournament;
+		this.userUUID = userUUID;
+		this.tournamentUUID = tournamentUUID;
 		this.joinedAt = joinedAt;
 	}
 
@@ -45,12 +46,12 @@ public class TournamentMembership {
 		return id;
 	}
 
-	public User getUser() {
-		return user;
+	public String getUserUUID() {
+		return userUUID;
 	}
 
-	public Tournament getTournament() {
-		return tournament;
+	public String getTournamentUUID() {
+		return tournamentUUID;
 	}
 
 	public Date getJoinedAt() {
