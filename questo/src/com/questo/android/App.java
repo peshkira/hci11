@@ -20,145 +20,146 @@ import com.questo.android.model.User;
 
 public class App extends Application {
 
-	private ModelManager modelManager;
-	private Object dbHelperLock = new Object();
-	private DBHelper dbHelper;
-	private Settings settings = new Settings();
-	private User loggedinUser;
+    private ModelManager modelManager;
+    private Object dbHelperLock = new Object();
+    private DBHelper dbHelper;
+    private Settings settings = new Settings();
+    private User loggedinUser;
 
-	private static final String TAG = "APP";
+    private static final String TAG = "APP";
 
-	@Override
-	public void onCreate() {
-		deleteDatabase();
-		OpenHelperManager.setOpenHelperFactory(new SqliteOpenHelperFactory() {
-			public OrmLiteSqliteOpenHelper getHelper(Context context) {
-				return new DBHelper(context);
-			}
-		});
-		settings.initializeFromFilestore();
-		//setCurrentUserForDebugging();
-		super.onCreate();
-	}
+    @Override
+    public void onCreate() {
+        deleteDatabase();
+        OpenHelperManager.setOpenHelperFactory(new SqliteOpenHelperFactory() {
+            public OrmLiteSqliteOpenHelper getHelper(Context context) {
+                return new DBHelper(context);
+            }
+        });
+        settings.initializeFromFilestore();
+        // setCurrentUserForDebugging();
+        super.onCreate();
+    }
 
-	public DBHelper getDB() {
-		synchronized (dbHelperLock) {
-			if (dbHelper == null)
-				dbHelper = (DBHelper) OpenHelperManager.getHelper(getApplicationContext());
-			return dbHelper;
-		}
-	}
+    public DBHelper getDB() {
+        synchronized (dbHelperLock) {
+            if (dbHelper == null)
+                dbHelper = (DBHelper) OpenHelperManager.getHelper(getApplicationContext());
+            return dbHelper;
+        }
+    }
 
-	public ModelManager getModelManager() {
-		if (modelManager == null)
-			modelManager = new ModelManager(this);
-		return modelManager;
-	}
+    public ModelManager getModelManager() {
+        if (modelManager == null)
+            modelManager = new ModelManager(this);
+        return modelManager;
+    }
 
-	// TODO: Remove if needed - deletes database on every app start (not
-	// every main activity start!):
-	private void deleteDatabase() {
-//		File dbFile = new File("/data/data/com.questo.android/databases/questo.db");
-//		if (dbFile.exists() && dbFile.canWrite())
-//			dbFile.delete();
-	}
+    // TODO: Remove if needed - deletes database on every app start (not
+    // every main activity start!):
+    private void deleteDatabase() {
+        // File dbFile = new
+        // File("/data/data/com.questo.android/databases/questo.db");
+        // if (dbFile.exists() && dbFile.canWrite())
+        // dbFile.delete();
+    }
 
-	// TODO: delete this later - only for initial debugging & testing:
-	public void setUserForDebugging(User user) {
-		this.loggedinUser = user;
-	}
+    // TODO: delete this later - only for initial debugging & testing:
+    public void setUserForDebugging(User user) {
+        this.loggedinUser = user;
+    }
 
-	public boolean tryAutomaticLogin() {
-		if (settings.getEmail() != null && settings.getPassword() != null) {
-			if (login(settings.getEmail(), settings.getPassword()) == null) {
-				Log.i(TAG, "Automatic login successful!");
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean tryAutomaticLogin() {
+        if (settings.getEmail() != null && settings.getPassword() != null) {
+            if (login(settings.getEmail(), settings.getPassword()) == null) {
+                Log.i(TAG, "Automatic login successful!");
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public User getLoggedinUser() {
-		return loggedinUser; 
-	}
-	
+    public User getLoggedinUser() {
+        return loggedinUser;
+    }
 
-	public LoginError login(String email, String password) {
-		User user = getModelManager().getUserByEmail(email);
-		if (user == null)
-			return new LoginError(true, null);
-		else {
-			if (!Security.validatePasswordCorrect(password, user))
-				return new LoginError(false, true);
-			loggedinUser = user;
-			settings.setEmail(email);
-			settings.setPassword(password);
-			return null;
-		}
-	}
-	
-	public Settings getSettings() {
-	    return this.settings;
-	}
-	
+    public LoginError login(String email, String password) {
+        User user = getModelManager().getUserByEmail(email);
+        if (user == null)
+            return new LoginError(true, null);
+        else {
+            if (!Security.validatePasswordCorrect(password, user))
+                return new LoginError(false, true);
+            loggedinUser = user;
+            settings.setEmail(email);
+            settings.setPassword(password);
+            return null;
+        }
+    }
 
-	private class Settings extends Properties {
-		private static final long serialVersionUID = -7551836747366493766L;
+    public void logout() {
+        if (this.getLoggedinUser() != null) {
+            loggedinUser = null;
+        }
+    }
 
-		public static final String EMAIL = "EMAIL";
-		public static final String PASSWORD = "PASSWORD";
+    private class Settings extends Properties {
+        private static final long serialVersionUID = -7551836747366493766L;
 
-		@Override
-		public synchronized Object put(Object key, Object value) {
-			Object result = super.put(key, value);
-			writeToFile();
-			return result;
-		}
+        public static final String EMAIL = "EMAIL";
+        public static final String PASSWORD = "PASSWORD";
 
-		public void reset() {
-			clear();
-			writeToFile();
-		}
+        @Override
+        public synchronized Object put(Object key, Object value) {
+            Object result = super.put(key, value);
+            writeToFile();
+            return result;
+        }
 
-		private void writeToFile() {
-			try {
-				FileOutputStream fos = openFileOutput(App.this.getString(R.string.settingsfile), Context.MODE_PRIVATE);
-				settings.store(fos, "Questo Local Settings");
-				fos.close();
-			} catch (Exception e) {
-				Log.e(TAG, "Serious error: Could not save to settings file!");
-				e.printStackTrace();
-			}
-		}
+        public void reset() {
+            clear();
+            writeToFile();
+        }
 
-		public void initializeFromFilestore() {
-			try {
-				FileInputStream is = openFileInput(getString(R.string.settingsfile));
-				load(is);
-			} catch (FileNotFoundException e1) {
-				reset();
-			} catch (IOException e) {
-				e.printStackTrace();
-				reset();
-			}
-		}
+        private void writeToFile() {
+            try {
+                FileOutputStream fos = openFileOutput(App.this.getString(R.string.settingsfile), Context.MODE_PRIVATE);
+                settings.store(fos, "Questo Local Settings");
+                fos.close();
+            } catch (Exception e) {
+                Log.e(TAG, "Serious error: Could not save to settings file!");
+                e.printStackTrace();
+            }
+        }
 
-		public void setEmail(String email) {
-			this.put(EMAIL, email);
-		}
+        public void initializeFromFilestore() {
+            try {
+                FileInputStream is = openFileInput(getString(R.string.settingsfile));
+                load(is);
+            } catch (FileNotFoundException e1) {
+                reset();
+            } catch (IOException e) {
+                e.printStackTrace();
+                reset();
+            }
+        }
 
-		public String getEmail() {
-			return (String) this.get(EMAIL);
-		}
+        public void setEmail(String email) {
+            this.put(EMAIL, email);
+        }
 
-		public void setPassword(String password) {
-			this.put(PASSWORD, password);
-		}
+        public String getEmail() {
+            return (String) this.get(EMAIL);
+        }
 
-		public String getPassword() {
-			return (String) this.get(PASSWORD);
-		}
+        public void setPassword(String password) {
+            this.put(PASSWORD, password);
+        }
 
-	}
+        public String getPassword() {
+            return (String) this.get(PASSWORD);
+        }
+
+    }
 
 }
