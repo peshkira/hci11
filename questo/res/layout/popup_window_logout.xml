@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/popup_logout" android:background="@drawable/img_boxborder"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<LinearLayout android:id="@+id/popup_shakable" android:background="@drawable/bg_papyrus"
+		android:orientation="vertical" android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		<TextView android:id="@+id/poput_txt" android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:layout_gravity="center"
+			android:gravity="center" android:layout_marginTop="5px" android:textColor="@color/winered_lightened"/>
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_marginTop="20px" android:layout_gravity="center_horizontal">
+			<Button android:id="@+id/popup_menu_button1" android:text="Ok"
+				style="@style/MediumRoundButton" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_marginRight="3px" />
+			<Button android:id="@+id/popup_menu_button2" android:text="Cancel"
+				style="@style/MediumRoundButtonAlternative" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" />
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>
