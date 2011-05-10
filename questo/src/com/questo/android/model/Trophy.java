@@ -9,6 +9,7 @@ import com.questo.android.model.json.JSONizer;
 public class Trophy {
 
 	public static final String UUID = "UUID";
+	public static final String TYPE = "TYPE";
 	
 	public enum Type {
 		GLOBAL, FOR_PLACE, FOR_QUEST;
@@ -21,6 +22,8 @@ public class Trophy {
 	@DatabaseField
 	private String name;
 	@DatabaseField
+	private String text;
+	@DatabaseField(columnName=TYPE)
 	private Type type;
 	@DatabaseField
 	private String jsonifiedExtras;
@@ -34,11 +37,20 @@ public class Trophy {
 	public Trophy() {
 	}
 
+	@Deprecated
 	public Trophy(String uuid, String name, Type type) {
 		super();
 		this.uuid = uuid;
 		this.name = name;
 		this.type = type;
+	}
+	
+	public Trophy(String uuid, String name, String text, Type type) {
+	    super();
+	    this.uuid = uuid;
+	    this.name = name;
+	    this.text = text;
+	    this.type = type;
 	}
 
 	public String getName() {
@@ -75,7 +87,15 @@ public class Trophy {
 		return other.id.equals(this.id);
 	}
 
-	public class Extras extends JSONKeyValueStore {
+	public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public class Extras extends JSONKeyValueStore {
 
 		public static final String QUEST_UUID = "PLACE_UUID";
 		//TODO Add your own values!

@@ -1,6 +1,7 @@
 package com.questo.android;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -40,9 +41,9 @@ import com.questo.android.view.TopBar;
 public class PlaceDetailsView extends Activity {
 
     private TopBar topbar;
-    
+
     private Place place;
-    
+
     private ModelManager mngr;
 
     @Override
@@ -67,7 +68,7 @@ public class PlaceDetailsView extends Activity {
         } else {
             object = mngr.getGenericObjectById(1, Place.class);
         }
-        
+
         if (object != null) {
             if (object instanceof Place) {
                 this.place = (Place) object;
@@ -98,8 +99,10 @@ public class PlaceDetailsView extends Activity {
         ListView trophyList = (ListView) findViewById(R.id.placetrophies);
         trophyList.setEmptyView(findViewById(R.id.empty_trophylist_text));
         PlaceTrophyAdapter adapt = new PlaceTrophyAdapter();
-        adapt.addItem(new Trophy(UUIDgen.getUUID(), "The One Ring", Type.FOR_PLACE));
-        adapt.addItem(new Trophy(UUIDgen.getUUID(), "The Light of Elendil", Type.FOR_PLACE));
+        List<Trophy> trophies = mngr.getTrophyForType(Type.FOR_PLACE);
+        if (trophies != null) {
+            adapt.addItems(trophies);
+        }
         trophyList.setAdapter(adapt);
     }
 
@@ -121,7 +124,7 @@ public class PlaceDetailsView extends Activity {
             Quest quest = new Quest(UUIDgen.getUUID(), PlaceDetailsView.this.place);
             quest.setCompletionState(Quest.Completion.INITIALIZED);
             mngr.create(quest, Quest.class);
-            
+
             if (place.getQuestions().size() > 10) {
                 CloseableIterator<Question> iter = place.getQuestions().iterator();
                 int i = 10;
@@ -136,7 +139,7 @@ public class PlaceDetailsView extends Activity {
                     mngr.create(qq, QuestHasQuestion.class);
                 }
             }
-            
+
             Intent navTo = new Intent(PlaceDetailsView.this, QuestionView.class);
             navTo.putExtra(Constants.TRANSITION_OBJECT_UUID, quest.getUuid());
             navTo.putExtra(Constants.NR_ANSWERED_QUESTIONS, 0);
@@ -158,6 +161,11 @@ public class PlaceDetailsView extends Activity {
 
         public void addItem(final Trophy item) {
             mData.add(item);
+            notifyDataSetChanged();
+        }
+
+        public void addItems(final List<Trophy> items) {
+            mData.addAll(items);
             notifyDataSetChanged();
         }
 
@@ -202,7 +210,8 @@ public class PlaceDetailsView extends Activity {
 
         @Override
         public void onClick(View v) {
-            startActivity(new Intent(PlaceDetailsView.this, TrophyView.class));
+            startActivity(new Intent(PlaceDetailsView.this, TrophyView.class).putExtra(
+                    Constants.TRANSITION_OBJECT_UUID, trophy.getUuid()));
 
         }
 
