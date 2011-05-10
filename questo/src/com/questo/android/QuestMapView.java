@@ -26,8 +26,8 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.questo.android.common.Constants;
 import com.questo.android.model.Place;
-import com.questo.android.model.Question;
 import com.questo.android.view.TopBar;
 
 public class QuestMapView extends MapActivity {
@@ -35,6 +35,7 @@ public class QuestMapView extends MapActivity {
 	private MapView questMap;
 	private List<Place> nearbyPlaces;
 	private GeoPoint currentLocation;
+	private Place currentPlace;
 	private ModelManager modelManager;
 	private App application;
 	private MapOverlay overlay;
@@ -114,10 +115,12 @@ public class QuestMapView extends MapActivity {
 	public boolean onContextItemSelected(MenuItem item) {
 
 		if (item.getTitle().equals("Add Place")) {
-			
+			Intent addPlaceIntent = new Intent(this, AddPlace.class);
+			startActivity(addPlaceIntent);
 		}
 		if (item.getTitle().equals("Add Question")) {
-			
+			Intent addQuestionIntent = new Intent(this, AddQuestion.class);
+			startActivity(addQuestionIntent);
 		}
 
 		return super.onContextItemSelected(item);
@@ -169,12 +172,15 @@ public class QuestMapView extends MapActivity {
 				questionCount = place.getQuestions().size();
 			}
 
+			QuestMapView.this.currentPlace = place;
+			
 			if (this.placeDetails == null) {
 				LayoutInflater inflater = (LayoutInflater) QuestMapView.this
 						.getApplicationContext().getSystemService(
 								Context.LAYOUT_INFLATER_SERVICE);
 				this.placeDetails = (RelativeLayout) inflater.inflate(
 						R.layout.quest_map_item, null);
+				this.placeDetails.setOnClickListener(new MapListener());
 			}
 			QuestMapView.this.questMap.removeView(this.placeDetails);
 			QuestMapView.this.questMap.addView(this.placeDetails,
@@ -207,6 +213,13 @@ public class QuestMapView extends MapActivity {
 				}
 				if (pressedButton.getText().equals("+")) {
 					QuestMapView.this.openContextMenu(v);
+				}
+			}
+			if(v.getId()==R.id.QuestMapPlaceDetailsLayout){
+				if(QuestMapView.this.currentPlace!=null){
+					Intent placeDetails = new Intent(QuestMapView.this, PlaceDetailsView.class);
+					placeDetails.putExtra(Constants.TRANSITION_OBJECT_UUID, QuestMapView.this.currentPlace.getUuid());					
+					startActivity(placeDetails);
 				}
 			}
 		}

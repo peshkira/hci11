@@ -11,6 +11,7 @@
 		<com.google.android.maps.MapView
 			android:id="@+id/QuestMap" android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:enabled="true"
-			android:clickable="true" android:apiKey="@string/apikey" />
+			android:clickable="true" android:apiKey="@string/apikey"
+			android:layout_below="@id/topbar" />
 	</AbsoluteLayout>
 </RelativeLayout>

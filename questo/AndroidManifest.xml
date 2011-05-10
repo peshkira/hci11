@@ -30,6 +30,9 @@
 		<supports-screens android:largeScreens="true"
 			android:normalScreens="true" android:smallScreens="true"
 			android:anyDensity="true" />
+		<activity android:name=".AddPlace">
+		</activity>
+		<activity android:name=".AddQuestion"></activity>
 	</application>
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_LOCATION" />
