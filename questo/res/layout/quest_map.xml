@@ -5,7 +5,6 @@
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:layout_marginBottom="20dip"
 		questo:label="@string/quests" questo:label_centered="true" />
-
 	<AbsoluteLayout android:id="@+id/QuestMapLayout"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:layout_below="@id/topbar">

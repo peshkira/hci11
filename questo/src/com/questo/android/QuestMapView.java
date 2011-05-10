@@ -10,7 +10,9 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -31,8 +33,6 @@ import com.questo.android.view.TopBar;
 public class QuestMapView extends MapActivity {
 
 	private MapView questMap;
-	private int showListBtnId;
-	private int addQuestionBtnId;
 	private List<Place> nearbyPlaces;
 	private GeoPoint currentLocation;
 	private ModelManager modelManager;
@@ -60,13 +60,12 @@ public class QuestMapView extends MapActivity {
 		setContentView(R.layout.quest_map);
 
 		TopBar topBar = (TopBar) findViewById(R.id.topbar);
-		Button showListBtn = topBar.addButtonLeftMost(this, "+");
-		Button addQuestionBtn = topBar.addButtonLeftMost(this, "-");
+		Button addQuestionBtn = topBar.addButtonLeftMost(this, "+");
+		Button showListBtn = topBar.addButtonLeftMost(this, "-");
 
-		showListBtnId = showListBtn.getId();
-		addQuestionBtnId = addQuestionBtn.getId();
 		showListBtn.setOnClickListener(new MapListener());
 		addQuestionBtn.setOnClickListener(new MapListener());
+		this.registerForContextMenu(addQuestionBtn);
 
 		initMapView();
 	}
@@ -103,6 +102,26 @@ public class QuestMapView extends MapActivity {
 				this.currentLocation.getLongitudeE6() / 1e6);
 		this.overlay.refreshOverlayItems();
 		this.questMap.invalidate();
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenu.ContextMenuInfo menuInfo) {
+		menu.add("Add Place");
+		menu.add("Add Question");
+	}
+
+	public boolean onContextItemSelected(MenuItem item) {
+
+		if (item.getTitle().equals("Add Place")) {
+			
+		}
+		if (item.getTitle().equals("Add Question")) {
+			
+		}
+
+		return super.onContextItemSelected(item);
+
 	}
 
 	public class MapOverlay extends ItemizedOverlay<OverlayItem> {
@@ -179,13 +198,16 @@ public class QuestMapView extends MapActivity {
 
 		@Override
 		public void onClick(View v) {
-			if (v.getId() == showListBtnId) {
-				Intent showListView = new Intent(QuestMapView.this,
-						QuestListView.class);
-				startActivity(showListView);
-			}
-			if (v.getId() == addQuestionBtnId) {
-
+			if(v instanceof Button){
+				Button pressedButton = (Button)v;
+				if (pressedButton.getText().equals("-")) {
+					Intent showListView = new Intent(QuestMapView.this,
+							QuestListView.class);
+					startActivity(showListView);
+				}
+				if (pressedButton.getText().equals("+")) {
+					QuestMapView.this.openContextMenu(v);
+				}
 			}
 		}
 
