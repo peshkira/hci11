@@ -46,13 +46,16 @@ public class PlaceDetailsView extends Activity {
 
     private ModelManager mngr;
 
+    private App app;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.place);
         this.topbar = (TopBar) findViewById(R.id.topbar);
         this.topbar.addButtonLeftMost(getApplicationContext(), "+", false);
-        this.mngr = ((App) getApplicationContext()).getModelManager();
+        this.app = ((App) getApplicationContext());
+        this.mngr = this.app.getModelManager();
 
         this.init(this.getIntent().getExtras());
 
@@ -99,7 +102,7 @@ public class PlaceDetailsView extends Activity {
         ListView trophyList = (ListView) findViewById(R.id.placetrophies);
         trophyList.setEmptyView(findViewById(R.id.empty_trophylist_text));
         PlaceTrophyAdapter adapt = new PlaceTrophyAdapter();
-        List<Trophy> trophies = mngr.getTrophyForType(Type.FOR_PLACE);
+        List<Trophy> trophies = mngr.getTrophyForType(this.app.getLoggedinUser(), Type.FOR_PLACE);
         if (trophies != null) {
             adapt.addItems(trophies);
         }

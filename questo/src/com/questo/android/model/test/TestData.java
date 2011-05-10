@@ -19,6 +19,7 @@ import com.questo.android.model.Question.Type;
 import com.questo.android.model.Tournament;
 import com.questo.android.model.TournamentTask;
 import com.questo.android.model.Trophy;
+import com.questo.android.model.TrophyForUser;
 import com.questo.android.model.User;
 
 public class TestData {
@@ -104,7 +105,7 @@ public class TestData {
                         + "In the Land of Mordor where the Shadows lie.",
                 com.questo.android.model.Trophy.Type.FOR_PLACE);
         manager.create(theonering, Trophy.class);
-
+        
         Trophy thelight = new Trophy(UUIDgen.getUUID(), "The Light Of Elendil",
                 "I give you the light of Elendil... our most beloved star!",
                 com.questo.android.model.Trophy.Type.FOR_PLACE);
@@ -114,6 +115,18 @@ public class TestData {
                 "We can't trust the Sword of a Thousand Truths to a newb!",
                 com.questo.android.model.Trophy.Type.FOR_QUEST);
         manager.create(sword, Trophy.class);
+        
+        TrophyForUser tfu1 = new TrophyForUser(UUIDgen.getUUID(), mainuser, threeHeadedMonkey.getUuid(), new Date());
+        manager.create(tfu1, TrophyForUser.class);
+        
+        TrophyForUser tfu2 = new TrophyForUser(UUIDgen.getUUID(), mainuser, theonering.getUuid(), new Date());
+        manager.create(tfu2, TrophyForUser.class);
+        
+        TrophyForUser tfu3 = new TrophyForUser(UUIDgen.getUUID(), mainuser, thelight.getUuid(), new Date());
+        manager.create(tfu3, TrophyForUser.class);
+        
+        TrophyForUser tfu4 = new TrophyForUser(UUIDgen.getUUID(), mainuser, sword.getUuid(), new Date());
+        manager.create(tfu4, TrophyForUser.class);
 
         return mainuser;
     }

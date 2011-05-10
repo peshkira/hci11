@@ -21,6 +21,7 @@ import com.questo.android.model.TournamentTask;
 import com.questo.android.model.TournamentTaskDone;
 import com.questo.android.model.Trophy;
 import com.questo.android.model.Trophy.Type;
+import com.questo.android.model.TrophyForUser;
 import com.questo.android.model.User;
 
 public class ModelManager {
@@ -131,12 +132,32 @@ public class ModelManager {
         return null;
     }
 
-    public List<Trophy> getTrophyForType(Type type) {
+    public List<Trophy> getTrophyForUser(User user) {
         try {
+
+            QueryBuilder<TrophyForUser, Integer> tfu = queryBuilder(TrophyForUser.class);
+            tfu.selectColumns(TrophyForUser.TROPHY_UUID).where().eq(TrophyForUser.USER, user).prepare();
+
             QueryBuilder<Trophy, Integer> trophy = queryBuilder(Trophy.class);
-            trophy.where().eq(Trophy.TYPE, type).prepare();
+            trophy.where().in(Trophy.UUID, tfu);
 
             return db().getCachedDao(Trophy.class).query(trophy.prepare());
+        } catch (SQLException e) {
+            handleException(e);
+        }
+        return new ArrayList<Trophy>();
+    }
+
+    public List<Trophy> getTrophyForType(User user, Type type) {
+        try {
+
+            QueryBuilder<TrophyForUser, Integer> tfu = queryBuilder(TrophyForUser.class);
+            tfu.selectColumns(TrophyForUser.TROPHY_UUID).where().eq(TrophyForUser.USER, user).prepare();
+
+            QueryBuilder<Trophy, Integer> trophies = queryBuilder(Trophy.class);
+            trophies.where().in(Trophy.UUID, tfu).and().eq(Trophy.TYPE, type);
+            
+            return db().getCachedDao(Trophy.class).query(trophies.prepare());
         } catch (SQLException e) {
             handleException(e);
         }

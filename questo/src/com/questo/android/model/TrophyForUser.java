@@ -9,15 +9,19 @@ import com.j256.ormlite.table.DatabaseTable;
 public class TrophyForUser {
 
 	public static final String UUID = "UUID";
+
+    public static final String USER = "USER";
+
+    public static final String TROPHY_UUID = "TROPHY_UUID";
 	
 	@DatabaseField(generatedId = true)
 	private Integer id;
 	@DatabaseField(columnName=UUID)
 	private String uuid;
-	@DatabaseField(foreign = true)
+	@DatabaseField(columnName=USER, foreign = true)
 	private User user;
-	@DatabaseField(foreign = true)
-	private Trophy trophy;
+	@DatabaseField(columnName=TROPHY_UUID)
+	private String trophyUuid;
 	@DatabaseField
 	private Date receivedAt;
 
@@ -28,11 +32,11 @@ public class TrophyForUser {
 	public TrophyForUser() {
 	}
 
-	public TrophyForUser(String uuid, User user, Trophy trophy, Date receivedAt) {
+	public TrophyForUser(String uuid, User user, String trophy, Date receivedAt) {
 		super();
 		this.uuid = uuid;
 		this.user = user;
-		this.trophy = trophy;
+		this.trophyUuid = trophy;
 		this.receivedAt = receivedAt;
 	}
 
@@ -48,8 +52,8 @@ public class TrophyForUser {
 		return user;
 	}
 
-	public Trophy getTrophy() {
-		return trophy;
+	public String getTrophy() {
+		return trophyUuid;
 	}
 
 	public Date getReceivedAt() {
