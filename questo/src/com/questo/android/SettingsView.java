@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.text.Html;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,14 +46,14 @@ public class SettingsView extends PreferenceActivity {
 
     }
 
-    // Does not work unfortunately.. as the back button event is not passed if
-    // the popupwindow is shown
     @Override
-    public void onBackPressed() {
-        if (this.popup != null) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        System.out.println("IN THE METHOD");
+        if (keyCode == KeyEvent.KEYCODE_BACK && this.popup != null) {
             ((LinearLayout) this.popup).findViewById(R.id.popup_shakable).startAnimation(new ShakeAnimation());
+            return true;
         } else {
-            super.onBackPressed();
+            return super.onKeyDown(keyCode, event);
         }
     }
 
@@ -86,7 +87,7 @@ public class SettingsView extends PreferenceActivity {
             SettingsView.this.popup = inflater.inflate(R.layout.popup_window_logout,
                     (ViewGroup) findViewById(R.id.popup_logout));
 
-            final PopupWindow pw = new PopupWindow(popup, 200, 150, true);
+            final PopupWindow pw = new PopupWindow(popup, 200, 150);
 
             final TextView txt = (TextView) popup.findViewById(R.id.poput_txt);
             txt.setText(Html.fromHtml("<big><b>Are You sure you want to abandon ship?</b></big>"));
