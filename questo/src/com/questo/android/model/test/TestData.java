@@ -64,10 +64,10 @@ public class TestData {
         manager.update(q_stephansdom_2, Question.class);
         
 		Tournament crazyTournament = new Tournament(UUIDgen.getUUID(), new Date(), "Crazy Tournament", "Vienna", Tournament.Type.COOP);
-		TournamentTask crazyParcourTask1 = new TournamentTask(UUIDgen.getUUID(), crazyTournament, stephansdom);
-		TournamentTask crazyParcourTask2 = new TournamentTask(UUIDgen.getUUID(), crazyTournament, stephansdom);
+		TournamentTask crazyParcourTask1 = new TournamentTask(UUIDgen.getUUID(), crazyTournament, stephansdom.getUuid());
+		TournamentTask crazyParcourTask2 = new TournamentTask(UUIDgen.getUUID(), crazyTournament, stephansdom.getUuid());
 		TournamentTaskDone crazyParcourTask1Done = new TournamentTaskDone(UUIDgen.getUUID(), mainuser, crazyParcourTask1.getUuid(), new Date());
-		TournamentMembership crazyTournamentMembership = new TournamentMembership(UUIDgen.getUUID(), mainuser, crazyTournament, new Date());
+		TournamentMembership crazyTournamentMembership = new TournamentMembership(UUIDgen.getUUID(), mainuser.getUuid(), crazyTournament.getUuid(), new Date());
 		manager.create(crazyTournament, Tournament.class);
 		manager.create(crazyParcourTask1, TournamentTask.class);
 		manager.create(crazyParcourTask2, TournamentTask.class);
@@ -75,8 +75,8 @@ public class TestData {
 		manager.create(crazyParcourTask1Done, TournamentTaskDone.class);
 		
 		Tournament deathmatchTournament = new Tournament(UUIDgen.getUUID(), new Date(), "Deathmatch", "Vienna", Tournament.Type.COOP);
-		TournamentTask deathmatchTask1 = new TournamentTask(UUIDgen.getUUID(), deathmatchTournament, stephansdom);
-		TournamentMembership deathmatchTournamentMembershipXY = new TournamentMembership(UUIDgen.getUUID(), xyUser, deathmatchTournament, new Date());
+		TournamentTask deathmatchTask1 = new TournamentTask(UUIDgen.getUUID(), deathmatchTournament, stephansdom.getUuid());
+		TournamentMembership deathmatchTournamentMembershipXY = new TournamentMembership(UUIDgen.getUUID(), xyUser.getUuid(), deathmatchTournament.getUuid(), new Date());
 		TournamentRequest deathmatchTournamentRequest = new TournamentRequest(UUIDgen.getUUID(), mainuser, xyUser, deathmatchTournament, new Date());
 		manager.create(deathmatchTournament, Tournament.class);
 		manager.create(deathmatchTask1, TournamentTask.class);

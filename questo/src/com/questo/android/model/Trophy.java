@@ -8,13 +8,15 @@ import com.questo.android.model.json.JSONizer;
 @DatabaseTable
 public class Trophy {
 
+	public static final String UUID = "UUID";
+	
 	public enum Type {
 		GLOBAL, FOR_PLACE, FOR_QUEST;
 	}
 
 	@DatabaseField(generatedId = true)
 	private Integer id;
-	@DatabaseField
+	@DatabaseField(columnName=UUID)
 	private String uuid;
 	@DatabaseField
 	private String name;

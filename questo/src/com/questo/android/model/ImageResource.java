@@ -6,13 +6,15 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable
 public class ImageResource {
 
+	public static final String UUID = "UUID";
+	
 	enum LocationType {
 		HTTP, FTP, SDCARD, ASSET;
 	}
 
 	@DatabaseField(generatedId = true)
 	private Integer id;
-	@DatabaseField
+	@DatabaseField(columnName=UUID)
 	private String uuid;
 	@DatabaseField
 	private String uri;

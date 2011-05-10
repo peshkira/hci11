@@ -14,6 +14,7 @@ import com.questo.android.model.json.JSONizer;
 public class User {
 
 	public static final String EMAIL = "EMAIL";
+	public static final String UUID = "UUID";
 	//private static final String TAG = "ENTITY USER"; // tag for log
 
 	public enum Gender {
@@ -22,7 +23,7 @@ public class User {
 
 	@DatabaseField(generatedId = true)
 	private Integer id;
-	@DatabaseField
+	@DatabaseField(columnName=UUID)
 	private String uuid;
 	@DatabaseField(columnName=EMAIL)
 	private String email;
