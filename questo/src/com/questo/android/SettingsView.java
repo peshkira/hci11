@@ -41,9 +41,8 @@ public class SettingsView extends PreferenceActivity {
     private void init() {
         App app = (App) this.getApplicationContext();
         TopBar topbar = (TopBar) findViewById(R.id.topbar);
-        topbar.addButtonLeftMost(this, "Logout");
+        ToggleButton btn = (ToggleButton) topbar.addToggleButtonLeftMost(this, "Logout", false);
 
-        ToggleButton btn = (ToggleButton) findViewById(R.id.topbar_button);
         btn.setOnClickListener(new LogoutClickListener(app));
 
     }
