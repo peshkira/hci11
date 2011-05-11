@@ -23,6 +23,10 @@ public class NewTournamentView extends Activity {
 
 	App app;
 	Tournament tournament;
+	PlacesAdapter placesAdapter;
+	ContestantsAdapter participantsAdapter;
+	
+	public static final int COMPANION_REQUEST_CODE = 1;
 
 	private class PlacesAdapter extends ArrayAdapter<Place> {
 
@@ -130,20 +134,39 @@ public class NewTournamentView extends Activity {
 		this.setContentView(R.layout.tournament_new);
 		
 		ListView placesList = (ListView)findViewById(R.id.tournament_questlist);
-		PlacesAdapter placesAdapter = new PlacesAdapter(this, R.layout.tournament_details_places_item);
+		placesAdapter = new PlacesAdapter(this, R.layout.tournament_details_places_item);
 		placesList.setAdapter(placesAdapter);
 
-		ListView contestantsList = (ListView)findViewById(R.id.tournament_contestantslist);
-		ContestantsAdapter contestantsAdapter = new ContestantsAdapter(this, R.layout.tournament_details_contestants_item);
-		contestantsList.setAdapter(contestantsAdapter);	
+		ListView participantsList = (ListView)findViewById(R.id.tournament_contestantslist);
+		participantsAdapter = new ContestantsAdapter(this, R.layout.tournament_details_contestants_item);
+		participantsList.setAdapter(participantsAdapter);	
 		
 		Button addParticipantsBtn = (Button)findViewById(R.id.add_participant);
 		addParticipantsBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(NewTournamentView.this, CompanionChooserView.class));
+				Intent intent = new Intent(NewTournamentView.this, CompanionChooserView.class);
+				String[] preselectedUUIDs = new String[participantsAdapter.getCount()];
+				for(int i = 0; i < participantsAdapter.getCount(); i++)
+					preselectedUUIDs[i] = participantsAdapter.getItem(i).getUuid();
+				intent.putExtra(CompanionChooserView.EXTRA_COMPANION_UUID_ARRAY, preselectedUUIDs);
+				startActivityForResult(intent, COMPANION_REQUEST_CODE);
 			}
 		});
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == COMPANION_REQUEST_CODE) {
+			if (resultCode == RESULT_OK) {
+				String[] participantUUIDs = data.getExtras().getStringArray(CompanionChooserView.EXTRA_COMPANION_UUID_ARRAY);
+				participantsAdapter.clear();
+				for (String participantUUID : participantUUIDs) {
+					User participant = app.getModelManager().getGenericObjectByUuid(participantUUID, User.class);
+					participantsAdapter.add(participant);
+				}
+			}
+		}
 	}
 
 	public void onBackPressed() {
