@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+	<item>
+		<bitmap android:src="@drawable/img_map_balloon" />
+	</item>
+	<item android:top="1px" android:bottom="1px">
+		<shape android:shape="rectangle">
+			<gradient android:startColor="#00000000"
+				android:endColor="#40000000" android:type="linear"
+				android:angle="270" android:dither="true" />
+		</shape>
+	</item>
+</layer-list>

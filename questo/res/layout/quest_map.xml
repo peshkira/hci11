@@ -3,8 +3,8 @@
 	android:layout_width="match_parent" android:layout_height="match_parent">
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:layout_marginBottom="20dip"
-		questo:label="@string/quests" questo:label_centered="true" />
+		android:layout_height="wrap_content" 
+		questo:label="@string/quests" questo:label_centered="false" />
 	<AbsoluteLayout android:id="@+id/QuestMapLayout"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:layout_below="@id/topbar">
