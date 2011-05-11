@@ -9,9 +9,9 @@ import java.util.concurrent.Callable;
 import android.content.Context;
 import android.util.Log;
 
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.questo.android.common.Constants;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
 import com.questo.android.model.Tournament;
@@ -26,32 +26,32 @@ import com.questo.android.model.User;
 
 public class ModelManager {
 
-    private App app;
-    private static final String TAG = "ModelManager";
+	private App app;
+	private static final String TAG = "ModelManager";
 
-    public ModelManager(Context ctx) {
-        this.app = (App) ctx;
-    }
+	public ModelManager(Context ctx) {
+		this.app = (App) ctx;
+	}
 
-    private DBHelper db() {
-        return app.getDB();
-    }
+	private DBHelper db() {
+		return app.getDB();
+	}
 
-    private void handleException(SQLException e) {
-        Log.e(TAG, "Problem with the database!");
-        e.printStackTrace();
-    }
+	private void handleException(SQLException e) {
+		Log.e(TAG, "Problem with the database!");
+		e.printStackTrace();
+	}
 
-    public <T> T create(T o, Class<T> clazz) {
-        try {
-            int result = db().getCachedDao(clazz).create(o);
-            if (result == 1)
-                return o;
-        } catch (SQLException e) {
-            handleException(e);
-        }
-        return null;
-    }
+	public <T> T create(T o, Class<T> clazz) {
+		try {
+			int result = db().getCachedDao(clazz).create(o);
+			if (result == 1)
+				return o;
+		} catch (SQLException e) {
+			handleException(e);
+		}
+		return null;
+	}
 
     public <T> T delete(T o, Class<T> clazz) {
         try {
@@ -75,16 +75,16 @@ public class ModelManager {
         return null;
     }
 
-    public <T> T refresh(T o, Class<T> clazz) {
-        try {
-            int result = db().getCachedDao(clazz).refresh(o);
-            if (result == 1)
-                return o;
-        } catch (SQLException e) {
-            handleException(e);
-        }
-        return null;
-    }
+	public <T> T refresh(T o, Class<T> clazz) {
+		try {
+			int result = db().getCachedDao(clazz).refresh(o);
+			if (result == 1)
+				return o;
+		} catch (SQLException e) {
+			handleException(e);
+		}
+		return null;
+	}
 
     public User getUserByEmail(String email) {
         try {
@@ -112,9 +112,30 @@ public class ModelManager {
         } catch (SQLException e) {
             handleException(e);
         }
-
+        
         return null;
     }
+    
+	public List<Place> getPlacesNearby(Double latitude, Double longitude) {
+		double lowLatitude = latitude - Constants.MAP_PLACES_NEARBY;
+		double highLatitude = latitude + Constants.MAP_PLACES_NEARBY;
+		double lowLongitude = longitude - Constants.MAP_PLACES_NEARBY;
+		double highLongitude = longitude + Constants.MAP_PLACES_NEARBY;
+
+		try {
+			QueryBuilder<Place, Integer> placeQBuilder = db().getCachedDao(
+					Place.class).queryBuilder();
+			placeQBuilder.where()
+					.between("latitude", lowLatitude, highLatitude).and()
+					.between("longitude", lowLongitude, highLongitude);
+			PreparedQuery<Place> preparedQuery = placeQBuilder.prepare();
+			List<Place> places = db().getCachedDao(Place.class).query(preparedQuery);
+			return places;
+		} catch (SQLException e) {
+			handleException(e);
+		}
+		return new ArrayList<Place>();
+	}
 
     public <T> T getGenericObjectByUuid(String uuid, Class<T> clazz) {
         try {
@@ -129,8 +150,8 @@ public class ModelManager {
             handleException(e);
         }
 
-        return null;
-    }
+		return null;
+	}
 
     public List<Trophy> getTrophyForUser(User user) {
         try {

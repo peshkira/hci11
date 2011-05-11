@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/QuestMapPlaceDetailsLayout"
+	android:layout_width="wrap_content" android:layout_height="wrap_content"
+	android:background="@drawable/img_map_balloon">
+	<TextView android:id="@+id/QuestMapPlaceDetailsName"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:text="A place" />
+	<TextView android:id="@+id/QuestMapPlaceDetailsQuestionCount"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:layout_below="@id/QuestMapPlaceDetailsName" android:text="Question count" />
+</RelativeLayout>

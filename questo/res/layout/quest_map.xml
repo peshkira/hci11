@@ -5,12 +5,13 @@
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:layout_marginBottom="20dip"
 		questo:label="@string/quests" questo:label_centered="true" />
-
-	<com.google.android.maps.MapView
-		android:id="@+id/QuestMap" 
+	<AbsoluteLayout android:id="@+id/QuestMapLayout"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
-        android:enabled="true"
-        android:clickable="true"		
-		android:apiKey="@string/apikey" 
-		android:layout_below="@id/topbar" />
+		android:layout_below="@id/topbar">
+		<com.google.android.maps.MapView
+			android:id="@+id/QuestMap" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:enabled="true"
+			android:clickable="true" android:apiKey="@string/apikey"
+			android:layout_below="@id/topbar" />
+	</AbsoluteLayout>
 </RelativeLayout>

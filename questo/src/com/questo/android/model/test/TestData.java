@@ -41,8 +41,12 @@ public class TestData {
         manager.create(xyUser, User.class);
 
         Place stephansdom = new Place(UUIDgen.getUUID(), "Stephansdom");
+		stephansdom.setLatitude(48.208359);
+		stephansdom.setLongitude(16.373298);
         manager.create(stephansdom, Place.class);
         Place peterskirche = new Place(UUIDgen.getUUID(), "Peterskirche");
+		peterskirche.setLatitude(48.209405);
+		peterskirche.setLongitude(16.370088);	
         manager.create(peterskirche, Place.class);
 
         Question q_stephansdom_1 = new Question(UUIDgen.getUUID(), Type.MULTIPLE_CHOICE,

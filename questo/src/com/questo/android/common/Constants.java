@@ -17,6 +17,10 @@ public final class Constants {
     public static final String CORRECT_ANSWER = "app.questo.questions.correct";
     public static final String BOOL_CORRECT_ANSWER = "app.questo.questions.correct.bool";
     public static final String CONGRATS_DETAILS = "You have answered {} of {} questions correctly, earning";
+    
+    public static final double MAP_PLACES_NEARBY = 2;
+    public static final String EXTRA_LATITUDE = "app.questo.extra.latitude";
+    public static final String EXTRA_LONGITUDE = "app.questo.extra.longitude";
 
     private Constants() {
 
