@@ -79,18 +79,21 @@ public class CompanionsView extends Activity {
         private LayoutInflater inflater;
 
         public CompanionsListAdapter(List<User> users) {
-            this.companions = users;
+            this.companions = new ArrayList<User>();
             this.data = users;
             this.inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         public void filter(CharSequence s) {
-            data = companions;
+            System.out.println("SEQUENCE: " + s);
+            this.data.addAll(this.companions);
+            this.companions.clear();
             Iterator<User> iter = this.data.iterator();
 
             while (iter.hasNext()) {
                 User next = iter.next();
                 if (!next.getName().contains(s)) {
+                    this.companions.add(next);
                     iter.remove();
                 }
             }
