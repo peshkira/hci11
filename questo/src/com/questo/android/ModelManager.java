@@ -124,7 +124,7 @@ public class ModelManager {
             initiator.selectColumns(Companionship.CONFIRMER_UUID).where().eq(Companionship.CONFIRMED, true).and().eq(Companionship.INITIATOR_UUID, user.getUuid());
             
             QueryBuilder<Companionship, Integer> confirmer = queryBuilder(Companionship.class);
-            initiator.selectColumns(Companionship.INITIATOR_UUID).where().eq(Companionship.CONFIRMED, true).and().eq(Companionship.CONFIRMER_UUID, user.getUuid());
+            confirmer.selectColumns(Companionship.INITIATOR_UUID).where().eq(Companionship.CONFIRMED, true).and().eq(Companionship.CONFIRMER_UUID, user.getUuid());
 
             QueryBuilder<User, Integer> companions = queryBuilder(User.class);
             companions.where().in(User.UUID, initiator).or().in(User.UUID, confirmer).prepare();

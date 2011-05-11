@@ -53,6 +53,10 @@ public class TestData {
         gand_main.setConfirmed(true);
         manager.create(gand_main, Companionship.class);
         
+        Companionship main_xy = new Companionship(UUIDgen.getUUID(), mainuser.getUuid(), xyUser.getUuid(), new Date());
+        main_xy.setConfirmedAt(new Date());
+        main_xy.setConfirmed(true);
+        manager.create(main_xy, Companionship.class);
 
         Place stephansdom = new Place(UUIDgen.getUUID(), "Stephansdom");
 		stephansdom.setLatitude(48.208359);

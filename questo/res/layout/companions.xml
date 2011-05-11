@@ -8,30 +8,30 @@
 		questo:label_centered="false" />
 	<EditText android:id="@+id/search_box" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:layout_marginLeft="10dip"
-		android:layout_marginRight="10dip" android:hint="type to filter"
+		android:layout_marginRight="10dip" android:layout_marginTop="10dip"
+		android:layout_marginBottom="10dip" android:hint="type to filter"
 		android:inputType="text" android:maxLines="1" />
-	<ScrollView android:layout_marginBottom="70dip"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:layout_gravity="top">
+	<RelativeLayout android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:gravity="center_vertical">
 		<LinearLayout android:layout_width="fill_parent"
-			android:layout_height="fill_parent">
-			<ListView android:id="@+id/list_companion"
-				android:layout_width="match_parent" android:layout_height="match_parent">
-			</ListView>
-			<TextView android:layout_width="fill_parent"
-				android:layout_height="fill_parent" android:id="@+id/empty_companions_text"
-				android:text="You don't have any companions yet!" style="@style/BlackShadowedFont"
-				android:padding="10dp" android:gravity="center_horizontal"
-				android:textSize="14sp" />
+			android:layout_height="wrap_content" android:padding="20dip"
+			android:layout_alignParentBottom="true" android:id="@+id/bottombar">
+			<Button android:id="@+id/btn_add_companion"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:layout_gravity="bottom" style="@style/MediumRoundButton"
+				android:text="Add Companion" />
 		</LinearLayout>
-	</ScrollView>
-	<RelativeLayout android:layout_marginTop="-70dip"
-		android:gravity="bottom" android:layout_height="wrap_content"
-		android:layout_width="fill_parent">
-		<Button android:id="@+id/btn_add_companion"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:layout_gravity="bottom|center_horizontal"
-			android:layout_marginLeft="10dip" android:layout_marginRight="10dip"
-			style="@style/MediumRoundButton" android:text="Add Companion" />
+		<ListView android:id="@+id/list_companion"
+			android:background="@color/winered_verydark" android:dividerHeight="1px"
+			android:cacheColorHint="#00000000" android:divider="#2b0201"
+			android:fadingEdge="vertical" android:fadingEdgeLength="10dp"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:layout_above="@+id/bottombar">
+		</ListView>
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:id="@+id/empty_companions_text"
+			android:text="You don't have any companions yet!" style="@style/BlackShadowedFont"
+			android:padding="10dp" android:gravity="center_horizontal"
+			android:textSize="14sp" android:layout_above="@+id/bottombar" />
 	</RelativeLayout>
 </LinearLayout>

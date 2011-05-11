@@ -1,6 +1,7 @@
 package com.questo.android;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import android.app.Activity;
@@ -36,64 +37,75 @@ public class CompanionsView extends Activity {
         topbar.addButtonLeftMost(this, "Requests");
 
         CompanionsListAdapter adapter = new CompanionsListAdapter(companions);
-        
+
         ListView companionsList = (ListView) findViewById(R.id.list_companion);
         companionsList.setEmptyView(findViewById(R.id.empty_companions_text));
         companionsList.setAdapter(adapter);
-        
+
         EditText searchbox = (EditText) findViewById(R.id.search_box);
         searchbox.addTextChangedListener(new SearchBoxTextWatcher(adapter));
-        
+
     }
-    
+
     private class SearchBoxTextWatcher implements TextWatcher {
-        
+
         private CompanionsListAdapter adapter;
-        
+
         public SearchBoxTextWatcher(CompanionsListAdapter adapter) {
             this.adapter = adapter;
         }
 
         @Override
         public void afterTextChanged(Editable s) {
-            
+
         }
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            
+
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            //TODO
+            adapter.filter(s);
         }
-        
+
     }
 
     private class CompanionsListAdapter extends BaseAdapter {
 
         private List<User> companions;
+        private List<User> data;
         private LayoutInflater inflater;
 
         public CompanionsListAdapter(List<User> users) {
             this.companions = users;
+            this.data = users;
             this.inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-        
-        public void filterItems(List<User> users) {
-            this.companions.clear();
-            this.companions.addAll(users);
+
+        public void filter(CharSequence s) {
+            data = companions;
+            Iterator<User> iter = this.data.iterator();
+
+            while (iter.hasNext()) {
+                User next = iter.next();
+                if (!next.getName().contains(s)) {
+                    iter.remove();
+                }
+            }
+            
+            notifyDataSetChanged();
         }
 
         @Override
         public int getCount() {
-            return this.companions.size();
+            return this.data.size();
         }
 
         @Override
         public Object getItem(int pos) {
-            return this.companions.get(pos);
+            return this.data.get(pos);
         }
 
         @Override
@@ -103,7 +115,7 @@ public class CompanionsView extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            User user = this.companions.get(position);
+            User user = this.data.get(position);
             LinearLayout view = (LinearLayout) this.inflater.inflate(R.layout.companion_listitem, null, false);
 
             ImageView image = (ImageView) view.findViewById(R.id.companion_img);
@@ -111,7 +123,7 @@ public class CompanionsView extends Activity {
 
             TextView name = (TextView) view.findViewById(R.id.companion_name);
             name.setText(user.getName());
-            //view.setOnClickListener(new UserClickListener(user));
+            // view.setOnClickListener(new UserClickListener(user));
             return view;
         }
 
