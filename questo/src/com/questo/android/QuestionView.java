@@ -103,7 +103,7 @@ public class QuestionView extends Activity {
         bar.setProgressDrawable(getResources().getDrawable(R.drawable.bg_progressbar));
         bar.setProgress(this.calcProgress(currentQuestion + 1, count));
 
-        final Button counter = this.topbar.addButtonLeftMost(getApplicationContext(), "30", false);
+        final Button counter = this.topbar.addButtonLeftMost(getApplicationContext(), "30");
         counter.setClickable(false);
 
         TextView question = (TextView) findViewById(R.id.question);

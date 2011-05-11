@@ -53,7 +53,7 @@ public class PlaceDetailsView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.place);
         this.topbar = (TopBar) findViewById(R.id.topbar);
-        this.topbar.addButtonLeftMost(getApplicationContext(), "+", false);
+        this.topbar.addButtonLeftMost(getApplicationContext(), "+");
         this.app = ((App) getApplicationContext());
         this.mngr = this.app.getModelManager();
 

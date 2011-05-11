@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:id="@+id/TournamentRelativeLayout" android:orientation="vertical"
+	android:background="@drawable/bg_papyrus">
+	<com.questo.android.view.TopBar
+		android:id="@+id/topbar" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" questo:label_centered="true"
+		questo:label="New Tournament" />
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:gravity="left"
+			android:padding="10dp" android:orientation="vertical">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" style="@style/NormalBlackFont"
+				android:id="@+id/label_name" android:text="Enter a name:" />
+			<EditText android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:id="@+id/edit_name"
+				android:layout_marginTop="5dp" />
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
+				<TextView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" style="@style/NormalBlackFont"
+					android:id="@+id/label_places" android:text="Select places:"
+					android:layout_marginTop="10dp" />
+			</LinearLayout>
+			<ListView android:layout_height="110dp"
+				android:layout_width="fill_parent" android:id="@+id/tournament_questlist"
+				android:background="@drawable/img_boxborder" android:dividerHeight="1px"
+				android:cacheColorHint="#00000000" android:divider="#20000000"
+				android:fadingEdge="none" android:layout_marginTop="10dp"
+				android:layout_marginBottom="20dp" android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp" />
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" style="@style/NormalBlackFont"
+				android:id="@+id/label_participants" />
+			<ListView android:layout_height="110dp"
+				android:layout_width="fill_parent" android:id="@+id/tournament_contestantslist"
+				android:background="@drawable/img_boxborder" android:dividerHeight="1px"
+				android:cacheColorHint="#00000000" android:divider="#20000000"
+				android:fadingEdge="none" android:layout_marginTop="10dp"
+				android:layout_marginBottom="10dp" android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp" />
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:padding="10dp"
+				android:orientation="vertical">
+				<Button android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:id="@+id/invite"
+					android:text="Challenge a companion!" style="@style/MediumRoundButton"
+					android:layout_gravity="center_horizontal" android:layout_weight="2"
+					android:layout_margin="10dp" />
+				<Button android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:id="@+id/participate_in_tournament"
+					android:text="Participate!" style="@style/MediumRoundButton"
+					android:layout_gravity="center_horizontal" android:visibility="gone"
+					android:layout_margin="10dp" />
+				<Button android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:id="@+id/cancel_tournament"
+					android:text="Cancel Participation" style="@style/MediumRoundButtonAlternative"
+					android:layout_gravity="center_horizontal" android:visibility="gone"
+					android:layout_margin="10dp" />
+			</LinearLayout>
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>
