@@ -51,13 +51,29 @@ public class QuestListView extends Activity {
 		setContentView(R.layout.quest_list);
 
 		TopBar topBar = (TopBar) findViewById(R.id.topbar);
-		Button addQuestionBtn = topBar.addButtonLeftMost(this.getApplicationContext(), "+");
-		Button showMapBtn = topBar.addToggleButtonLeftMost(this.getApplicationContext(), "List", true);
+		Button addQuestionBtn = topBar.addButtonLeftMost(
+				this.getApplicationContext(), "+");
+		Button showMapBtn = topBar.addToggleButtonLeftMost(
+				this.getApplicationContext(), "List", true);
 
 		addQuestionBtnId = addQuestionBtn.getId();
 		showMapBtnId = showMapBtn.getId();
-		addQuestionBtn.setOnClickListener(new QuestListListener());
-		showMapBtn.setOnClickListener(new QuestListListener());
+		addQuestionBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				QuestListView.this.openContextMenu(v);
+			}
+		});
+		showMapBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent showMapView = new Intent(QuestListView.this,
+						QuestMapView.class);
+				startActivity(showMapView);				
+			}
+		});
 		registerForContextMenu(addQuestionBtn);
 
 		ListView questList = (ListView) findViewById(R.id.QuestList);
@@ -71,7 +87,7 @@ public class QuestListView extends Activity {
 				0, new QuestListListener());
 		Location location = locationManager
 				.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		if(location!=null){
+		if (location != null) {
 			this.currentLocation = new GeoPoint(
 					(int) (location.getLatitude() * 1E6),
 					(int) (location.getLongitude() * 1E6));
@@ -82,7 +98,7 @@ public class QuestListView extends Activity {
 	}
 
 	private void refreshList() {
-		if(this.currentLocation!=null){
+		if (this.currentLocation != null) {
 			this.nearbyPlaces = this.modelManager.getPlacesNearby(
 					this.currentLocation.getLatitudeE6() / 1e6,
 					this.currentLocation.getLongitudeE6() / 1e6);
@@ -115,29 +131,14 @@ public class QuestListView extends Activity {
 		return super.onContextItemSelected(item);
 
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		startActivity(new Intent(this, HomeView.class));
 	}
 
-	private class QuestListListener implements OnClickListener,
-			LocationListener, OnItemClickListener {
-
-		@Override
-		public void onClick(View v) {
-			if (v instanceof Button) {
-				Button btn = (Button) v;
-				if (btn.getText().equals("m")) {
-					Intent showMapView = new Intent(QuestListView.this,
-							QuestMapView.class);
-					startActivity(showMapView);
-				}
-				if (btn.getText().equals("+")) {
-					QuestListView.this.openContextMenu(v);
-				}
-			}
-		}
+	private class QuestListListener implements LocationListener,
+			OnItemClickListener {
 
 		@Override
 		public void onLocationChanged(Location location) {
@@ -205,7 +206,8 @@ public class QuestListView extends Activity {
 				if (nameText != null) {
 					nameText.setText(current.getName());
 				}
-				if ((distanceText != null) && (QuestListView.this.currentLocation != null)) {
+				if ((distanceText != null)
+						&& (QuestListView.this.currentLocation != null)) {
 					Location placeLocation = new Location("gps");
 					placeLocation.setLatitude(current.getLatitude());
 					placeLocation.setLongitude(current.getLongitude());

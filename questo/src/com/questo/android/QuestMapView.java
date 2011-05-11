@@ -33,6 +33,8 @@ import com.questo.android.view.TopBar;
 
 public class QuestMapView extends MapActivity {
 
+	public final static int ADD_PLACE_REQUEST_CODE = 1;
+
 	private MapView questMap;
 	private List<Place> nearbyPlaces;
 	private GeoPoint currentLocation;
@@ -62,11 +64,27 @@ public class QuestMapView extends MapActivity {
 		setContentView(R.layout.quest_map);
 
 		TopBar topBar = (TopBar) findViewById(R.id.topbar);
-		Button addQuestionBtn = topBar.addButtonLeftMost(this.getApplicationContext(), "+");
-		Button showListBtn = topBar.addToggleButtonLeftMost(this.getApplicationContext(), "List", false);
+		Button addQuestionBtn = topBar.addButtonLeftMost(
+				this.getApplicationContext(), "+");
+		Button showListBtn = topBar.addToggleButtonLeftMost(
+				this.getApplicationContext(), "List", false);
 
-		showListBtn.setOnClickListener(new MapListener());
-		addQuestionBtn.setOnClickListener(new MapListener());
+		showListBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent showListView = new Intent(QuestMapView.this,
+						QuestListView.class);
+				startActivity(showListView);
+			}
+		});
+		addQuestionBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				QuestMapView.this.openContextMenu(v);
+			}
+		});
 		this.registerForContextMenu(addQuestionBtn);
 
 		initMapView();
@@ -100,7 +118,7 @@ public class QuestMapView extends MapActivity {
 	}
 
 	private void refreshMap() {
-		if(this.currentLocation!=null){
+		if (this.currentLocation != null) {
 			this.nearbyPlaces = QuestMapView.this.modelManager.getPlacesNearby(
 					this.currentLocation.getLatitudeE6() / 1e6,
 					this.currentLocation.getLongitudeE6() / 1e6);
@@ -120,7 +138,8 @@ public class QuestMapView extends MapActivity {
 
 		if (item.getTitle().equals("Add Place")) {
 			Intent addPlaceIntent = new Intent(this, AddPlace.class);
-			startActivity(addPlaceIntent);
+			// startActivity(addPlaceIntent);
+			startActivityForResult(addPlaceIntent, ADD_PLACE_REQUEST_CODE);
 		}
 		if (item.getTitle().equals("Add Question")) {
 			Intent addQuestionIntent = new Intent(this, AddQuestion.class);
@@ -129,6 +148,11 @@ public class QuestMapView extends MapActivity {
 
 		return super.onContextItemSelected(item);
 
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		this.refreshMap();
 	}
 
 	public class MapOverlay extends ItemizedOverlay<OverlayItem> {
@@ -184,12 +208,27 @@ public class QuestMapView extends MapActivity {
 								Context.LAYOUT_INFLATER_SERVICE);
 				this.placeDetails = (RelativeLayout) inflater.inflate(
 						R.layout.quest_map_item, null);
-				this.placeDetails.setOnClickListener(new MapListener());
+				this.placeDetails.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						if (QuestMapView.this.currentPlace != null) {
+							Intent placeDetails = new Intent(QuestMapView.this,
+									PlaceDetailsView.class);
+							placeDetails.putExtra(
+									Constants.TRANSITION_OBJECT_UUID,
+									QuestMapView.this.currentPlace.getUuid());
+							startActivity(placeDetails);
+						}
+					}
+				});
 			}
 			QuestMapView.this.questMap.removeView(this.placeDetails);
 			QuestMapView.this.questMap.addView(this.placeDetails,
 					new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
-							MapView.LayoutParams.WRAP_CONTENT, item.getPoint(), 0, DisplayHelper.dpToPixel(-57, QuestMapView.this), MapView.LayoutParams.BOTTOM_CENTER));
+							MapView.LayoutParams.WRAP_CONTENT, item.getPoint(),
+							0, DisplayHelper.dpToPixel(-57, QuestMapView.this),
+							MapView.LayoutParams.BOTTOM_CENTER));
 
 			TextView placeNameText = (TextView) this.placeDetails
 					.findViewById(R.id.QuestMapPlaceDetailsName);
@@ -203,31 +242,7 @@ public class QuestMapView extends MapActivity {
 		}
 	}
 
-	private class MapListener implements OnClickListener, LocationListener {
-
-		@Override
-		public void onClick(View v) {
-			if (v instanceof Button) {
-				Button pressedButton = (Button) v;
-				if (pressedButton.getText().equals("-")) {
-					Intent showListView = new Intent(QuestMapView.this,
-							QuestListView.class);
-					startActivity(showListView);
-				}
-				if (pressedButton.getText().equals("+")) {
-					QuestMapView.this.openContextMenu(v);
-				}
-			}
-			if (v.getId() == R.id.QuestMapPlaceDetailsLayout) {
-				if (QuestMapView.this.currentPlace != null) {
-					Intent placeDetails = new Intent(QuestMapView.this,
-							PlaceDetailsView.class);
-					placeDetails.putExtra(Constants.TRANSITION_OBJECT_UUID,
-							QuestMapView.this.currentPlace.getUuid());
-					startActivity(placeDetails);
-				}
-			}
-		}
+	private class MapListener implements LocationListener {
 
 		@Override
 		public void onLocationChanged(Location location) {

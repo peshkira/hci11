@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import com.questo.android.model.Question;
 
@@ -23,6 +25,9 @@ public class AddQuestion extends Activity {
 	}
 	
 	private void refreshObject(){
+		EditText questionText = (EditText)findViewById(R.id.AddQuestionQuestion);
+		RadioGroup questionType = (RadioGroup)findViewById(R.id.AddQuestionQuestionType);
+		
 		
 	}	
 
