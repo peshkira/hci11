@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.questo.android.common.Constants;
+import com.questo.android.helper.FontHelper;
 import com.questo.android.view.TopBar;
 
 public class QuestCompleteView extends Activity {
@@ -35,6 +36,9 @@ public class QuestCompleteView extends Activity {
         int size = extras.getInt(Constants.QUEST_SIZE);
         int correctAns = extras.getInt(Constants.NR_ANSWERED_QUESTIONS_CORRECT);
 
+        TextView congrats = (TextView)findViewById(R.id.txt_congrats);
+        congrats.setTypeface(FontHelper.getMedievalFont(this));
+        
         TextView cngrtDetails = (TextView) findViewById(R.id.txt_congrats_details);
         cngrtDetails.setText(Constants.CONGRATS_DETAILS.replaceFirst("\\{\\}", correctAns +"").replace("{}", size + ""));
         
