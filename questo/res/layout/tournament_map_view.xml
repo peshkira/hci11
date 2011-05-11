@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:layout_width="match_parent" android:layout_height="match_parent">
+	<com.questo.android.view.TopBar
+		android:id="@+id/topbar" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" questo:label_centered="false"
+		questo:label="@string/select_places" />
+	<AbsoluteLayout android:id="@+id/QuestMapLayout"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:layout_below="@id/topbar">
+		<com.google.android.maps.MapView
+			android:id="@+id/TournamentMap" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:enabled="true"
+			android:clickable="true" android:apiKey="@string/apikey" />
+	</AbsoluteLayout>
+	<Button android:id="@+id/TournamentMapDoneBtn"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_below="@id/TournamentMap"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true" android:text="Done" />
+</RelativeLayout>
