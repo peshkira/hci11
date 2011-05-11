@@ -8,13 +8,21 @@
 		questo:label_centered="true" />
 	<ScrollView android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:fillViewport="true">
-		<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-			android:id="@+id/trophy_grid" android:background="@drawable/bg_papyrus"
-			android:layout_width="fill_parent" android:layout_height="fill_parent"
-			android:layout_marginTop="15dip" android:columnWidth="90dp"
-			android:numColumns="3" android:horizontalSpacing="10dp"
-			android:verticalSpacing="30dp" android:stretchMode="columnWidth"
-			android:gravity="center" android:listSelector="@android:color/transparent">
-		</GridView>
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:orientation="vertical"
+			android:padding="10dp" android:background="@drawable/bg_papyrus">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" style="@style/NormalBlackFont"
+				android:text="With your bare hands, you have earned these trophies and prizes:"
+				android:layout_marginBottom="10dp" />
+			<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+				android:id="@+id/trophy_grid" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:background="@drawable/img_boxborder" 
+				android:columnWidth="90dp" android:numColumns="3"
+				android:horizontalSpacing="10dp" android:verticalSpacing="30dp"
+				android:stretchMode="columnWidth" android:gravity="center"
+				android:listSelector="@android:color/transparent">
+			</GridView>
+		</LinearLayout>
 	</ScrollView>
 </LinearLayout>
