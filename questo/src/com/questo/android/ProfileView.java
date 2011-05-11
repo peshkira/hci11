@@ -3,23 +3,44 @@ package com.questo.android;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.TabHost.TabSpec;
 
+import com.questo.android.common.Constants;
+import com.questo.android.model.User;
 import com.questo.android.view.ProfileTabPlaces;
 import com.questo.android.view.ProfileTabThrophies;
+import com.questo.android.view.TopBar;
 
 public class ProfileView extends TabActivity{
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);   
+        setContentView(R.layout.user_profile);
         
-        this.initView();
+        this.initView(this.getIntent().getExtras());
     }
     
-    private void initView(){
-        setContentView(R.layout.user_profile);
+    private void initView(Bundle extras){
+        User user;
+        App app = (App) getApplicationContext();
+        ModelManager mngr = app.getModelManager();
+        
+        TopBar topbar = (TopBar) findViewById(R.id.topbar);
+        TextView state = (TextView) findViewById(R.id.UserProfileStateText);
+        state.setText(Html.fromHtml("You are a King<br/>Points earned: 2337"));
+        
+        if (extras != null) {
+            String userUuid = extras.getString(Constants.TRANSITION_OBJECT_UUID);
+            user = mngr.getGenericObjectByUuid(userUuid, User.class);
+            topbar.setLabel(user.getName());
+        } else {
+            user = app.getLoggedinUser();
+            topbar.setLabel("You");
+        }
         
         TabHost tabHost = getTabHost();
         TabSpec spec;
@@ -27,13 +48,13 @@ public class ProfileView extends TabActivity{
         
         intent = new Intent().setClass(this, ProfileTabThrophies.class);
         spec = tabHost.newTabSpec("ProfileTabThrophies");
-        spec.setIndicator("Throphy", getResources().getDrawable(R.drawable.tab));
+        spec.setIndicator("Throphy", getResources().getDrawable(R.drawable.img_trophy_thumb));
         spec.setContent(intent);
         tabHost.addTab(spec);
         
         intent = new Intent().setClass(this, ProfileTabPlaces.class);
         spec = tabHost.newTabSpec("ProfileTabPlaces");
-        spec.setIndicator("Places");
+        spec.setIndicator("Places", getResources().getDrawable(R.drawable.img_questo_sign_thumb));
         spec.setContent(intent);
         tabHost.addTab(spec);                      
         

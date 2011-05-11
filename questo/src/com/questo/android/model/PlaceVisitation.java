@@ -10,14 +10,18 @@ public class PlaceVisitation {
 	
 	public static final String UUID = "UUID";
 
+    public static final String PLACE_UUID = "PLACE_UUID";
+
+    public static final String USER = "USER";
+
 	@DatabaseField(generatedId = true)
 	private Integer id;
 	@DatabaseField(columnName=UUID)
 	private String uuid;
-	@DatabaseField(foreign = true)
+	@DatabaseField(columnName=USER, foreign = true)
 	private User user;
-	@DatabaseField(foreign = true)
-	private Place place;
+	@DatabaseField(columnName=PLACE_UUID)
+	private String place;
 	@DatabaseField
 	private Date visitedAt;
 
@@ -28,7 +32,7 @@ public class PlaceVisitation {
 	public PlaceVisitation() {
 	}
 
-	public PlaceVisitation(String uuid, User user, Place place, Date visitedAt) {
+	public PlaceVisitation(String uuid, User user, String place, Date visitedAt) {
 		super();
 		this.uuid = uuid;
 		this.user = user;
@@ -48,7 +52,7 @@ public class PlaceVisitation {
 		return user;
 	}
 
-	public Place getPlace() {
+	public String getPlace() {
 		return place;
 	}
 

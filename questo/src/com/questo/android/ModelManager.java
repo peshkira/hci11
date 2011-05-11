@@ -15,6 +15,7 @@ import com.questo.android.common.Constants;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Companionship;
 import com.questo.android.model.Place;
+import com.questo.android.model.PlaceVisitation;
 import com.questo.android.model.Tournament;
 import com.questo.android.model.TournamentMembership;
 import com.questo.android.model.TournamentRequest;
@@ -121,10 +122,12 @@ public class ModelManager {
         try {
 
             QueryBuilder<Companionship, Integer> initiator = queryBuilder(Companionship.class);
-            initiator.selectColumns(Companionship.CONFIRMER_UUID).where().eq(Companionship.CONFIRMED, true).and().eq(Companionship.INITIATOR_UUID, user.getUuid());
-            
+            initiator.selectColumns(Companionship.CONFIRMER_UUID).where().eq(Companionship.CONFIRMED, true).and()
+                    .eq(Companionship.INITIATOR_UUID, user.getUuid());
+
             QueryBuilder<Companionship, Integer> confirmer = queryBuilder(Companionship.class);
-            confirmer.selectColumns(Companionship.INITIATOR_UUID).where().eq(Companionship.CONFIRMED, true).and().eq(Companionship.CONFIRMER_UUID, user.getUuid());
+            confirmer.selectColumns(Companionship.INITIATOR_UUID).where().eq(Companionship.CONFIRMED, true).and()
+                    .eq(Companionship.CONFIRMER_UUID, user.getUuid());
 
             QueryBuilder<User, Integer> companions = queryBuilder(User.class);
             companions.where().in(User.UUID, initiator).or().in(User.UUID, confirmer).prepare();
@@ -358,5 +361,21 @@ public class ModelManager {
     private <T> QueryBuilder<T, Integer> queryBuilder(Class<T> queryClass) throws SQLException {
         return db().getCachedDao(queryClass).queryBuilder();
     }
+
+    public List<Place> getPlacesForUser(User user) {
+        try {
+            QueryBuilder<PlaceVisitation, Integer> visitations = queryBuilder(PlaceVisitation.class);
+            visitations.selectColumns(PlaceVisitation.PLACE_UUID).where().eq(PlaceVisitation.USER, user).prepare();
+
+            QueryBuilder<Place, Integer> trophy = queryBuilder(Place.class);
+            trophy.where().in(Place.UUID, visitations);
+
+            return db().getCachedDao(Place.class).query(trophy.prepare());
+        } catch (SQLException e) {
+            handleException(e);
+        }
+        return new ArrayList<Place>();
+    }
+    
 
 }

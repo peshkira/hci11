@@ -207,7 +207,7 @@ public class PlaceDetailsView extends Activity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             Trophy trophy = mData.get(position);
-            LinearLayout view = (LinearLayout) mInflater.inflate(R.layout.place_trophy_listitem, null, false);
+            LinearLayout view = (LinearLayout) mInflater.inflate(R.layout.trophy_listitem, null, false);
 
             ImageView image = (ImageView) view.findViewById(R.id.trophy_img);
             // image.setImageResource(trophy.getImgUrl);
