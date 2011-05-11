@@ -1,24 +1,24 @@
 package com.questo.android.model.test;
 
 import java.util.Date;
-import java.util.UUID;
 
 import com.questo.android.ModelManager;
 import com.questo.android.helper.Security;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Companionship;
 import com.questo.android.model.Place;
+import com.questo.android.model.PlaceVisitation;
 import com.questo.android.model.PossibleAnswer;
 import com.questo.android.model.PossibleAnswerImpl;
 import com.questo.android.model.PossibleAnswerMultipleChoice;
 import com.questo.android.model.PossibleAnswerNumberGuessing;
 import com.questo.android.model.Question;
-import com.questo.android.model.TournamentMembership;
-import com.questo.android.model.TournamentRequest;
-import com.questo.android.model.TournamentTaskDone;
 import com.questo.android.model.Question.Type;
 import com.questo.android.model.Tournament;
+import com.questo.android.model.TournamentMembership;
+import com.questo.android.model.TournamentRequest;
 import com.questo.android.model.TournamentTask;
+import com.questo.android.model.TournamentTaskDone;
 import com.questo.android.model.Trophy;
 import com.questo.android.model.TrophyForUser;
 import com.questo.android.model.User;
@@ -66,6 +66,9 @@ public class TestData {
 		peterskirche.setLatitude(48.209405);
 		peterskirche.setLongitude(16.370088);	
         manager.create(peterskirche, Place.class);
+        
+        PlaceVisitation visitation = new PlaceVisitation(UUIDgen.getUUID(), mainuser, stephansdom.getUuid(), new Date());
+        manager.create(visitation, PlaceVisitation.class);
 
         Question q_stephansdom_1 = new Question(UUIDgen.getUUID(), Type.MULTIPLE_CHOICE,
                 "How high is the southern tower of the Stephansdom?");

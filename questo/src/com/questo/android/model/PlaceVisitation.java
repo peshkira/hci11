@@ -37,7 +37,7 @@ public class PlaceVisitation {
 		this.uuid = uuid;
 		this.user = user;
 		this.place = place;
-		this.visitedAt = visitedAt;
+		this.setVisitedAt(visitedAt);
 	}
 
 	public String getUuid() {
@@ -60,6 +60,10 @@ public class PlaceVisitation {
 		return visitedAt;
 	}
 
+	public void setVisitedAt(Date visitedAt) {
+	    this.visitedAt = visitedAt;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if (!this.getClass().equals(o.getClass()))
@@ -67,5 +71,6 @@ public class PlaceVisitation {
 		PlaceVisitation other = (PlaceVisitation) o;
 		return other.id.equals(this.id);
 	}
+
 
 }

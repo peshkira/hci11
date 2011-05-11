@@ -376,6 +376,22 @@ public class ModelManager {
         }
         return new ArrayList<Place>();
     }
-    
+
+    public PlaceVisitation getPlaceVisitationForUserAndPlace(User user, String placeUuid) {
+        try {
+            QueryBuilder<PlaceVisitation, Integer> visitations = queryBuilder(PlaceVisitation.class);
+            visitations.where().eq(PlaceVisitation.USER, user).and().eq(PlaceVisitation.PLACE_UUID, placeUuid);
+
+            List<PlaceVisitation> list = db().getCachedDao(PlaceVisitation.class).query(visitations.prepare());
+            if (!list.isEmpty()) {
+                return list.get(0);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            handleException(e);
+        }
+        return null;
+    }
 
 }

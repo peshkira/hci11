@@ -1,6 +1,7 @@
 package com.questo.android;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -24,6 +25,7 @@ import com.questo.android.common.Constants;
 import com.questo.android.helper.DisplayHelper;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
+import com.questo.android.model.PlaceVisitation;
 import com.questo.android.model.Quest;
 import com.questo.android.model.QuestHasQuestion;
 import com.questo.android.model.Question;
@@ -46,7 +48,7 @@ public class PlaceDetailsView extends Activity {
     private Place place;
 
     private int questionCount;
-    
+
     private ModelManager mngr;
 
     private App app;
@@ -87,6 +89,18 @@ public class PlaceDetailsView extends Activity {
                 v = (TextView) findViewById(R.id.answered_questions);
                 // TODO
                 v.setText(Html.fromHtml(Constants.NR_ANSWERED_QUESTIONS_LABEL.replace(Constants.PLACEHOLDER, "" + 0)));
+
+                PlaceVisitation visitation = mngr.getPlaceVisitationForUserAndPlace(app.getLoggedinUser(),
+                        place.getUuid());
+                if (visitation == null) {
+                    visitation = new PlaceVisitation(UUIDgen.getUUID(), app.getLoggedinUser(), place.getUuid(),
+                            new Date());
+                    mngr.create(visitation, PlaceVisitation.class);
+                } else {
+                    visitation.setVisitedAt(new Date());
+                    mngr.update(visitation, PlaceVisitation.class);
+                }
+
             }
         } else {
             // fetch test place for now...
@@ -101,19 +115,17 @@ public class PlaceDetailsView extends Activity {
 
         b = (Button) findViewById(R.id.start_quest);
         if (questionCount > 0) {
-        	b.setOnClickListener(new StartQuestListener());
-        	int questionCountForQuest = Math.min(Constants.QUESTIONS_PER_PLACE, questionCount);
-        	b.setText(Html.fromHtml("<big><b>Start Quest</b></big><small><br/><br/>" + questionCountForQuest + " questions</small>"));
+            b.setOnClickListener(new StartQuestListener());
+            int questionCountForQuest = Math.min(Constants.QUESTIONS_PER_PLACE, questionCount);
+            b.setText(Html.fromHtml("<big><b>Start Quest</b></big><small><br/><br/>" + questionCountForQuest
+                    + " questions</small>"));
+        } else {
+            b.setEnabled(false);
+            b.setText(Html.fromHtml("<big><b>Start Quest</b></big><small><br/><br/>No questions</small>"));
+            b.setBackgroundResource(R.drawable.btn_round_disabled);
+            int dp20 = DisplayHelper.dpToPixel(20, this);
+            b.setPadding(dp20, dp20, dp20, dp20);
         }
-        else {
-        	b.setEnabled(false);
-        	b.setText(Html.fromHtml("<big><b>Start Quest</b></big><small><br/><br/>No questions</small>"));
-        	b.setBackgroundResource(R.drawable.btn_round_disabled);
-        	int dp20 = DisplayHelper.dpToPixel(20, this);
-        	b.setPadding(dp20, dp20, dp20, dp20);
-        }
-        
-        
 
         ListView trophyList = (ListView) findViewById(R.id.placetrophies);
         trophyList.setEmptyView(findViewById(R.id.empty_trophylist_text));
