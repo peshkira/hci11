@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.j256.ormlite.dao.CloseableIterator;
 import com.questo.android.common.Constants;
+import com.questo.android.helper.DisplayHelper;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
 import com.questo.android.model.Quest;
@@ -44,6 +45,8 @@ public class PlaceDetailsView extends Activity {
 
     private Place place;
 
+    private int questionCount;
+    
     private ModelManager mngr;
 
     private App app;
@@ -75,6 +78,7 @@ public class PlaceDetailsView extends Activity {
         if (object != null) {
             if (object instanceof Place) {
                 this.place = (Place) object;
+                this.questionCount = place.getQuestions().size();
                 this.topbar.setLabel(place.getName());
                 TextView v = (TextView) findViewById(R.id.nr_questions);
                 v.setText(Html.fromHtml(Constants.NR_QUESTIONS_LABEL.replace(Constants.PLACEHOLDER, ""
@@ -96,8 +100,20 @@ public class PlaceDetailsView extends Activity {
         b.setOnClickListener(new AddQuestionListener());
 
         b = (Button) findViewById(R.id.start_quest);
-        b.setOnClickListener(new StartQuestListener());
-        b.setText(Html.fromHtml("<big><b>Start Quest</b></big><small><br/><br/>10 questions</small>"));
+        if (questionCount > 0) {
+        	b.setOnClickListener(new StartQuestListener());
+        	int questionCountForQuest = Math.min(Constants.QUESTIONS_PER_PLACE, questionCount);
+        	b.setText(Html.fromHtml("<big><b>Start Quest</b></big><small><br/><br/>" + questionCountForQuest + " questions</small>"));
+        }
+        else {
+        	b.setEnabled(false);
+        	b.setText(Html.fromHtml("<big><b>Start Quest</b></big><small><br/><br/>No questions</small>"));
+        	b.setBackgroundResource(R.drawable.btn_round_disabled);
+        	int dp20 = DisplayHelper.dpToPixel(20, this);
+        	b.setPadding(dp20, dp20, dp20, dp20);
+        }
+        
+        
 
         ListView trophyList = (ListView) findViewById(R.id.placetrophies);
         trophyList.setEmptyView(findViewById(R.id.empty_trophylist_text));
