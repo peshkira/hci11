@@ -12,7 +12,7 @@
 		<LinearLayout android:orientation="horizontal"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:layout_marginTop="20px" android:layout_gravity="center_horizontal">
-			<Button android:id="@+id/popup_menu_button1" android:text="Ok"
+			<Button android:id="@+id/popup_menu_button1" android:text="Logout"
 				style="@style/MediumRoundButton" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:layout_marginRight="3px" />
 			<Button android:id="@+id/popup_menu_button2" android:text="Cancel"

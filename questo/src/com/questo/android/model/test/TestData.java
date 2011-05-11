@@ -36,7 +36,7 @@ public class TestData {
         User xyUser = new User(UUIDgen.getUUID(), new Date());
         xyUser.setEmail("xy@xy.com");
         xyUser.setPasswordSalt("lolcat");
-        xyUser.setPasswordHash(Security.md5("xy")); // pw = questo ;)
+        xyUser.setPasswordHash(Security.md5("xylolcat")); // pw = questo ;)
         xyUser.setName("Xavier Ypsilon");
         manager.create(xyUser, User.class);
 
