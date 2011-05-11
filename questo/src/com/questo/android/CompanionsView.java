@@ -28,10 +28,14 @@ public class CompanionsView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.companions);
 
+        App app = (App) this.getApplicationContext();
+        ModelManager mngr = app.getModelManager();
+        List<User> companions = mngr.getCompanionsForUser(app.getLoggedinUser());
+        System.out.println("SIZE: " + companions.size());
         TopBar topbar = (TopBar) findViewById(R.id.topbar);
         topbar.addButtonLeftMost(this, "Requests");
 
-        CompanionsListAdapter adapter = new CompanionsListAdapter(new ArrayList<User>());
+        CompanionsListAdapter adapter = new CompanionsListAdapter(companions);
         
         ListView companionsList = (ListView) findViewById(R.id.list_companion);
         companionsList.setEmptyView(findViewById(R.id.empty_companions_text));
