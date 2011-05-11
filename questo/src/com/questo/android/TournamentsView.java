@@ -85,6 +85,15 @@ public class TournamentsView extends Activity {
 			}
 		});
 
+		Button newTournamentBtn = (Button)this.findViewById(R.id.tournament_create);
+		newTournamentBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent tournamentCreation = new Intent(TournamentsView.this, NewTournamentView.class);
+				startActivity(tournamentCreation);
+			}
+		});
+		
 		ListView tournamentList = (ListView) this.findViewById(R.id.tournamentlist);
 		tournamentList.setEmptyView(findViewById(R.id.empty_tournamentlist_text));
 		tournamentList.setOnItemClickListener(new OnItemClickListener() {

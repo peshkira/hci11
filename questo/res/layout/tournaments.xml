@@ -15,7 +15,7 @@
 			android:layout_height="wrap_content" style="@style/NormalBlackFont"
 			android:text="You can organize a new tournament and invite your companions or opponents:" />
 		<Button android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@+id/TournamentCreateTournamentBtn"
+			android:layout_height="wrap_content" android:id="@+id/tournament_create"
 			android:text="New Tournament" style="@style/MediumRoundButton"
 			android:layout_gravity="center_horizontal" android:layout_margin="20dp" />
 		<TextView android:layout_width="wrap_content"
