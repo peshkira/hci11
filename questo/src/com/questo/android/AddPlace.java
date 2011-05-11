@@ -16,6 +16,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
 
 public class AddPlace extends MapActivity {
@@ -57,6 +58,7 @@ public class AddPlace extends MapActivity {
 	}
 
 	private void refreshObject() {
+		this.place = new Place(UUIDgen.getUUID(), "");		
 		EditText nameEdit = (EditText) findViewById(R.id.AddPlaceName);
 		if (nameEdit != null) {
 			this.place.setName(nameEdit.getText().toString());
