@@ -18,6 +18,7 @@
 		<activity android:name=".view.ProfileTabPlaces"></activity>
 		<activity android:name=".TrophyView"></activity>
 		<activity android:name=".TrophyRoomView"></activity>
+		<activity android:name=".CompanionsView"></activity>
 		<activity android:name=".PlaceDetailsView"></activity>
 		<activity android:name=".QuestionView"></activity>
 		<activity android:name=".QuestionResult"></activity>

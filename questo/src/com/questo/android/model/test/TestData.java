@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.questo.android.ModelManager;
 import com.questo.android.helper.Security;
 import com.questo.android.helper.UUIDgen;
+import com.questo.android.model.Companionship;
 import com.questo.android.model.Place;
 import com.questo.android.model.PossibleAnswer;
 import com.questo.android.model.PossibleAnswerImpl;
@@ -36,9 +37,26 @@ public class TestData {
         User xyUser = new User(UUIDgen.getUUID(), new Date());
         xyUser.setEmail("xy@xy.com");
         xyUser.setPasswordSalt("lolcat");
-        xyUser.setPasswordHash(Security.md5("xy")); // pw = questo ;)
+        xyUser.setPasswordHash(Security.md5("xylolcat")); // pw = xy ;)
         xyUser.setName("Xavier Ypsilon");
         manager.create(xyUser, User.class);
+        
+        User gandalf = new User(UUIDgen.getUUID(), new Date());
+        gandalf.setEmail("gandalf@questo.com");
+        gandalf.setPasswordSalt("lolcat");
+        gandalf.setPasswordHash(Security.md5("gandalflolcat")); //pw = gandalf ;)
+        gandalf.setName("Gandalf");
+        manager.create(gandalf, User.class);
+        
+        Companionship gand_main = new Companionship(UUIDgen.getUUID(), gandalf.getUuid(), mainuser.getUuid(), new Date());
+        gand_main.setConfirmedAt(new Date());
+        gand_main.setConfirmed(true);
+        manager.create(gand_main, Companionship.class);
+        
+        Companionship main_xy = new Companionship(UUIDgen.getUUID(), mainuser.getUuid(), xyUser.getUuid(), new Date());
+        main_xy.setConfirmedAt(new Date());
+        main_xy.setConfirmed(true);
+        manager.create(main_xy, Companionship.class);
 
         Place stephansdom = new Place(UUIDgen.getUUID(), "Stephansdom");
 		stephansdom.setLatitude(48.208359);
