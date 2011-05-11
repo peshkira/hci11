@@ -7,7 +7,7 @@
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" questo:label_centered="true"
-		questo:label="New Tournament" />
+		questo:label="Select Participants" />
 	<ScrollView android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
 		<LinearLayout android:layout_width="fill_parent"
