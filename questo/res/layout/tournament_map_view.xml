@@ -1,0 +1,17 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:layout_width="match_parent" android:layout_height="match_parent">
+	<com.questo.android.view.TopBar
+		android:id="@+id/topbar" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		questo:label="@string/select_places" questo:label_centered="false" />
+	<AbsoluteLayout android:id="@+id/QuestMapLayout"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:layout_below="@id/topbar">
+		<com.google.android.maps.MapView
+			android:id="@+id/QuestMap" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:enabled="true"
+			android:clickable="true" android:apiKey="@string/apikey"
+			android:layout_below="@id/topbar" />
+	</AbsoluteLayout>
+</RelativeLayout>
