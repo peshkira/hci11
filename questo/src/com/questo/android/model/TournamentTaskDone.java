@@ -7,14 +7,18 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
 public class TournamentTaskDone {
+	
+	public static final String UUID = "UUID";
+	public static final String USER = "USER";
+	public static final String TOURNAMENT_TASK_UUID = "TOURNAMENT_TASK_UUID";
 
 	@DatabaseField(generatedId = true)
 	private Integer id;
-	@DatabaseField
+	@DatabaseField(columnName=UUID)
 	private String uuid;
-	@DatabaseField(foreign = true)
-	private TournamentTask tournamentTask;
-	@DatabaseField(foreign = true)
+	@DatabaseField(columnName=TOURNAMENT_TASK_UUID)
+	private String tournamentTaskUUID;
+	@DatabaseField(foreign = true, columnName=USER)
 	private User user;
 	@DatabaseField
 	private Date completedAt;
@@ -26,11 +30,11 @@ public class TournamentTaskDone {
 	public TournamentTaskDone() {
 	}
 
-	public TournamentTaskDone(String uuid, User user, TournamentTask tournamentTask, Date completedAt) {
+	public TournamentTaskDone(String uuid, User user, String tournamentTaskUUID, Date completedAt) {
 		super();
 		this.uuid = uuid;
 		this.user = user;
-		this.tournamentTask = tournamentTask;
+		this.tournamentTaskUUID = tournamentTaskUUID;
 		this.completedAt = completedAt;
 	}
 
@@ -42,8 +46,8 @@ public class TournamentTaskDone {
 		return id;
 	}
 
-	public TournamentTask getTournamentTask() {
-		return tournamentTask;
+	public String getTournamentTaskUUID() {
+		return tournamentTaskUUID;
 	}
 
 	public User getUser() {

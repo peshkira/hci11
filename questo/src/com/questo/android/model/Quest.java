@@ -7,13 +7,16 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
 public class Quest {
+	
+	public static final String UUID = "UUID";
+	
 	public enum Completion {
 		INITIALIZED, COMPLETED
 	}
 
 	@DatabaseField(generatedId = true)
 	private Integer id;
-	@DatabaseField
+	@DatabaseField(columnName=UUID)
 	private String uuid;
 	@DatabaseField(foreign = true)
 	private Place place;

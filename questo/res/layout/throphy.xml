@@ -2,21 +2,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
 	android:layout_width="match_parent" android:layout_height="match_parent"
-	android:background="#FFFFFF">	
+	android:background="@drawable/bg_papyrus">
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" questo:label="Questo!"
-		questo:label_centered="true" />
-	<ImageView android:layout_height="wrap_content" 
-		android:layout_width="wrap_content" 
-		android:src="@drawable/img_throphy_img" 
-		android:id="@+id/UserProfileImg" 
-		android:layout_below="@id/topbar"/>
-	<TextView android:layout_height="wrap_content" 
-		android:id="@+id/UserProfileStateText"
-		android:layout_width="wrap_content" 
-		android:text="throphy text"
-		android:layout_toRightOf="@id/UserProfileImg"
-		android:layout_below="@id/topbar"
-		android:textColor="@color/winered"/>
+		android:layout_height="wrap_content" questo:label_centered="true" />
+	<ScrollView android:layout_height="fill_parent"
+		android:layout_width="fill_parent" android:fillViewport="true">
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:orientation="vertical"
+			android:gravity="center_vertical|center_horizontal">
+			<LinearLayout android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:orientation="vertical"
+				android:background="@drawable/img_boxborder" android:gravity="center_vertical|center_horizontal">
+				<com.questo.android.view.FlexibleImageView
+					android:id="@+id/trophy_img" android:layout_width="150dp"
+					android:layout_height="150dp" android:layout_centerInParent="true" />
+			</LinearLayout>
+
+			<TextView android:id="@+id/trophy_text"
+				android:layout_height="wrap_content" android:layout_width="wrap_content"
+				android:layout_centerInParent="true" android:gravity="center_horizontal"
+				style="@style/BlackShadowedFont" android:textSize="16sp"
+				android:layout_marginTop="10dp" />
+		</LinearLayout>
+	</ScrollView>
 </RelativeLayout>

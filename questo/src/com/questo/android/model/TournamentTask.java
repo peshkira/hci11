@@ -5,15 +5,20 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
 public class TournamentTask {
+	
+	public final static String ID = "ID";
+	public final static String UUID = "UUID";
+	public final static String TOURNAMENT = "TOURNAMENT";
+	public final static String PLACE_UUID = "PLACE_UUID";
 
-	@DatabaseField(generatedId = true)
+	@DatabaseField(generatedId = true, columnName=ID)
 	private Integer id;
-	@DatabaseField
+	@DatabaseField(columnName = UUID)
 	private String uuid;
-	@DatabaseField(foreign = true)
+	@DatabaseField(foreign = true, columnName=TOURNAMENT)
 	private Tournament tournament;
-	@DatabaseField(foreign = true)
-	private Place place;
+	@DatabaseField(columnName=PLACE_UUID)
+	private String placeUUID;
 
 	/**
 	 * No-args Constructor only for ORM-access, always use parameterized
@@ -22,10 +27,11 @@ public class TournamentTask {
 	public TournamentTask() {
 	}
 
-	public TournamentTask(String uuid, Tournament tournament, Place place) {
+	public TournamentTask(String uuid, Tournament tournament, String placeUUID) {
 		super();
 		this.uuid = uuid;
-		this.place = place;
+		this.tournament = tournament;
+		this.placeUUID = placeUUID;
 	}
 
 	public String getUuid() {
@@ -36,8 +42,8 @@ public class TournamentTask {
 		return id;
 	}
 
-	public Place getPlace() {
-		return place;
+	public String getPlaceUUID() {
+		return placeUUID;
 	}
 	
 	public Tournament getTournament() {

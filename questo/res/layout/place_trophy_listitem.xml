@@ -6,7 +6,7 @@
 	android:paddingBottom="5dp" android:paddingRight="15dp"
 	android:gravity="center_vertical" android:minHeight="55dp">
 	<ImageView android:id="@+id/trophy_img" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:src="@drawable/img_throphy_img_thumb"/>
+		android:layout_height="wrap_content" android:src="@drawable/img_trophy_thumb"/>
 	<TextView android:id="@+id/trophy_name" android:layout_height="wrap_content"
 		android:layout_marginLeft="20dip"
 		android:layout_width="fill_parent" android:width="20dip"

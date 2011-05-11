@@ -1,72 +1,115 @@
 package com.questo.android;
 
-import com.questo.android.model.Tournament;
-import com.questo.android.model.Trophy;
-import com.questo.android.view.ProfileTabThrophies;
-
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class TournamentRequestView extends Activity{
-	
-	
-	private class TournamentListAdapter extends ArrayAdapter<Tournament>{
+import com.questo.android.model.Tournament;
+import com.questo.android.model.TournamentRequest;
+import com.questo.android.model.User;
+import com.questo.android.view.TopBar;
 
-		public TournamentListAdapter(Context context, int textViewResourceId) {
+public class TournamentRequestView extends Activity {
+	App app;
+	TournamentRequestListAdapter adapter;
+
+	private class TournamentRequestListAdapter extends ArrayAdapter<TournamentRequest> {
+
+		public TournamentRequestListAdapter(Context context, int textViewResourceId) {
 			super(context, textViewResourceId);
 		}
-		
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = convertView;
-			if(v==null){
-				LayoutInflater inflater = (LayoutInflater)TournamentRequestView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				v = inflater.inflate(R.layout.tournament_request_list_item, null);
+			if (v == null) {
+				LayoutInflater inflater = (LayoutInflater) TournamentRequestView.this
+						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				v = inflater.inflate(R.layout.tournament_requests_list_item, null);
 			}
+			final TournamentRequest current = this.getItem(position);
+			TextView reqDescription = (TextView) v.findViewById(R.id.request_description);
+			app.getModelManager().refresh(current.getRequestor(), User.class);
+			app.getModelManager().refresh(current.getTournament(), Tournament.class);
+			String requestorName = current.getRequestor().getName() == null ? "Someone" : current.getRequestor()
+					.getName();
+			String tournamentName = current.getTournament().getName() == null ? "Unknown" : current.getTournament()
+					.getName();
+
+			reqDescription.setText(Html.fromHtml("<b>" + requestorName
+					+ "</b> has challenged you to the tournament <b>" + tournamentName + "</b>."));
+
+			Button acceptBtn = (Button) v.findViewById(R.id.accept);
+			acceptBtn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					app.getModelManager().acceptTournamentRequest(current);
+					loadRequests();
+				}
+			});
 			
-			Tournament current = this.getItem(position);
-//			TextView throphyText = (TextView)v.findViewById(R.id.ThrophyListText);
-//			ImageView throphyIcon = (ImageView)v.findViewById(R.id.ThrophyListIcon);
-			
-			if(current!=null){
-//				if(throphyText!=null){
-//					throphyText.setText(current.getName());
-//				}
-//				
-//				if(throphyIcon!=null){
-//					//setting the default throphy thumb image for all throphies without an icon
-//					throphyIcon.setImageDrawable(getResources().getDrawable(R.drawable.throphy_img_thumb));
-//				}	
-			}
+			Button rejectBtn = (Button) v.findViewById(R.id.reject);
+			rejectBtn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					app.getModelManager().delete(current, TournamentRequest.class);
+					loadRequests();
+				}
+			});
+
 			return v;
-		}	
-		
+		}
+
 	}
-	
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		app = (App) getApplicationContext();
 		initView();
 	}
-	
-	private void initView(){
-		this.setContentView(R.layout.tournament_request);
-		
-		ListView tournamentRequestList = (ListView)findViewById(R.id.TournamentRequestList); 
-		String[] listContent = new String[] {"foo", "bla"};
-//		ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.tournament_request_list_item, listContent);
-		TournamentListAdapter adapter = new TournamentListAdapter(this, R.layout.tournament_request_list_item);
+
+	private void initView() {
+		this.setContentView(R.layout.tournament_requests);
+		TopBar topBar = (TopBar) findViewById(R.id.topbar);
+		Button requestButton = topBar.addButtonLeftMost(this, "Requests", true);
+		requestButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(TournamentRequestView.this, TournamentsView.class));
+			}
+		});
+		TextView description = (TextView) findViewById(R.id.description);
+		description
+				.setText(Html
+						.fromHtml("Your herald has delivered to you the following <b>requests for tournament participation</b>:"));
+
+		ListView tournamentRequestList = (ListView) findViewById(R.id.requestlist);
+		tournamentRequestList.setEmptyView(findViewById(R.id.empty_tournamentrequestlist_text));
+		String[] listContent = new String[] { "foo", "bla" };
+		adapter = new TournamentRequestListAdapter(this,
+				R.layout.tournament_requests_list_item);
 		tournamentRequestList.setAdapter(adapter);
+		loadRequests();
+	}
+	
+	private void loadRequests() {
+		adapter.clear();
+		for (TournamentRequest req : app.getModelManager().getTournamentRequestsForUser(app.getLoggedinUser()))
+			adapter.add(req);
+	}
+
+	public void onBackPressed() {
+		startActivity(new Intent(this, TournamentsView.class));
 	}
 }

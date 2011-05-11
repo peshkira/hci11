@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.questo.android.common.Constants;
+import com.questo.android.model.Question;
 import com.questo.android.view.FlexibleImageView;
 import com.questo.android.view.TopBar;
 
@@ -45,6 +46,7 @@ public class QuestionResult extends Activity {
 
     private void init(Bundle extras) {
         boolean correct = extras.getBoolean(Constants.BOOL_CORRECT_ANSWER);
+        String qtn = extras.getString(Constants.QUESTION);
         size = extras.getInt(Constants.QUEST_SIZE);
         questUuid = extras.getString(Constants.TRANSITION_OBJECT_UUID);
         currentQuestion = extras.getInt(Constants.NR_ANSWERED_QUESTIONS);
@@ -56,7 +58,7 @@ public class QuestionResult extends Activity {
         }
 
         this.topbar = (TopBar) findViewById(R.id.topbar);
-        this.topbar.setTopBarLabel(Constants.QUESTION_PROGRESS.replaceFirst("\\{\\}", currentQuestion + 1 + "")
+        this.topbar.setLabel(Constants.QUESTION_PROGRESS.replaceFirst("\\{\\}", currentQuestion + 1 + "")
                 .replace("{}", count + ""));
 
         ProgressBar bar = (ProgressBar) findViewById(R.id.progressbar);
@@ -77,6 +79,12 @@ public class QuestionResult extends Activity {
 
         Button btnNext = (Button) findViewById(R.id.btn_next_question);
         btnNext.setOnClickListener(new NextQuestionClickListener());
+        
+        ImageView flag = (ImageView) findViewById(R.id.btn_report);
+        flag.setOnClickListener(new ReportClickListener(qtn));
+        
+        TextView report = (TextView) findViewById(R.id.txt_report_btn);
+        report.setOnClickListener(new ReportClickListener(qtn));
 
     }
 
@@ -103,5 +111,21 @@ public class QuestionResult extends Activity {
             startActivity(intent);
         }
 
+    }
+    
+    private class ReportClickListener implements OnClickListener {
+
+        private String question;
+        
+        public ReportClickListener(String question) {
+            this.question = question;
+        }
+        
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(QuestionResult.this, ReportQuestionView.class).putExtra(Constants.QUESTION, this.question));
+            overridePendingTransition(R.anim.push_up_in, R.anim.no_change_out);
+        }
+        
     }
 }

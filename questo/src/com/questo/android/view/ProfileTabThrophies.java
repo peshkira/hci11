@@ -43,7 +43,7 @@ public class ProfileTabThrophies extends Activity{
 			View v = convertView;
 			if(v==null){
 				LayoutInflater inflater = (LayoutInflater)ProfileTabThrophies.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				v = inflater.inflate(R.layout.tournament_request_list_item, null);
+				v = inflater.inflate(R.layout.tournament_requests_list_item, null);
 			}
 			
 			Trophy current = this.getItem(position);
@@ -57,7 +57,7 @@ public class ProfileTabThrophies extends Activity{
 				
 				if(throphyIcon!=null){
 					//setting the default throphy thumb image for all throphies without an icon
-					throphyIcon.setImageDrawable(getResources().getDrawable(R.drawable.img_throphy_img_thumb));
+					throphyIcon.setImageDrawable(getResources().getDrawable(R.drawable.img_trophy_thumb));
 				}
 				
 			}

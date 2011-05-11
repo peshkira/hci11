@@ -7,10 +7,12 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
 public class PlaceVisitation {
+	
+	public static final String UUID = "UUID";
 
 	@DatabaseField(generatedId = true)
 	private Integer id;
-	@DatabaseField
+	@DatabaseField(columnName=UUID)
 	private String uuid;
 	@DatabaseField(foreign = true)
 	private User user;

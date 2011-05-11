@@ -61,8 +61,8 @@ public class QuestMapView extends MapActivity {
 		setContentView(R.layout.quest_map);
 
 		TopBar topBar = (TopBar) findViewById(R.id.topbar);
-		Button addQuestionBtn = topBar.addButtonLeftMost(this, "+");
-		Button showListBtn = topBar.addButtonLeftMost(this, "-");
+		Button addQuestionBtn = topBar.addButtonLeftMost(this.getApplicationContext(), "+", false);
+		Button showListBtn = topBar.addButtonLeftMost(this.getApplicationContext(), "-", false);
 
 		showListBtn.setOnClickListener(new MapListener());
 		addQuestionBtn.setOnClickListener(new MapListener());
@@ -99,11 +99,13 @@ public class QuestMapView extends MapActivity {
 	}
 
 	private void refreshMap() {
-		this.nearbyPlaces = QuestMapView.this.modelManager.getPlacesNearby(
-				this.currentLocation.getLatitudeE6() / 1e6,
-				this.currentLocation.getLongitudeE6() / 1e6);
-		this.overlay.refreshOverlayItems();
-		this.questMap.invalidate();
+		if(this.currentLocation!=null){
+			this.nearbyPlaces = QuestMapView.this.modelManager.getPlacesNearby(
+					this.currentLocation.getLatitudeE6() / 1e6,
+					this.currentLocation.getLongitudeE6() / 1e6);
+			this.overlay.refreshOverlayItems();
+			this.questMap.invalidate();
+		}
 	}
 
 	@Override
