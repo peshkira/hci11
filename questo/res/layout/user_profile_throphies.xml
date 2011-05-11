@@ -4,4 +4,10 @@
 	<ListView android:layout_height="fill_parent"
 		android:layout_width="match_parent" android:layout_alignParentLeft="true"
 		android:id="@+id/ProfileThrophyList" android:background="@color/winered_verydark" />
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:id="@+id/empty_trophy_text"
+		android:text="No trophies earned yet!" style="@style/WhiteShadowedFont"
+		android:padding="10dp" android:gravity="center_horizontal"
+		android:textSize="14sp" android:layout_above="@+id/bottombar"
+		android:background="@color/winered_verydark" />
 </RelativeLayout>

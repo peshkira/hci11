@@ -1,17 +1,21 @@
 package com.questo.android;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.Iterator;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,7 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.questo.android.common.Constants;
 import com.questo.android.model.User;
+import com.questo.android.view.ProfileTabThrophies;
 import com.questo.android.view.TopBar;
 
 public class CompanionsView extends Activity {
@@ -41,10 +47,28 @@ public class CompanionsView extends Activity {
         ListView companionsList = (ListView) findViewById(R.id.list_companion);
         companionsList.setEmptyView(findViewById(R.id.empty_companions_text));
         companionsList.setAdapter(adapter);
+        companionsList.setOnItemClickListener(new CompanionItemListener(companions));
 
         EditText searchbox = (EditText) findViewById(R.id.search_box);
         searchbox.addTextChangedListener(new SearchBoxTextWatcher(adapter));
 
+    }
+    
+    private class CompanionItemListener implements OnItemClickListener {
+        
+        private List<User> companions;
+
+        public CompanionItemListener(List<User> companions) {
+            this.companions = companions;
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            Intent showCompanion = new Intent(CompanionsView.this, ProfileView.class).putExtra(
+                    Constants.TRANSITION_OBJECT_UUID, this.companions.get(position).getUuid());
+            startActivity(showCompanion);
+            
+        }
     }
 
     private class SearchBoxTextWatcher implements TextWatcher {
@@ -96,6 +120,11 @@ public class CompanionsView extends Activity {
                     this.companions.add(next);
                     iter.remove();
                 }
+            }
+            
+            if (data.isEmpty()) {
+                TextView tv = (TextView) findViewById(R.id.empty_companions_text);
+                tv.setText("No companion with that name!");
             }
             
             notifyDataSetChanged();

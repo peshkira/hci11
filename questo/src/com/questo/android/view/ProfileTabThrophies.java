@@ -22,6 +22,7 @@ import com.questo.android.R;
 import com.questo.android.TrophyView;
 import com.questo.android.common.Constants;
 import com.questo.android.model.Trophy;
+import com.questo.android.model.User;
 
 public class ProfileTabThrophies extends Activity {
 
@@ -34,15 +35,19 @@ public class ProfileTabThrophies extends Activity {
     }
 
     private void initView() {
+        String uuid = this.getIntent().getExtras().getString(Constants.TRANSITION_OBJECT_UUID);
+        
         App app = (App) getApplicationContext();
         ModelManager mngr = app.getModelManager();
-
-        List<Trophy> trophies = mngr.getTrophyForUser(app.getLoggedinUser());
+        User user = (User) mngr.getGenericObjectByUuid(uuid, User.class);
+        
+        List<Trophy> trophies = mngr.getTrophyForUser(user);
         ThrophyListAdapter adapter = new ThrophyListAdapter(trophies);
 
         ListView trophyList = (ListView) findViewById(R.id.ProfileThrophyList);
         trophyList.setAdapter(adapter);
         trophyList.setOnItemClickListener(new TrophyListener(trophies));
+        trophyList.setEmptyView(findViewById(R.id.empty_trophy_text));
 
     }
 

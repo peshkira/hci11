@@ -23,6 +23,7 @@ import com.questo.android.R;
 import com.questo.android.common.Constants;
 import com.questo.android.model.Place;
 import com.questo.android.model.Trophy;
+import com.questo.android.model.User;
 
 public class ProfileTabPlaces extends Activity {
 
@@ -36,15 +37,19 @@ public class ProfileTabPlaces extends Activity {
     }
 
     private void initView() {
+        String uuid = this.getIntent().getExtras().getString(Constants.TRANSITION_OBJECT_UUID);
+
         App app = (App) getApplicationContext();
         ModelManager mngr = app.getModelManager();
+        User user = (User) mngr.getGenericObjectByUuid(uuid, User.class);
 
-        List<Place> places = mngr.getPlacesForUser(app.getLoggedinUser());
+        List<Place> places = mngr.getPlacesForUser(user);
         PlaceListAdapter adapter = new PlaceListAdapter(places);
 
         ListView placeList = (ListView) findViewById(R.id.ProfilePlaceList);
         placeList.setAdapter(adapter);
         placeList.setOnItemClickListener(new PlaceListener(places));
+        placeList.setEmptyView(findViewById(R.id.empty_places_text));
 
     }
 

@@ -31,28 +31,30 @@ public class ProfileView extends TabActivity{
         
         TopBar topbar = (TopBar) findViewById(R.id.topbar);
         TextView state = (TextView) findViewById(R.id.UserProfileStateText);
-        state.setText(Html.fromHtml("You are a King<br/>Points earned: 2337"));
+        
         
         if (extras != null) {
             String userUuid = extras.getString(Constants.TRANSITION_OBJECT_UUID);
             user = mngr.getGenericObjectByUuid(userUuid, User.class);
             topbar.setLabel(user.getName());
+            state.setText(Html.fromHtml(user.getName() + " is a Peasant<br/>Points earned: 12"));
         } else {
             user = app.getLoggedinUser();
             topbar.setLabel("You");
+            state.setText(Html.fromHtml("You are a King<br/>Points earned: 2337"));
         }
         
         TabHost tabHost = getTabHost();
         TabSpec spec;
         Intent intent;
         
-        intent = new Intent().setClass(this, ProfileTabThrophies.class);
+        intent = new Intent().setClass(this, ProfileTabThrophies.class).putExtra(Constants.TRANSITION_OBJECT_UUID, user.getUuid());
         spec = tabHost.newTabSpec("ProfileTabThrophies");
         spec.setIndicator("Throphy", getResources().getDrawable(R.drawable.img_trophy_thumb));
         spec.setContent(intent);
         tabHost.addTab(spec);
         
-        intent = new Intent().setClass(this, ProfileTabPlaces.class);
+        intent = new Intent().setClass(this, ProfileTabPlaces.class).putExtra(Constants.TRANSITION_OBJECT_UUID, user.getUuid());
         spec = tabHost.newTabSpec("ProfileTabPlaces");
         spec.setIndicator("Places", getResources().getDrawable(R.drawable.img_questo_sign_thumb));
         spec.setContent(intent);
