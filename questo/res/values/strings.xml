@@ -24,4 +24,5 @@
     <string name="error_login_password_wrong">The password you provided is wrong.</string>
     <string name="tournament_request">Tournament Requests</string>
     <string name="place_achieved_trophies">You have achieved these Trophies here:</string>
+    <string name="select_places">Select Places</string>
 </resources>
