@@ -9,11 +9,13 @@
 		questo:label="@string/quests" questo:label_centered="true" />
 	<TextView android:id="@+id/AddQuestionQuestionLabel"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:text="Name:" android:layout_below="@id/topbar"
+		android:text="Fragetext: " android:layout_below="@id/topbar"
 		android:textSize="15sp" android:textColor="#000000" />
 	<EditText android:id="@+id/AddQuestionQuestion"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:text="Fragetext" android:layout_below="@id/topbar" android:layout_toRightOf="@id/AddQuestionQuestionLabel"
+		android:text="Fragetext" android:layout_below="@id/topbar"
+		android:layout_toRightOf="@id/AddQuestionQuestionLabel" 
+		android:layout_alignBaseline="@id/AddQuestionQuestionLabel"
 		android:textSize="15sp" android:textColor="#000000" />
 	<RadioGroup android:id="@+id/AddQuestionQuestionType"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -30,10 +32,9 @@
 	</RadioGroup>
 	<Button android:id="@+id/AddQuestionCancelBtn"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_below="@id/AddQuestionQuestionType" 
-		android:layout_alignParentBottom="true" android:text="Cancel"/>
+		android:layout_alignParentBottom="true" android:text="Cancel" />
 	<Button android:id="@+id/AddQuestionCreateBtn"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_below="@id/AddQuestionQuestionType" android:layout_toRightOf="@id/AddQuestionCancelBtn" 
-		android:layout_alignParentBottom="true" android:text="Create Question"/>		
+		android:layout_toRightOf="@id/AddQuestionCancelBtn"
+		android:layout_alignParentBottom="true" android:layout_alignParentRight="true" android:text="Create Question" />
 </RelativeLayout>

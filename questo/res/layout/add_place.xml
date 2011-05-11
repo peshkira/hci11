@@ -10,17 +10,18 @@
 	<TextView android:id="@+id/AddPlaceNameLabel"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:textSize="15sp" android:textColor="#000000" android:text="Name:"
-		android:layout_below="@id/topbar" />
+		android:layout_below="@id/topbar" android:layout_alignBaseline="@id/AddPlaceNameLabel" />
 	<EditText android:id="@+id/AddPlaceName" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:textSize="15sp"
 		android:textColor="#000000" android:text="Name des Platzes"
-		android:layout_toRightOf="@id/AddPlaceNameLabel" />
+		android:layout_below="@id/topbar" android:layout_toRightOf="@id/AddPlaceNameLabel" 
+		android:layout_alignBaseline="@id/AddPlaceNameLabel"/>
 	<Button android:id="@+id/AddPlaceCancelBtn"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_below="@id/AddPlaceName" 
-		android:layout_alignParentBottom="true" android:text="Cancel"/>
+		android:text="Cancel" android:layout_alignParentBottom="true" />
 	<Button android:id="@+id/AddPlaceCreateBtn"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_below="@id/AddPlaceName" android:layout_toRightOf="@id/AddPlaceCancelBtn" 
-		android:layout_alignParentBottom="true" android:text="Create Place"/>	
+		android:layout_toRightOf="@id/AddPlaceCancelBtn"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true" android:text="Create Place" />
 </RelativeLayout>

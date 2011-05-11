@@ -93,6 +93,7 @@ public class QuestMapView extends MapActivity {
 		this.questMap.getController().setZoom(18);
 	}
 
+	@Override
 	public void onBackPressed() {
 		startActivity(new Intent(this, HomeView.class));
 	}
@@ -173,7 +174,7 @@ public class QuestMapView extends MapActivity {
 			}
 
 			QuestMapView.this.currentPlace = place;
-			
+
 			if (this.placeDetails == null) {
 				LayoutInflater inflater = (LayoutInflater) QuestMapView.this
 						.getApplicationContext().getSystemService(
@@ -204,8 +205,8 @@ public class QuestMapView extends MapActivity {
 
 		@Override
 		public void onClick(View v) {
-			if(v instanceof Button){
-				Button pressedButton = (Button)v;
+			if (v instanceof Button) {
+				Button pressedButton = (Button) v;
 				if (pressedButton.getText().equals("-")) {
 					Intent showListView = new Intent(QuestMapView.this,
 							QuestListView.class);
@@ -215,10 +216,12 @@ public class QuestMapView extends MapActivity {
 					QuestMapView.this.openContextMenu(v);
 				}
 			}
-			if(v.getId()==R.id.QuestMapPlaceDetailsLayout){
-				if(QuestMapView.this.currentPlace!=null){
-					Intent placeDetails = new Intent(QuestMapView.this, PlaceDetailsView.class);
-					placeDetails.putExtra(Constants.TRANSITION_OBJECT_UUID, QuestMapView.this.currentPlace.getUuid());					
+			if (v.getId() == R.id.QuestMapPlaceDetailsLayout) {
+				if (QuestMapView.this.currentPlace != null) {
+					Intent placeDetails = new Intent(QuestMapView.this,
+							PlaceDetailsView.class);
+					placeDetails.putExtra(Constants.TRANSITION_OBJECT_UUID,
+							QuestMapView.this.currentPlace.getUuid());
 					startActivity(placeDetails);
 				}
 			}
