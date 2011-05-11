@@ -61,8 +61,8 @@ public class QuestMapView extends MapActivity {
 		setContentView(R.layout.quest_map);
 
 		TopBar topBar = (TopBar) findViewById(R.id.topbar);
-		Button addQuestionBtn = topBar.addButtonLeftMost(this.getApplicationContext(), "+", false);
-		Button showListBtn = topBar.addButtonLeftMost(this.getApplicationContext(), "-", false);
+		Button addQuestionBtn = topBar.addButtonLeftMost(this.getApplicationContext(), "+");
+		Button showListBtn = topBar.addToggleButtonLeftMost(this.getApplicationContext(), "List", false);
 
 		showListBtn.setOnClickListener(new MapListener());
 		addQuestionBtn.setOnClickListener(new MapListener());

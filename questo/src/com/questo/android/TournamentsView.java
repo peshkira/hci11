@@ -76,7 +76,7 @@ public class TournamentsView extends Activity {
 		this.setContentView(R.layout.tournaments);
 
 		TopBar topBar = (TopBar) findViewById(R.id.topbar);
-		Button requestButton = topBar.addButtonLeftMost(this, "Requests", false);
+		Button requestButton = topBar.addToggleButtonLeftMost(this, "Requests", false);
 		requestButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

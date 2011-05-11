@@ -45,7 +45,7 @@ public class TopBar extends LinearLayout {
 		labelCentered = a.getBoolean(R.styleable.TopBar_label_centered, false);
 		if (labelCentered) {
 			TextView labelText = (TextView) findViewById(R.id.label);
-			labelText.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+			labelText.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
 		}
 	}
 
@@ -57,16 +57,28 @@ public class TopBar extends LinearLayout {
 		}
 	}
 
-	public Button addButtonLeftMost(final Context ctx, String label, boolean checked) {
+	public Button addButtonLeftMost(final Context ctx, CharSequence label) {
+		Button newButton = (Button) LayoutInflater.from(ctx).inflate(R.layout.topbar_button, null);
+		newButton.setText(label);
+		addButtonToLayout(newButton);
+		return newButton;
+	}
+
+	public Button addToggleButtonLeftMost(final Context ctx, CharSequence label, boolean checked) {
+		Button newButton = (ToggleButton) LayoutInflater.from(ctx).inflate(R.layout.topbar_togglebutton, null);
+		((ToggleButton) newButton).setTextOn(label);
+		((ToggleButton) newButton).setTextOff(label);
+		((ToggleButton) newButton).setChecked(checked);
+
+		addButtonToLayout(newButton);
+		return newButton;
+	}
+
+	private void addButtonToLayout(Button newButton) {
 		LinearLayout buttonsContainer = (LinearLayout) findViewById(R.id.buttons_container);
-		ToggleButton newButton = (ToggleButton) LayoutInflater.from(ctx).inflate(R.layout.topbar_button, null);
-		newButton.setTextOn(label);
-		newButton.setTextOff(label);
-		newButton.setChecked(checked);
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
 				LinearLayout.LayoutParams.FILL_PARENT);
 		buttonsContainer.addView(newButton, 0, lp);
-		return newButton;
 	}
 
 	public void setLabel(String label) {
