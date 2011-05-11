@@ -14,12 +14,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.questo.android.common.Constants;
 import com.questo.android.model.Place;
 import com.questo.android.model.Tournament;
 import com.questo.android.model.User;
 import com.questo.android.view.FlexibleImageView;
-import com.questo.android.view.TopBar;
 
 public class NewTournamentView extends Activity {
 
@@ -138,6 +136,14 @@ public class NewTournamentView extends Activity {
 		ListView contestantsList = (ListView)findViewById(R.id.tournament_contestantslist);
 		ContestantsAdapter contestantsAdapter = new ContestantsAdapter(this, R.layout.tournament_details_contestants_item);
 		contestantsList.setAdapter(contestantsAdapter);	
+		
+		Button addParticipantsBtn = (Button)findViewById(R.id.add_participant);
+		addParticipantsBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(NewTournamentView.this, CompanionChooserView.class));
+			}
+		});
 	}
 
 	public void onBackPressed() {

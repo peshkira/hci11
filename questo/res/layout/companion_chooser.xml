@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:id="@+id/TournamentRelativeLayout" android:orientation="vertical"
+	android:background="@drawable/bg_papyrus">
+	<com.questo.android.view.TopBar
+		android:id="@+id/topbar" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" questo:label_centered="true"
+		questo:label="Select Participants" />
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" style="@style/NormalBlackFont"
+		android:text="Select the companions you want to challenge to your tournament:"
+		android:layout_margin="10dp" />
+	<RelativeLayout android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:gravity="center_vertical">
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:padding="20dip"
+			android:layout_alignParentBottom="true" android:id="@+id/bottombar"
+			android:orientation="horizontal">
+			<Button android:id="@+id/select" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_gravity="bottom"
+				style="@style/MediumRoundButton" android:text="Select"
+				android:layout_marginRight="10dp" android:layout_weight="1" />
+			<Button android:id="@+id/cancel" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_gravity="bottom"
+				style="@style/MediumRoundButtonAlternative" android:text="Cancel"
+				android:layout_weight="1" />
+		</LinearLayout>
+		<ListView android:id="@+id/list_companions"
+			android:background="@color/winered_verydark" android:dividerHeight="1px"
+			android:cacheColorHint="#00000000" android:divider="#2b0201"
+			android:fadingEdge="vertical" android:fadingEdgeLength="10dp"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:layout_above="@+id/bottombar">
+		</ListView>
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:id="@+id/empty_companions_text"
+			android:text="You don't have any companions yet!" style="@style/WhiteShadowedFont"
+			android:textSize="14sp" android:padding="10dp" android:gravity="center_horizontal"
+			android:layout_above="@+id/bottombar" android:background="@color/winered_verydark" />
+	</RelativeLayout>
+</LinearLayout>
