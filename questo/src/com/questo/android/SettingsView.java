@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.text.Html;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.Button;
@@ -80,42 +82,50 @@ public class SettingsView extends PreferenceActivity {
         @Override
         public void onClick(View v) {
             final ToggleButton btn = (ToggleButton) v;
-            SettingsView.this.toggled = true;
+            if (!SettingsView.this.toggled) {
+                SettingsView.this.toggled = true;
 
-            LayoutInflater inflater = (LayoutInflater) SettingsView.this
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            SettingsView.this.popup = inflater.inflate(R.layout.popup_window_logout,
-                    (ViewGroup) findViewById(R.id.popup_logout));
+                LayoutInflater inflater = (LayoutInflater) SettingsView.this
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                SettingsView.this.popup = inflater.inflate(R.layout.popup_window_logout,
+                        (ViewGroup) findViewById(R.id.popup_logout));
 
-            final PopupWindow pw = new PopupWindow(popup, 200, 150);
+                Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+                int width = (int) (display.getWidth() * 0.75);
+                int height = (int) (display.getHeight() * 0.25);
 
-            final TextView txt = (TextView) popup.findViewById(R.id.poput_txt);
-            txt.setText(Html.fromHtml("<big><b>Are You sure you want to abandon ship?</b></big>"));
+                final PopupWindow pw = new PopupWindow(popup, width, height);
 
-            final Button button1 = (Button) popup.findViewById(R.id.popup_menu_button1);
-            button1.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View vv) {
-                    LogoutClickListener.this.app.logout();
-                    startActivity(new Intent(SettingsView.this, LoginView.class));
-                }
-            });
+                final TextView txt = (TextView) popup.findViewById(R.id.poput_txt);
+                txt.setText(Html.fromHtml("<big><b>Are You sure you want to abandon ship?</b></big>"));
 
-            final Button button2 = (Button) popup.findViewById(R.id.popup_menu_button2);
-            button2.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View vv) {
-                    // close the popup
-                    btn.toggle();
-                    pw.dismiss();
-                    SettingsView.this.toggled = false;
-                    SettingsView.this.popup = null;
-                }
-            });
+                final Button button1 = (Button) popup.findViewById(R.id.popup_menu_button1);
+                button1.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View vv) {
+                        LogoutClickListener.this.app.logout();
+                        startActivity(new Intent(SettingsView.this, LoginView.class));
+                    }
+                });
 
-            // finally show the popup in the center of the window
-            pw.showAtLocation(popup, Gravity.CENTER, 0, 0);
+                final Button button2 = (Button) popup.findViewById(R.id.popup_menu_button2);
+                button2.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View vv) {
+                        // close the popup
+                        btn.toggle();
+                        pw.dismiss();
+                        SettingsView.this.toggled = false;
+                        SettingsView.this.popup = null;
+                    }
+                });
 
+                // finally show the popup in the center of the window
+                pw.showAtLocation(popup, Gravity.CENTER, 0, 0);
+
+            } else {
+                btn.toggle();
+            }
         }
     }
 }
