@@ -27,6 +27,7 @@ import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 import com.questo.android.common.Constants;
+import com.questo.android.helper.DisplayHelper;
 import com.questo.android.model.Place;
 import com.questo.android.view.TopBar;
 
@@ -188,8 +189,7 @@ public class QuestMapView extends MapActivity {
 			QuestMapView.this.questMap.removeView(this.placeDetails);
 			QuestMapView.this.questMap.addView(this.placeDetails,
 					new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
-							MapView.LayoutParams.WRAP_CONTENT, item.getPoint(),
-							MapView.LayoutParams.BOTTOM_CENTER));
+							MapView.LayoutParams.WRAP_CONTENT, item.getPoint(), 0, DisplayHelper.dpToPixel(-57, QuestMapView.this), MapView.LayoutParams.BOTTOM_CENTER));
 
 			TextView placeNameText = (TextView) this.placeDetails
 					.findViewById(R.id.QuestMapPlaceDetailsName);
