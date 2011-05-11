@@ -14,6 +14,8 @@
 	<color name="papyrus_shadowed_end">#957e5a</color>
 	
 	<color name="text_greyed_out">#afafaf</color>
+	<color name="grey_gradient_start">#919191</color>
+	<color name="grey_gradient_end">#515151</color>
 	
 	<color name="light_text_shadow">#ffeded</color>
 	<color name="black_semitransparent">#22000000</color>
