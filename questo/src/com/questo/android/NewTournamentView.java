@@ -20,7 +20,8 @@ import com.questo.android.model.User;
 import com.questo.android.view.FlexibleImageView;
 
 public class NewTournamentView extends Activity {
-
+	
+	public final static int REQUEST_CODE_TOURNAMENT_MAP = 0;
 	App app;
 	Tournament tournament;
 
@@ -136,6 +137,16 @@ public class NewTournamentView extends Activity {
 		ListView contestantsList = (ListView)findViewById(R.id.tournament_contestantslist);
 		ContestantsAdapter contestantsAdapter = new ContestantsAdapter(this, R.layout.tournament_details_contestants_item);
 		contestantsList.setAdapter(contestantsAdapter);	
+		
+		Button addPlacesBtn = (Button)findViewById(R.id.add_place);
+		addPlacesBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent places = new Intent(NewTournamentView.this, TournamentMapView.class);
+				startActivityForResult(places, NewTournamentView.REQUEST_CODE_TOURNAMENT_MAP);
+			}
+		});
 		
 		Button addParticipantsBtn = (Button)findViewById(R.id.add_participant);
 		addParticipantsBtn.setOnClickListener(new OnClickListener() {

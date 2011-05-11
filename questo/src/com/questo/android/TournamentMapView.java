@@ -1,7 +1,9 @@
 package com.questo.android;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +22,7 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.questo.android.common.Constants;
 import com.questo.android.model.Place;
 import com.questo.android.view.TopBar;
 
@@ -30,16 +33,17 @@ public class TournamentMapView extends MapActivity {
 	private MapView questMap;
 	private List<Place> nearbyPlaces;
 	private GeoPoint currentLocation;
-	private Place currentPlace;
 	private ModelManager modelManager;
 	private App application;
 	private MapOverlay overlay;
 	private MyLocationOverlay myLocationOverlay;
+	private Map<String, Place> selectedPlaces;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		this.selectedPlaces = new HashMap<String, Place>();
 		this.application = (App) getApplicationContext();
 		this.modelManager = application.getModelManager();
 		initView();
@@ -53,14 +57,26 @@ public class TournamentMapView extends MapActivity {
 	}
 
 	private void initView() {
-		setContentView(R.layout.quest_map);
+		setContentView(R.layout.tournament_map_view);
 
 		TopBar topBar = (TopBar) findViewById(R.id.topbar);
+		Button doneBtn = (Button)findViewById(R.id.TournamentMapDoneBtn);
+		doneBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent tournamentView = new Intent(TournamentMapView.this, NewTournamentView.class);
+				String[] selected = TournamentMapView.this.getSelectedPlaces();
+				tournamentView.putExtra(Constants.EXTRA_COMPANION_UUID_ARRAY, TournamentMapView.this.getSelectedPlaces());
+				TournamentMapView.this.setResult(RESULT_OK, tournamentView);
+				TournamentMapView.this.finish();
+			}
+		});
+		
 		initMapView();
 	}
-
+	
 	private void initMapView() {
-		this.questMap = (MapView) findViewById(R.id.QuestMap);
+		this.questMap = (MapView) findViewById(R.id.TournamentMap);
 		questMap.setBuiltInZoomControls(true);
 		List<Overlay> mapOverlays = questMap.getOverlays();
 		Drawable target = this.getResources().getDrawable(
@@ -89,25 +105,66 @@ public class TournamentMapView extends MapActivity {
 			this.questMap.invalidate();
 		}
 	}
+	
+	private String[] getSelectedPlaces(){
+		List<String> uuids = new ArrayList<String>();
+		for(TournamentOverlayItem item: this.overlay.getItems()){
+			if(item.isSelected())
+				uuids.add(item.getPlace().getUuid());
+		}
+		
+		String[] s = new String[0];
+		return uuids.toArray(s);
+	}
+	
+	private void setSelectedPlaces(String[] uuids){
+		ModelManager manager = ((App)this.getApplication()).getModelManager();
+		for(String uuid: uuids){
+			Place place = manager.getGenericObjectByUuid(uuid, Place.class);
+			this.selectedPlaces.put(uuid, place);
+		}
+	}
 
 	private class TournamentOverlayItem extends OverlayItem {
 
-		public final static int ITEM_STATE_NORMAL = 0;
-		public final static int ITEM_STATE_SELECTED = 1;
-		private int state;
-
+		private boolean isSelected = false;
+		private Drawable normal;
+		private Drawable selected;
+		private Place place;
+		
 		public TournamentOverlayItem(GeoPoint point, String title,
 				String snippet) {
 			super(point, title, snippet);
-			this.state = TournamentOverlayItem.ITEM_STATE_NORMAL;
+			this.normal = TournamentMapView.this.getResources().getDrawable(
+					R.drawable.img_questo_q_stand);			
+			this.normal.setBounds(0, 0, this.normal.getIntrinsicWidth(), this.normal.getIntrinsicHeight());			
+			this.selected = TournamentMapView.this.getResources().getDrawable(
+					R.drawable.img_questo_q_stand_new);			
+			this.selected.setBounds(0, 0, this.selected.getIntrinsicWidth(), this.selected.getIntrinsicHeight());
 		}
 
-		public int getState() {
-			return this.state;
+		public boolean isSelected() {
+			return this.isSelected;
 		}
 
-		public void setState(int state) {
-			this.state = state;
+		public void toggleSelected(){
+			this.isSelected = !this.isSelected;
+		}
+
+		public Place getPlace() {
+			return place;
+		}
+
+		public void setPlace(Place place) {
+			this.place = place;
+		}
+
+		@Override
+		public Drawable getMarker(int stateBitset) {
+			if(this.isSelected())
+				return this.selected;
+			else
+				return this.normal;
 		}
 	}
 
@@ -130,6 +187,7 @@ public class TournamentMapView extends MapActivity {
 						(int) (place.getLongitude() * 1E6));
 				TournamentOverlayItem overlayItem = new TournamentOverlayItem(
 						placeLocation, place.getName(), "");
+				overlayItem.setPlace(place);
 				this.items.add(overlayItem);
 			}
 
@@ -146,18 +204,19 @@ public class TournamentMapView extends MapActivity {
 		public synchronized int size() {
 			return this.items.size();
 		}
+		
+		public List<TournamentOverlayItem> getItems(){
+			return this.items;
+		}
 
 		@Override
 		protected boolean onTap(int index) {
 			TournamentOverlayItem item = items.get(index);
 			Place place = TournamentMapView.this.nearbyPlaces.get(index);
-			if (item.getState() == TournamentOverlayItem.ITEM_STATE_NORMAL) {
-				item.setState(TournamentOverlayItem.ITEM_STATE_SELECTED);
-			}
-			if (item.getState() == TournamentOverlayItem.ITEM_STATE_SELECTED) {
-				item.setState(TournamentOverlayItem.ITEM_STATE_NORMAL);
-			}
+			item.toggleSelected();
+			TournamentMapView.this.selectedPlaces.put(place.getUuid(), place);
 
+			populate();
 			return true;
 		}
 	}
