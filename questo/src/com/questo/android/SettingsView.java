@@ -90,8 +90,8 @@ public class SettingsView extends PreferenceActivity {
                         (ViewGroup) findViewById(R.id.popup_logout));
 
                 Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-                int width = (int) (display.getWidth() * 0.75);
-                int height = (int) (display.getHeight() * 0.25);
+                int width = (int) (display.getWidth() * 0.80);
+                int height = (int) (display.getHeight() * 0.30);
 
                 final PopupWindow pw = new PopupWindow(popup, width, height);
 

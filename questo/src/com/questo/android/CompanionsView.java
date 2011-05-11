@@ -116,7 +116,7 @@ public class CompanionsView extends Activity {
 
             while (iter.hasNext()) {
                 User next = iter.next();
-                if (!next.getName().contains(s)) {
+                if (!next.getName().toLowerCase().contains(s.toString().toLowerCase())) {
                     this.companions.add(next);
                     iter.remove();
                 }
