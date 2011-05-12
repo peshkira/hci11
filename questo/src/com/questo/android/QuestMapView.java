@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -34,6 +35,7 @@ import com.questo.android.view.TopBar;
 public class QuestMapView extends MapActivity {
 
 	public final static int ADD_PLACE_REQUEST_CODE = 1;
+	public final static int ADD_QUESTION_REQUEST_CODE = 2;
 
 	private MapView questMap;
 	private List<Place> nearbyPlaces;
@@ -130,25 +132,48 @@ public class QuestMapView extends MapActivity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenu.ContextMenuInfo menuInfo) {
-		menu.add("Add Place");
-		menu.add("Add Question");
+		MenuItem addPlace = menu.add("Add Place");
+		addPlace.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				Intent addPlaceIntent = new Intent(QuestMapView.this, AddPlace.class);
+				startActivityForResult(addPlaceIntent, ADD_PLACE_REQUEST_CODE);
+				return true;
+			}
+		});
+		
+		MenuItem addQuestion = menu.add("Add Question");
+		addQuestion.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				if(QuestMapView.this.currentPlace != null){
+					String uuid = QuestMapView.this.currentPlace.getUuid();
+					Intent addQuestionIntent = new Intent(QuestMapView.this, AddQuestion.class);
+					addQuestionIntent.putExtra(Constants.EXTRA_ADD_QUESTION_PLACE_UUID, uuid);
+					startActivityForResult(addQuestionIntent, ADD_QUESTION_REQUEST_CODE);
+					return true;
+				}
+				return false;
+			}
+		});
 	}
 
-	public boolean onContextItemSelected(MenuItem item) {
-
-		if (item.getTitle().equals("Add Place")) {
-			Intent addPlaceIntent = new Intent(this, AddPlace.class);
-			// startActivity(addPlaceIntent);
-			startActivityForResult(addPlaceIntent, ADD_PLACE_REQUEST_CODE);
-		}
-		if (item.getTitle().equals("Add Question")) {
-			Intent addQuestionIntent = new Intent(this, AddQuestion.class);
-			startActivity(addQuestionIntent);
-		}
-
-		return super.onContextItemSelected(item);
-
-	}
+//	public boolean onContextItemSelected(MenuItem item) {
+//
+//		if (item.getTitle().equals("Add Place")) {
+//
+//		}
+//		if (item.getTitle().equals("Add Question")) {
+//			if(QuestMapView.this.currentPlace!=null){
+//
+//			}
+//		}
+//
+//		return super.onContextItemSelected(item);
+//
+//	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -247,11 +272,11 @@ public class QuestMapView extends MapActivity {
 		@Override
 		public void onLocationChanged(Location location) {
 			if (QuestMapView.this.questMap != null) {
-				GeoPoint current = new GeoPoint(
-						(int) (location.getLatitude() * 1e6),
-						(int) (location.getLongitude() * 1e6));
-				QuestMapView.this.questMap.getController().setCenter(current);
-				QuestMapView.this.currentLocation = current;
+//				GeoPoint current = new GeoPoint(
+//						(int) (location.getLatitude() * 1e6),
+//						(int) (location.getLongitude() * 1e6));
+//				QuestMapView.this.questMap.getController().setCenter(current);
+//				QuestMapView.this.currentLocation = current;
 				QuestMapView.this.refreshMap();
 			}
 		}
