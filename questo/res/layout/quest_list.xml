@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
-	android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/papyrus_start">
+	android:layout_width="match_parent" android:layout_height="match_parent"
+	android:background="@color/papyrus_start">
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:layout_marginBottom="20dip"
+		android:layout_height="wrap_content"
 		questo:label="@string/quests" questo:label_centered="false" />
+	<TextView android:id="@+id/description" android:layout_width="fill_parent" android:layout_height="wrap_content" android:padding="20dp"
+	android:text="These places are in your immediate neighborhood:" style="@style/BlackShadowedFont"
+	android:layout_below="@+id/topbar"/>
 	<ListView android:layout_width="match_parent"
-		android:layout_height="wrap_content" android:layout_alignParentLeft="true"
-		android:id="@+id/QuestList" android:layout_below="@id/topbar" />
+		android:layout_height="fill_parent" android:layout_alignParentLeft="true"
+		android:id="@+id/QuestList" android:layout_below="@+id/description"
+		android:background="@color/winered_verydark" android:dividerHeight="1px"
+		android:cacheColorHint="#00000000" android:divider="#2b0201" />
 </RelativeLayout>

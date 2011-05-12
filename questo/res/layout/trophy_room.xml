@@ -20,7 +20,7 @@
 				android:layout_height="wrap_content" android:background="@drawable/img_boxborder" 
 				android:columnWidth="90dp" android:numColumns="3"
 				android:horizontalSpacing="10dp" android:verticalSpacing="30dp"
-				android:stretchMode="columnWidth" android:gravity="center"
+				android:stretchMode="columnWidth" android:gravity="top"
 				android:listSelector="@android:color/transparent">
 			</GridView>
 		</LinearLayout>
