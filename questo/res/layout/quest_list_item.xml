@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/listitemstate_lightlist">
+	android:layout_width="match_parent" android:layout_height="match_parent"
+	android:background="@drawable/listitemstate_darklist" android:padding="10dp">
 	<TextView android:id="@+id/QuestListNameText"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:textColor="#000000" android:textSize="15sp" />
+		style="@style/QuestListFont" android:textSize="15sp" />
 	<TextView android:id="@+id/QuestListDistance"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:textColor="#000000" android:textSize="15sp" 
-		android:layout_below="@id/QuestListNameText" 
-		android:layout_alignParentLeft="true"
-		/>
+		android:layout_below="@id/QuestListNameText"
+		android:layout_alignParentLeft="true" style="@style/QuestListFont" />
 	<TextView android:id="@+id/QuestListQuestCount"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:textColor="#000000" android:textSize="15sp"
-		android:layout_below="@id/QuestListNameText" 
-		android:layout_alignParentRight="true"/>
+		android:layout_below="@id/QuestListNameText"
+		android:layout_alignParentRight="true" style="@style/QuestListFont" />
 </RelativeLayout>

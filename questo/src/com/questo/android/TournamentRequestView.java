@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.questo.android.common.Constants;
 import com.questo.android.model.Tournament;
 import com.questo.android.model.TournamentRequest;
 import com.questo.android.model.User;
@@ -41,7 +42,7 @@ public class TournamentRequestView extends Activity {
 			TextView reqDescription = (TextView) v.findViewById(R.id.request_description);
 
 			User requestor = app.getModelManager().getGenericObjectByUuid(current.getRequestorUUID(), User.class);
-			Tournament tournament = app.getModelManager().getGenericObjectByUuid(current.getTournamentUUID(),
+			final Tournament tournament = app.getModelManager().getGenericObjectByUuid(current.getTournamentUUID(),
 					Tournament.class);
 			String requestorName = requestor.getName() == null ? "Someone" : requestor.getName();
 			String tournamentName = tournament.getName() == null ? "Unknown" : tournament.getName();
@@ -64,6 +65,16 @@ public class TournamentRequestView extends Activity {
 				public void onClick(View v) {
 					app.getModelManager().delete(current, TournamentRequest.class);
 					loadRequests();
+				}
+			});
+			
+			Button detailsBtn = (Button) v.findViewById(R.id.details);
+			detailsBtn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(TournamentRequestView.this, TournamentDetailsView.class);
+	                intent.putExtra(Constants.TRANSITION_OBJECT_UUID, tournament.getUuid());
+	                startActivity(intent);
 				}
 			});
 
