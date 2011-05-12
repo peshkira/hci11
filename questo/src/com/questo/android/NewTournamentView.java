@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
@@ -158,8 +159,12 @@ public class NewTournamentView extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Intent places = new Intent(NewTournamentView.this, TournamentMapView.class);
-				startActivityForResult(places, NewTournamentView.TOURNAMENT_MAP_REQUEST_CODE);
+				Intent intent = new Intent(NewTournamentView.this, TournamentMapView.class);
+				String[] preselectedUUIDs = new String[placesAdapter.getCount()];
+				for (int i = 0; i < placesAdapter.getCount(); i++)
+					preselectedUUIDs[i] = placesAdapter.getItem(i).getUuid();
+				intent.putExtra(TournamentMapView.EXTRA_PLACE_UUID_ARRAY, preselectedUUIDs);
+				startActivityForResult(intent, NewTournamentView.TOURNAMENT_MAP_REQUEST_CODE);
 			}
 		});
 
@@ -180,8 +185,14 @@ public class NewTournamentView extends Activity {
 		createBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ModelManager mngr = app.getModelManager();
 				TextView name = (TextView) findViewById(R.id.name);
+				if (name.getText().length() == 0) {
+					Toast noNameToast = Toast.makeText(NewTournamentView.this, "Please provide a name!", Toast.LENGTH_LONG);
+					noNameToast.show();
+					return;
+				}
+				ModelManager mngr = app.getModelManager();
+				
 				TextView location = (TextView) findViewById(R.id.location);
 				Tournament newTournament = new Tournament(UUIDgen.getUUID(), new Date(), name.getText().toString(),
 						location.getText().toString(), Tournament.Type.COOP);
