@@ -3,7 +3,7 @@
 	android:layout_width="match_parent" android:layout_height="match_parent">
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" questo:label_centered="false"
+		android:layout_height="wrap_content" questo:label_centered="true"
 		questo:label="@string/select_places" />
 	<AbsoluteLayout android:id="@+id/QuestMapLayout"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
@@ -13,9 +13,18 @@
 			android:layout_height="fill_parent" android:enabled="true"
 			android:clickable="true" android:apiKey="@string/apikey" />
 	</AbsoluteLayout>
-	<Button android:id="@+id/TournamentMapDoneBtn"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_below="@id/TournamentMap"
-		android:layout_alignParentBottom="true"
-		android:layout_alignParentRight="true" android:text="Done" />
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="vertical"
+		android:layout_alignParentBottom="true" android:layout_below="@id/TournamentMap">
+		<LinearLayout android:id="@+id/layout_zoom"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:layout_centerHorizontal="true" android:gravity="center_horizontal"/>
+		<Button android:id="@+id/TournamentMapDoneBtn"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:text="Done" style="@style/MediumRoundButton"
+			android:layout_margin="10dp" />
+	</LinearLayout>
+
+
 </RelativeLayout>

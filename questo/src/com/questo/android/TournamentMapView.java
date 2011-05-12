@@ -13,6 +13,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ZoomButtonsController;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 
 import com.google.android.maps.GeoPoint;
@@ -63,6 +66,8 @@ public class TournamentMapView extends MapActivity {
 
 		TopBar topBar = (TopBar) findViewById(R.id.topbar);
 		Button doneBtn = (Button)findViewById(R.id.TournamentMapDoneBtn);
+		
+		
 		doneBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -95,6 +100,14 @@ public class TournamentMapView extends MapActivity {
 				.getSystemService(Context.LOCATION_SERVICE);
 
 		this.questMap.getController().setZoom(18);
+		
+		LinearLayout zoomLayout = (LinearLayout)findViewById(R.id.layout_zoom);  
+		View zoomView = questMap.getZoomButtonsController().getZoomControls(); 
+		///zoomView.get
+		questMap.getZoomButtonsController().getContainer().removeView(zoomView);
+		zoomLayout.addView(zoomView, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)); 
+		//questMap.displayZoomControls(true);
+		//questMap.set
 	}
 
 	private void refreshMap() {
@@ -114,7 +127,7 @@ public class TournamentMapView extends MapActivity {
 //		tournamentView.putExtra(Constants.EXTRA_COMPANION_UUID_ARRAY, TournamentMapView.this.getSelectedPlaces());
 //		TournamentMapView.this.setResult(RESULT_OK, tournamentView);
 //		TournamentMapView.this.finish();
-		String[] uuids = getIntent().getStringArrayExtra(Constants.EXTRA_COMPANION_UUID_ARRAY);
+		String[] uuids = getIntent().getStringArrayExtra(EXTRA_PLACE_UUID_ARRAY);
 		if(uuids!=null){
 			setSelectedPlaces(uuids);	
 		}
