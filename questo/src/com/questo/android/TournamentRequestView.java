@@ -39,12 +39,12 @@ public class TournamentRequestView extends Activity {
 			}
 			final TournamentRequest current = this.getItem(position);
 			TextView reqDescription = (TextView) v.findViewById(R.id.request_description);
-			app.getModelManager().refresh(current.getRequestor(), User.class);
-			app.getModelManager().refresh(current.getTournament(), Tournament.class);
-			String requestorName = current.getRequestor().getName() == null ? "Someone" : current.getRequestor()
-					.getName();
-			String tournamentName = current.getTournament().getName() == null ? "Unknown" : current.getTournament()
-					.getName();
+
+			User requestor = app.getModelManager().getGenericObjectByUuid(current.getRequestorUUID(), User.class);
+			Tournament tournament = app.getModelManager().getGenericObjectByUuid(current.getTournamentUUID(),
+					Tournament.class);
+			String requestorName = requestor.getName() == null ? "Someone" : requestor.getName();
+			String tournamentName = tournament.getName() == null ? "Unknown" : tournament.getName();
 
 			reqDescription.setText(Html.fromHtml("<b>" + requestorName
 					+ "</b> has challenged you to the tournament <b>" + tournamentName + "</b>."));
@@ -57,7 +57,7 @@ public class TournamentRequestView extends Activity {
 					loadRequests();
 				}
 			});
-			
+
 			Button rejectBtn = (Button) v.findViewById(R.id.reject);
 			rejectBtn.setOnClickListener(new OnClickListener() {
 				@Override
@@ -97,12 +97,11 @@ public class TournamentRequestView extends Activity {
 		ListView tournamentRequestList = (ListView) findViewById(R.id.requestlist);
 		tournamentRequestList.setEmptyView(findViewById(R.id.empty_tournamentrequestlist_text));
 		String[] listContent = new String[] { "foo", "bla" };
-		adapter = new TournamentRequestListAdapter(this,
-				R.layout.tournament_requests_list_item);
+		adapter = new TournamentRequestListAdapter(this, R.layout.tournament_requests_list_item);
 		tournamentRequestList.setAdapter(adapter);
 		loadRequests();
 	}
-	
+
 	private void loadRequests() {
 		adapter.clear();
 		for (TournamentRequest req : app.getModelManager().getTournamentRequestsForUser(app.getLoggedinUser()))

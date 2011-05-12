@@ -9,18 +9,20 @@ import com.j256.ormlite.table.DatabaseTable;
 public class TournamentRequest {
 	
 	public static final String UUID = "UUID";
-	public static final String USER = "USER";
+	public static final String USER_UUID = "USER_UUID";
+	public static final String REQUESTOR_UUID = "REQUESTOR_UUID";
+	public static final String TOURNAMENT_UUID = "TOURNAMENT_UUID";
 
 	@DatabaseField(generatedId = true)
 	private Integer id;
 	@DatabaseField(columnName=UUID)
 	private String uuid;
-	@DatabaseField(foreign = true)
-	private Tournament tournament;
-	@DatabaseField(foreign = true, columnName = USER)
-	private User user;
-	@DatabaseField(foreign = true)
-	private User requestor;
+	@DatabaseField(columnName=TOURNAMENT_UUID)
+	private String tournamentUUID;
+	@DatabaseField(columnName = USER_UUID)
+	private String userUUID;
+	@DatabaseField(columnName = REQUESTOR_UUID)
+	private String requestorUUID;
 	@DatabaseField
 	private Date invitedAt;
 
@@ -31,12 +33,12 @@ public class TournamentRequest {
 	public TournamentRequest() {
 	}
 
-	public TournamentRequest(String uuid, User user, User requestor, Tournament tournament, Date invitedAt) {
+	public TournamentRequest(String uuid, String userUUID, String requestorUUID, String tournamentUUID, Date invitedAt) {
 		super();
 		this.uuid = uuid;
-		this.user = user;
-		this.requestor = requestor;
-		this.tournament = tournament;
+		this.userUUID = userUUID;
+		this.requestorUUID = requestorUUID;
+		this.tournamentUUID = tournamentUUID;
 		this.invitedAt = invitedAt;
 	}
 
@@ -48,20 +50,20 @@ public class TournamentRequest {
 		return id;
 	}
 
-	public User getRequestor() {
-		return requestor;
+	public String getRequestorUUID() {
+		return requestorUUID;
 	}
 
-	public void setRequestor(User requestor) {
-		this.requestor = requestor;
+	public void setRequestorUUID(String requestorUUID) {
+		this.requestorUUID = requestorUUID;
 	}
 
-	public User getUser() {
-		return user;
+	public String getUserUUID() {
+		return userUUID;
 	}
 
-	public Tournament getTournament() {
-		return tournament;
+	public String getTournamentUUID() {
+		return tournamentUUID;
 	}
 
 	public Date getInvitedAt() {

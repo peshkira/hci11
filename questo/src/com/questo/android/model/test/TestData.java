@@ -113,8 +113,8 @@ public class TestData {
                 stephansdom.getUuid());
         TournamentMembership deathmatchTournamentMembershipXY = new TournamentMembership(UUIDgen.getUUID(),
                 xyUser.getUuid(), deathmatchTournament.getUuid(), new Date());
-        TournamentRequest deathmatchTournamentRequest = new TournamentRequest(UUIDgen.getUUID(), mainuser, xyUser,
-                deathmatchTournament, new Date());
+        TournamentRequest deathmatchTournamentRequest = new TournamentRequest(UUIDgen.getUUID(), mainuser.getUuid(), xyUser.getUuid(),
+                deathmatchTournament.getUuid(), new Date());
         manager.create(deathmatchTournament, Tournament.class);
         manager.create(deathmatchTask1, TournamentTask.class);
         manager.create(deathmatchTournamentMembershipXY, TournamentMembership.class);
