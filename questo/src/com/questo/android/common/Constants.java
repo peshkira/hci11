@@ -18,6 +18,7 @@ public final class Constants {
     public static final String BOOL_CORRECT_ANSWER = "app.questo.questions.correct.bool";
     public static final String CONGRATS_DETAILS = "You have answered {} of {} questions correctly, earning";
     public static final String EXTRA_COMPANION_UUID_ARRAY = "app.questo.extra.companion.uuid";
+    public static final String EXTRA_ADD_QUESTION_PLACE_UUID = "app.questo.extra.add.question.place.uuid";
     
     public static final double MAP_PLACES_NEARBY = 2;
     public static final String EXTRA_LATITUDE = "app.questo.extra.latitude";

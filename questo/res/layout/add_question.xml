@@ -14,27 +14,48 @@
 	<EditText android:id="@+id/AddQuestionQuestion"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:text="" android:layout_below="@id/topbar"
-		android:layout_toRightOf="@id/AddQuestionQuestionLabel" 
+		android:layout_toRightOf="@id/AddQuestionQuestionLabel"
 		android:layout_alignBaseline="@id/AddQuestionQuestionLabel"
 		android:textSize="15sp" android:textColor="#000000" />
 	<RadioGroup android:id="@+id/AddQuestionQuestionType"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:layout_below="@id/AddQuestionQuestion">
-		<RadioButton android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="Multiple Choice"
-			android:textSize="15sp" android:textColor="#000000" />
-		<RadioButton android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="Text"
-			android:textSize="15sp" android:textColor="#000000" />
-		<RadioButton android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="Number Guessing"
-			android:textSize="15sp" android:textColor="#000000" />
+		<RadioButton android:id="@+id/QuestionTypeMultipleChoice"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:text="Multiple Choice" android:textSize="15sp"
+			android:textColor="#000000" />
+		<RadioButton android:id="@+id/QuestionTypeText"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:text="Text" android:textSize="15sp" android:textColor="#000000" />
+		<RadioButton android:id="@+id/QuestionTypeNumberGuessing"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:text="Number Guessing" android:textSize="15sp"
+			android:textColor="#000000" />
 	</RadioGroup>
+	<RelativeLayout android:id="@+id/TypeMultipleChoice"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_below="@id/AddQuestionQuestionType" android:visibility="visible">
+		<EditText android:id="@+id/MultipleChoiceEdit"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+	</RelativeLayout>
+	<RelativeLayout android:id="@+id/TypeText"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_below="@id/AddQuestionQuestionType" android:visibility="gone">
+		<EditText android:id="@+id/TextEdit"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+	</RelativeLayout>
+	<RelativeLayout android:id="@+id/TypeNumberGuessing"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_below="@id/AddQuestionQuestionType" android:visibility="gone">
+		<EditText android:id="@+id/NumberGuessingEdit"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+	</RelativeLayout>
 	<Button android:id="@+id/AddQuestionCancelBtn"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true" android:text="Cancel" />
 	<Button android:id="@+id/AddQuestionCreateBtn"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/AddQuestionCancelBtn"
-		android:layout_alignParentBottom="true" android:layout_alignParentRight="true" android:text="Create Question" />
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true" android:text="Create Question" />
 </RelativeLayout>
