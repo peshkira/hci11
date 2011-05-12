@@ -111,6 +111,14 @@ public class QuestMapView extends MapActivity {
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
 				0, new MapListener());
 
+		this.questMap.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				QuestMapView.this.overlay.togglePlaceDetails();
+			}
+		});
+
 		this.questMap.getController().setZoom(18);
 	}
 
@@ -124,7 +132,7 @@ public class QuestMapView extends MapActivity {
 			this.nearbyPlaces = QuestMapView.this.modelManager.getPlacesNearby(
 					this.currentLocation.getLatitudeE6() / 1e6,
 					this.currentLocation.getLongitudeE6() / 1e6);
-			if(this.overlay.placeDetails!=null){
+			if (this.overlay.placeDetails != null) {
 				this.overlay.placeDetails.setVisibility(View.INVISIBLE);
 			}
 			this.overlay.refreshOverlayItems();
@@ -137,25 +145,29 @@ public class QuestMapView extends MapActivity {
 			ContextMenu.ContextMenuInfo menuInfo) {
 		MenuItem addPlace = menu.add("Add Place");
 		addPlace.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-			
+
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
-				Intent addPlaceIntent = new Intent(QuestMapView.this, AddPlace.class);
+				Intent addPlaceIntent = new Intent(QuestMapView.this,
+						AddPlace.class);
 				startActivityForResult(addPlaceIntent, ADD_PLACE_REQUEST_CODE);
 				return true;
 			}
 		});
-		
+
 		MenuItem addQuestion = menu.add("Add Question");
 		addQuestion.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-			
+
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
-				if(QuestMapView.this.currentPlace != null){
+				if (QuestMapView.this.currentPlace != null) {
 					String uuid = QuestMapView.this.currentPlace.getUuid();
-					Intent addQuestionIntent = new Intent(QuestMapView.this, AddQuestion.class);
-					addQuestionIntent.putExtra(Constants.EXTRA_ADD_QUESTION_PLACE_UUID, uuid);
-					startActivityForResult(addQuestionIntent, ADD_QUESTION_REQUEST_CODE);
+					Intent addQuestionIntent = new Intent(QuestMapView.this,
+							AddQuestion.class);
+					addQuestionIntent.putExtra(
+							Constants.EXTRA_ADD_QUESTION_PLACE_UUID, uuid);
+					startActivityForResult(addQuestionIntent,
+							ADD_QUESTION_REQUEST_CODE);
 					return true;
 				}
 				return false;
@@ -163,20 +175,20 @@ public class QuestMapView extends MapActivity {
 		});
 	}
 
-//	public boolean onContextItemSelected(MenuItem item) {
-//
-//		if (item.getTitle().equals("Add Place")) {
-//
-//		}
-//		if (item.getTitle().equals("Add Question")) {
-//			if(QuestMapView.this.currentPlace!=null){
-//
-//			}
-//		}
-//
-//		return super.onContextItemSelected(item);
-//
-//	}
+	// public boolean onContextItemSelected(MenuItem item) {
+	//
+	// if (item.getTitle().equals("Add Place")) {
+	//
+	// }
+	// if (item.getTitle().equals("Add Question")) {
+	// if(QuestMapView.this.currentPlace!=null){
+	//
+	// }
+	// }
+	//
+	// return super.onContextItemSelected(item);
+	//
+	// }
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -251,7 +263,7 @@ public class QuestMapView extends MapActivity {
 					}
 				});
 			}
-			this.placeDetails.setVisibility(View.VISIBLE);
+			this.togglePlaceDetails();
 			QuestMapView.this.questMap.removeView(this.placeDetails);
 			QuestMapView.this.questMap.addView(this.placeDetails,
 					new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
@@ -269,6 +281,15 @@ public class QuestMapView extends MapActivity {
 
 			return true;
 		}
+
+		private void togglePlaceDetails() {
+			if (this.placeDetails != null) {
+				if (this.placeDetails.getVisibility() == View.INVISIBLE)
+					this.placeDetails.setVisibility(View.VISIBLE);
+				else
+					this.placeDetails.setVisibility(View.INVISIBLE);
+			}
+		}
 	}
 
 	private class MapListener implements LocationListener {
@@ -276,11 +297,11 @@ public class QuestMapView extends MapActivity {
 		@Override
 		public void onLocationChanged(Location location) {
 			if (QuestMapView.this.questMap != null) {
-//				GeoPoint current = new GeoPoint(
-//						(int) (location.getLatitude() * 1e6),
-//						(int) (location.getLongitude() * 1e6));
-//				QuestMapView.this.questMap.getController().setCenter(current);
-//				QuestMapView.this.currentLocation = current;
+				// GeoPoint current = new GeoPoint(
+				// (int) (location.getLatitude() * 1e6),
+				// (int) (location.getLongitude() * 1e6));
+				// QuestMapView.this.questMap.getController().setCenter(current);
+				// QuestMapView.this.currentLocation = current;
 				QuestMapView.this.refreshMap();
 			}
 		}
