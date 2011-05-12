@@ -263,7 +263,8 @@ public class QuestMapView extends MapActivity {
 					}
 				});
 			}
-			this.togglePlaceDetails();
+//			this.togglePlaceDetails();
+			this.placeDetails.setVisibility(View.VISIBLE);
 			QuestMapView.this.questMap.removeView(this.placeDetails);
 			QuestMapView.this.questMap.addView(this.placeDetails,
 					new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
