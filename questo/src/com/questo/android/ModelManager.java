@@ -326,7 +326,7 @@ public class ModelManager {
     public List<TournamentRequest> getTournamentRequestsForUser(User user) {
         try {
             QueryBuilder<TournamentRequest, Integer> tournamentRequests = queryBuilder(TournamentRequest.class);
-            tournamentRequests.where().eq(TournamentRequest.USER, user);
+            tournamentRequests.where().eq(TournamentRequest.USER_UUID, user.getUuid());
             return db().getCachedDao(TournamentRequest.class).query(tournamentRequests.prepare());
         } catch (SQLException e) {
             handleException(e);
@@ -346,7 +346,9 @@ public class ModelManager {
         try {
             db().executeInTransaction(new Callable<Void>() {
                 public Void call() throws Exception {
-                    addTournamentMembership(request.getTournament(), request.getUser());
+                	Tournament t = getGenericObjectByUuid(request.getTournamentUUID(), Tournament.class);
+                	User u = getGenericObjectByUuid(request.getUserUUID(), User.class);
+                    addTournamentMembership(t, u);
                     delete(request, TournamentRequest.class);
                     return null;
                 }

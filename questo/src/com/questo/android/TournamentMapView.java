@@ -29,6 +29,7 @@ import com.questo.android.view.TopBar;
 public class TournamentMapView extends MapActivity {
 
 	public final static int ADD_PLACE_REQUEST_CODE = 1;
+	public final static String EXTRA_PLACE_UUID_ARRAY = "EXTRA_PLACE_UUID_ARRAY";
 
 	private MapView questMap;
 	private List<Place> nearbyPlaces;
@@ -67,7 +68,7 @@ public class TournamentMapView extends MapActivity {
 			public void onClick(View v) {
 				Intent tournamentView = new Intent(TournamentMapView.this, NewTournamentView.class);
 				String[] selected = TournamentMapView.this.getSelectedPlaces();
-				tournamentView.putExtra(Constants.EXTRA_COMPANION_UUID_ARRAY, TournamentMapView.this.getSelectedPlaces());
+				tournamentView.putExtra(EXTRA_PLACE_UUID_ARRAY, TournamentMapView.this.getSelectedPlaces());
 				TournamentMapView.this.setResult(RESULT_OK, tournamentView);
 				TournamentMapView.this.finish();
 			}

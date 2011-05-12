@@ -5,33 +5,36 @@
 	android:background="@color/papyrus_start">
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:layout_marginBottom="20dip"
+		android:layout_height="wrap_content" 
 		questo:label="@string/add_place" questo:label_centered="true" />
-	<TextView android:id="@+id/AddPlaceNameLabel"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:textSize="15sp" android:textColor="#000000" android:text="Name:"
-		android:layout_below="@id/topbar" android:layout_alignBaseline="@id/AddPlaceNameLabel" />
-	<EditText android:id="@+id/AddPlaceName" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:textSize="15sp"
-		android:textColor="#000000" android:text=""
-		android:layout_below="@id/topbar" android:layout_toRightOf="@id/AddPlaceNameLabel" 
-		android:layout_alignBaseline="@id/AddPlaceNameLabel"/>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:padding="10dp"
+		android:layout_below="@id/topbar" android:orientation="horizontal" android:id="@+id/name_layout">
+		<EditText android:id="@+id/AddPlaceName"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:textSize="15sp" android:textColor="#000000" android:text="" android:singleLine="true"
+			android:hint="Enter name..."/>
+	</LinearLayout>
 	<AbsoluteLayout android:id="@+id/QuestMapLayout"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:layout_below="@id/AddPlaceName">
+		android:layout_below="@+id/name_layout">
 		<com.google.android.maps.MapView
 			android:id="@+id/AddPlaceMap" android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:enabled="true"
 			android:clickable="true" android:apiKey="@string/apikey"
 			android:layout_below="@id/topbar" />
 	</AbsoluteLayout>
-	<Button android:id="@+id/AddPlaceCancelBtn"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:text="Cancel" android:layout_alignParentBottom="true" />
-	<Button android:id="@+id/AddPlaceCreateBtn"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/AddPlaceCancelBtn"
-		android:layout_alignParentBottom="true"
-		android:layout_alignParentRight="true" android:text="Create Place" 
-		android:layout_below="@id/AddPlaceMap"/>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+		android:layout_below="@id/AddPlaceMap" android:orientation="horizontal" android:padding="10dp">
+		<Button android:id="@+id/AddPlaceCreateBtn"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:layout_alignParentLeft="true" android:text="Create"
+			style="@style/MediumRoundButton" android:layout_marginRight="10dp"/>
+		<Button android:id="@+id/AddPlaceCancelBtn"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:text="Cancel" android:layout_weight="1"
+			style="@style/MediumRoundButtonAlternative"/>
+	</LinearLayout>
 </RelativeLayout>
