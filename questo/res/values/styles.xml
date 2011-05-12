@@ -35,6 +35,9 @@
 	<style name="NormalBlackFont" parent="@style/BlackShadowedFont">
 		<item name="android:textSize">15sp</item>
 	</style>
+	<style name="QuestListFont" parent="@style/WhiteShadowedFont">
+		<item name="android:textSize">15sp</item>
+	</style>
 	<style name="TournamentListFont" parent="@style/WhiteShadowedFont">
 		<item name="android:textSize">16sp</item>
 	</style>
