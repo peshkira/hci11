@@ -124,6 +124,9 @@ public class QuestMapView extends MapActivity {
 			this.nearbyPlaces = QuestMapView.this.modelManager.getPlacesNearby(
 					this.currentLocation.getLatitudeE6() / 1e6,
 					this.currentLocation.getLongitudeE6() / 1e6);
+			if(this.overlay.placeDetails!=null){
+				this.overlay.placeDetails.setVisibility(View.INVISIBLE);
+			}
 			this.overlay.refreshOverlayItems();
 			this.questMap.invalidate();
 		}
@@ -248,6 +251,7 @@ public class QuestMapView extends MapActivity {
 					}
 				});
 			}
+			this.placeDetails.setVisibility(View.VISIBLE);
 			QuestMapView.this.questMap.removeView(this.placeDetails);
 			QuestMapView.this.questMap.addView(this.placeDetails,
 					new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
