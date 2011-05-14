@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" android:background="@drawable/bg_papyrus">
+	<com.questo.android.view.TopBar
+		android:id="@+id/topbar" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" questo:label="Add Companion"
+		questo:label_centered="false" />
+	<EditText android:id="@+id/search_box" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_marginLeft="10dip"
+		android:layout_marginRight="10dip" android:layout_marginTop="10dip"
+		android:layout_marginBottom="10dip" android:hint="search by email or name"
+		android:inputType="text" android:maxLines="1" />
+	<ListView android:id="@+id/list_users" android:background="@color/winered_verydark"
+		android:dividerHeight="1px" android:cacheColorHint="#00000000"
+		android:divider="#2b0201" android:fadingEdge="vertical"
+		android:fadingEdgeLength="10dp" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:layout_above="@+id/bottombar">
+	</ListView>
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:id="@+id/empty_users_text"
+		android:text="You can search for new companions by typing in the box above."
+		style="@style/BlackShadowedFont" android:padding="10dp"
+		android:gravity="center_horizontal" android:textSize="14sp"
+		android:layout_above="@+id/bottombar" />
+</LinearLayout>
