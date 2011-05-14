@@ -31,6 +31,7 @@ import com.questo.android.view.TopBar;
 public class ProfileView extends TabActivity {
 
     private View popup = null;
+    private TabHost tabHost;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class ProfileView extends TabActivity {
 
         TopBar topbar = (TopBar) findViewById(R.id.topbar);
         TextView state = (TextView) findViewById(R.id.UserProfileStateText);
-        
+
         if (extras != null) {
             String userUuid = extras.getString(Constants.TRANSITION_OBJECT_UUID);
             user = mngr.getGenericObjectByUuid(userUuid, User.class);
@@ -62,43 +63,35 @@ public class ProfileView extends TabActivity {
 
         }
 
-        TabHost tabHost = getTabHost();
+        this.tabHost = getTabHost();
         TabSpec spec;
         Intent intent;
 
         intent = new Intent().setClass(this, ProfileTabThrophies.class).putExtra(Constants.TRANSITION_OBJECT_UUID,
                 user.getUuid());
-        spec = tabHost.newTabSpec("ProfileTabThrophies");
+        spec = this.tabHost.newTabSpec("ProfileTabThrophies");
         spec.setIndicator("Throphy", getResources().getDrawable(R.drawable.img_trophy_thumb));
         spec.setContent(intent);
-        tabHost.addTab(spec);
+        this.tabHost.addTab(spec);
 
         intent = new Intent().setClass(this, ProfileTabPlaces.class).putExtra(Constants.TRANSITION_OBJECT_UUID,
                 user.getUuid());
-        spec = tabHost.newTabSpec("ProfileTabPlaces");
+        spec = this.tabHost.newTabSpec("ProfileTabPlaces");
         spec.setIndicator("Places", getResources().getDrawable(R.drawable.img_questo_sign_thumb));
         spec.setContent(intent);
-        tabHost.addTab(spec);
+        this.tabHost.addTab(spec);
 
-        tabHost.setCurrentTab(0);
+        this.tabHost.setCurrentTab(0);
+        this.tabHost.setFocusable(false);
     }
 
     @Override
     public void onBackPressed() {
-    
-    }
-    
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && this.popup != null) {
-            System.out.println("NOT NULL");
+        if (this.popup != null) {
             ((LinearLayout) this.popup).findViewById(R.id.popup_shakable).startAnimation(new ShakeAnimation());
-            return true;
         } else {
-            System.out.println("NULL");
-            return super.onKeyDown(keyCode, event);
+            super.onBackPressed();
         }
-        
     }
 
     private class LogoutClickListener implements OnClickListener {
@@ -113,6 +106,8 @@ public class ProfileView extends TabActivity {
         public void onClick(View v) {
             final Button btn = (Button) v;
             btn.setEnabled(false);
+            tabHost.setVisibility(View.GONE);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
             LayoutInflater inflater = (LayoutInflater) ProfileView.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -124,8 +119,6 @@ public class ProfileView extends TabActivity {
             int height = (int) (display.getHeight() * 0.30);
 
             final PopupWindow pw = new PopupWindow(popup, width, height);
-            pw.setFocusable(false);
-            
 
             final TextView txt = (TextView) popup.findViewById(R.id.poput_txt);
             txt.setText(Html.fromHtml("<big><b>Are You sure you want to abandon ship?</b></big>"));
@@ -147,6 +140,8 @@ public class ProfileView extends TabActivity {
                     pw.dismiss();
                     ProfileView.this.popup = null;
                     btn.setEnabled(true);
+                    tabHost.setVisibility(View.VISIBLE);
+
                 }
             });
 

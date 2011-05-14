@@ -5,7 +5,7 @@
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" questo:label="Settings"
-		questo:label_centered="false" />
+		questo:label_centered="true" />
 	<!-- <ScrollView android:fillViewport="true"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"> -->
 		<ListView android:id="@android:id/list" android:layout_width="match_parent"

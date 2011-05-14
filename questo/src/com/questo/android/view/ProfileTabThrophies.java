@@ -33,7 +33,7 @@ public class ProfileTabThrophies extends Activity {
 
         this.initView();
     }
-
+    
     private void initView() {
         String uuid = this.getIntent().getExtras().getString(Constants.TRANSITION_OBJECT_UUID);
         

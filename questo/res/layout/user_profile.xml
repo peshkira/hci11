@@ -6,7 +6,7 @@
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:layout_marginBottom="20dip"
-		questo:label_centered="true" />
+		questo:label_centered="false" />
 	<ImageView android:layout_height="wrap_content"
 		android:layout_width="wrap_content" android:src="@drawable/img_profile_img"
 		android:id="@+id/UserProfileImg" android:layout_below="@id/topbar" />
