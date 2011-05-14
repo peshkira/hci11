@@ -117,6 +117,24 @@ public class ModelManager {
 
         return null;
     }
+    
+    public Companionship getCompanionshipFor(User initiator, User confirmer) {
+        try {
+
+            QueryBuilder<Companionship, Integer> companionship = queryBuilder(Companionship.class);
+            companionship.where().eq(Companionship.INITIATOR_UUID, initiator.getUuid()).and().eq(Companionship.CONFIRMER_UUID, confirmer.getUuid());
+
+            List<Companionship> list = db().getCachedDao(Companionship.class).query(companionship.prepare());
+            if (list.isEmpty()) {
+                return null;
+            } else {
+                return list.get(0);
+            }
+        } catch (SQLException e) {
+            handleException(e);
+        }
+        return null;
+    }
 
     public List<User> getCompanionsForUser(User user) {
         try {
@@ -133,6 +151,35 @@ public class ModelManager {
             companions.where().in(User.UUID, initiator).or().in(User.UUID, confirmer).prepare();
 
             return db().getCachedDao(User.class).query(companions.prepare());
+        } catch (SQLException e) {
+            handleException(e);
+        }
+        return new ArrayList<User>();
+    }
+    
+    //TODO very inefficient, however it does not matter as this functionality will be handled by the server
+    // and not by the local db...
+    public List<User> getNonCompanionsForUser(User user) {
+        try {
+
+            QueryBuilder<Companionship, Integer> initiator = queryBuilder(Companionship.class);
+            initiator.selectColumns(Companionship.CONFIRMER_UUID).where().eq(Companionship.CONFIRMED, true).and()
+                    .eq(Companionship.INITIATOR_UUID, user.getUuid());
+
+            QueryBuilder<Companionship, Integer> confirmer = queryBuilder(Companionship.class);
+            confirmer.selectColumns(Companionship.INITIATOR_UUID).where().eq(Companionship.CONFIRMED, true).and()
+                    .eq(Companionship.CONFIRMER_UUID, user.getUuid());
+
+            QueryBuilder<User, Integer> companions = queryBuilder(User.class);
+            companions.selectColumns(User.UUID);
+            companions.where().in(User.UUID, initiator).or().in(User.UUID, confirmer).prepare();
+            
+            QueryBuilder<User, Integer> noncompanions = queryBuilder(User.class);
+            noncompanions.where().not().in(User.UUID, companions);
+            
+            List<User> users = db().getCachedDao(User.class).query(noncompanions.prepare());
+            users.remove(app.getLoggedinUser());
+            return users; 
         } catch (SQLException e) {
             handleException(e);
         }

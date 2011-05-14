@@ -30,19 +30,23 @@ import com.questo.android.view.TopBar;
 
 public class CompanionsView extends Activity {
 
+    private App app;
+    private ModelManager mngr;
+    private CompanionsListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.companions);
 
-        App app = (App) this.getApplicationContext();
-        ModelManager mngr = app.getModelManager();
+        app = (App) this.getApplicationContext();
+        mngr = app.getModelManager();
         List<User> companions = mngr.getCompanionsForUser(app.getLoggedinUser());
         System.out.println("SIZE: " + companions.size());
         TopBar topbar = (TopBar) findViewById(R.id.topbar);
         topbar.addButtonLeftMost(this, "Requests");
 
-        CompanionsListAdapter adapter = new CompanionsListAdapter(companions);
+        adapter = new CompanionsListAdapter(companions);
 
         ListView companionsList = (ListView) findViewById(R.id.list_companion);
         companionsList.setEmptyView(findViewById(R.id.empty_companions_text));
@@ -51,12 +55,20 @@ public class CompanionsView extends Activity {
 
         EditText searchbox = (EditText) findViewById(R.id.search_box);
         searchbox.addTextChangedListener(new SearchBoxTextWatcher(adapter));
-        
+
         Button btnAdd = (Button) findViewById(R.id.btn_add_companion);
         btnAdd.setOnClickListener(new AddCompanionListener());
 
     }
     
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("THIS DOES NOT GET CALLED!");
+        adapter.setData(mngr.getCompanionsForUser(app.getLoggedinUser()));
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+    
+
     private class AddCompanionListener implements OnClickListener {
 
         @Override
@@ -64,11 +76,11 @@ public class CompanionsView extends Activity {
             startActivity(new Intent(CompanionsView.this, AddCompanionView.class));
             overridePendingTransition(R.anim.push_up_in, R.anim.no_change_out);
         }
-        
+
     }
-    
+
     private class CompanionItemListener implements OnItemClickListener {
-        
+
         private List<User> companions;
 
         public CompanionItemListener(List<User> companions) {
@@ -78,9 +90,10 @@ public class CompanionsView extends Activity {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
             Intent showCompanion = new Intent(CompanionsView.this, ProfileView.class).putExtra(
-                    Constants.TRANSITION_OBJECT_UUID, this.companions.get(position).getUuid());
-            startActivity(showCompanion);
-            
+                    Constants.TRANSITION_OBJECT_UUID, this.companions.get(position).getUuid()).putExtra(
+                    Constants.PROFILE_BTN_TYPE, Constants.PROFILE_BTN_TYPES[2]);
+            startActivityForResult(showCompanion, RESULT_CANCELED);
+
         }
     }
 
@@ -120,9 +133,14 @@ public class CompanionsView extends Activity {
             this.data = users;
             this.inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
+        
+        public void setData(List<User> users) {
+            this.data = users;
+            this.companions.clear();
+            notifyDataSetChanged();
+        }
 
         public void filter(CharSequence s) {
-            System.out.println("SEQUENCE: " + s);
             this.data.addAll(this.companions);
             this.companions.clear();
             Iterator<User> iter = this.data.iterator();
@@ -134,12 +152,12 @@ public class CompanionsView extends Activity {
                     iter.remove();
                 }
             }
-            
+
             if (data.isEmpty()) {
                 TextView tv = (TextView) findViewById(R.id.empty_companions_text);
                 tv.setText("No companion with that name!");
             }
-            
+
             notifyDataSetChanged();
         }
 

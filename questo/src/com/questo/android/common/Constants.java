@@ -25,6 +25,8 @@ public final class Constants {
     public static final String EXTRA_LONGITUDE = "app.questo.extra.longitude";
 
     public static final int QUESTIONS_PER_PLACE = 10;
+    public static final String PROFILE_BTN_TYPE = "app.questo.profile.btn";
+    public static final String[] PROFILE_BTN_TYPES = {"request", "cancel_request", "cancel_companionship"};
     
     private Constants() {
 

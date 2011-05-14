@@ -1,5 +1,7 @@
 package com.questo.android;
 
+import java.util.Date;
+
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +9,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +24,8 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.questo.android.common.Constants;
+import com.questo.android.helper.UUIDgen;
+import com.questo.android.model.Companionship;
 import com.questo.android.model.User;
 import com.questo.android.view.ProfileTabPlaces;
 import com.questo.android.view.ProfileTabThrophies;
@@ -32,6 +35,9 @@ public class ProfileView extends TabActivity {
 
     private View popup = null;
     private TabHost tabHost;
+    private App app;
+    private ModelManager mngr;
+    private Button btnAction;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,8 +49,8 @@ public class ProfileView extends TabActivity {
 
     private void initView(Bundle extras) {
         User user;
-        App app = (App) getApplicationContext();
-        ModelManager mngr = app.getModelManager();
+        app = (App) getApplicationContext();
+        mngr = app.getModelManager();
 
         TopBar topbar = (TopBar) findViewById(R.id.topbar);
         TextView state = (TextView) findViewById(R.id.UserProfileStateText);
@@ -54,6 +60,12 @@ public class ProfileView extends TabActivity {
             user = mngr.getGenericObjectByUuid(userUuid, User.class);
             topbar.setLabel(user.getName());
             state.setText(Html.fromHtml(user.getName() + " is a Peasant<br/>Points earned: 12"));
+
+
+            String type = extras.getString(Constants.PROFILE_BTN_TYPE);
+            
+            this.switchButtonTo(type, user);
+            
         } else {
             user = app.getLoggedinUser();
             topbar.setLabel("You");
@@ -90,8 +102,61 @@ public class ProfileView extends TabActivity {
         if (this.popup != null) {
             ((LinearLayout) this.popup).findViewById(R.id.popup_shakable).startAnimation(new ShakeAnimation());
         } else {
+            finishActivity(RESULT_OK);
             super.onBackPressed();
         }
+    }
+    
+    private class ProfileButtonActionListener implements OnClickListener {
+
+        private String action;
+        
+        private User confirmer;
+
+        public ProfileButtonActionListener(String action, User user) {
+            this.action = action;
+            this.confirmer = user;
+        }
+        
+        @Override
+        public void onClick(View v) {
+            //send request
+            if (this.action.equals(Constants.PROFILE_BTN_TYPES[0])) {
+                Companionship companionship = new Companionship(UUIDgen.getUUID(), app.getLoggedinUser().getUuid(), confirmer.getUuid(), new Date());
+                companionship.setConfirmed(false);
+                mngr.create(companionship, Companionship.class);
+                ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[1], confirmer);
+                
+                //cancel request
+            } else if (this.action.equals(Constants.PROFILE_BTN_TYPES[1])) {
+                Companionship companionship = mngr.getCompanionshipFor(app.getLoggedinUser(), confirmer);
+                if (companionship != null) {
+                    mngr.delete(companionship, Companionship.class);
+                } else {
+                    System.out.println("SOMETHING MUST HAVE GONE WRONG");
+                }
+                ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[0], confirmer);
+                //cancel companionship
+            } else {
+                Companionship c1 = mngr.getCompanionshipFor(app.getLoggedinUser(), confirmer);
+                Companionship c2 = mngr.getCompanionshipFor(confirmer, app.getLoggedinUser());
+                
+                if (c1 != null && c2 == null) {
+                    System.out.println("REMOVING COMPANIONSHIP");
+                    mngr.delete(c1, Companionship.class);
+                   
+                } else if (c2 != null && c1 == null) {
+                    System.out.println("REMOVING COMPANIONSHIP");
+                    mngr.delete(c2, Companionship.class);
+                    
+                } else {
+                    System.out.println("SOMETHING MUST HAVE GONE WRONG");
+                }
+                
+                ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[0], confirmer);
+            }
+        }
+        
     }
 
     private class LogoutClickListener implements OnClickListener {
@@ -161,6 +226,29 @@ public class ProfileView extends TabActivity {
             t.getMatrix().reset();
             t.getMatrix().postTranslate((float) Math.random() * 6 - 3, (float) Math.random() * 6 - 3);
         }
+    }
+
+    public void switchButtonTo(String type, User confirmer) {
+        Button btn;
+        if (type.equals(Constants.PROFILE_BTN_TYPES[0])) { // request
+            btn = (Button) findViewById(R.id.btn_send_request);
+
+            // cancel request
+        } else if (type.equals(Constants.PROFILE_BTN_TYPES[1])) {
+            btn = (Button) findViewById(R.id.btn_cancel_request);
+            
+            //cancel companionship
+        } else {
+            btn = (Button) findViewById(R.id.btn_cancel_companionship);
+        }
+
+        if (btnAction != null) {
+            btnAction.setVisibility(View.GONE);
+        }
+        
+        btnAction = btn;
+        btnAction.setVisibility(View.VISIBLE);
+        btnAction.setOnClickListener(new ProfileButtonActionListener(type, confirmer));
     }
 
 }
