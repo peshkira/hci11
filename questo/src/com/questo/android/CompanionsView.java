@@ -44,7 +44,14 @@ public class CompanionsView extends Activity {
         List<User> companions = mngr.getCompanionsForUser(app.getLoggedinUser());
         System.out.println("SIZE: " + companions.size());
         TopBar topbar = (TopBar) findViewById(R.id.topbar);
-        topbar.addButtonLeftMost(this, "Requests");
+        Button requestButton = topbar.addToggleButtonLeftMost(this, "Requests", false);
+        requestButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent tournamentRequest = new Intent(CompanionsView.this, CompanionRequestsView.class);
+                startActivity(tournamentRequest);
+            }
+        });
 
         adapter = new CompanionsListAdapter(companions);
 
@@ -66,6 +73,11 @@ public class CompanionsView extends Activity {
         System.out.println("THIS DOES NOT GET CALLED!");
         adapter.setData(mngr.getCompanionsForUser(app.getLoggedinUser()));
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, HomeView.class));
     }
     
 

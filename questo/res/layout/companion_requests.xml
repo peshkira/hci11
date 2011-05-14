@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent"
+    android:background="@drawable/bg_papyrus" android:orientation="vertical">
+    <com.questo.android.view.TopBar
+        android:id="@+id/topbar" android:layout_width="fill_parent"
+        android:layout_height="wrap_content" questo:label="Companions"
+        questo:label_centered="false" />
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:gravity="left"
+        android:padding="10dp" android:orientation="vertical">
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content" style="@style/NormalBlackFont"
+            android:id="@+id/description" />
+    </LinearLayout>
+    <ListView android:layout_height="fill_parent"
+        android:layout_width="fill_parent" android:id="@+id/requestlist"
+        android:background="@color/winered_verydark" android:dividerHeight="1px"
+        android:cacheColorHint="#00000000" android:divider="#2b0201"
+        android:fadingEdge="vertical" android:fadingEdgeLength="10dp" />
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="fill_parent" android:id="@+id/empty_companionrequestlist_text"
+        android:text="No requests at the moment." style="@style/WhiteShadowedFont"
+        android:padding="10dp" android:background="@color/winered_verydark"
+        android:gravity="center_horizontal" android:textSize="14sp" />
+</LinearLayout>

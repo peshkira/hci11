@@ -36,7 +36,7 @@ public class TournamentRequestView extends Activity {
 			if (v == null) {
 				LayoutInflater inflater = (LayoutInflater) TournamentRequestView.this
 						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				v = inflater.inflate(R.layout.tournament_requests_list_item, null);
+				v = inflater.inflate(R.layout.requests_list_item, null);
 			}
 			final TournamentRequest current = this.getItem(position);
 			TextView reqDescription = (TextView) v.findViewById(R.id.request_description);
@@ -108,7 +108,7 @@ public class TournamentRequestView extends Activity {
 		ListView tournamentRequestList = (ListView) findViewById(R.id.requestlist);
 		tournamentRequestList.setEmptyView(findViewById(R.id.empty_tournamentrequestlist_text));
 		String[] listContent = new String[] { "foo", "bla" };
-		adapter = new TournamentRequestListAdapter(this, R.layout.tournament_requests_list_item);
+		adapter = new TournamentRequestListAdapter(this, R.layout.requests_list_item);
 		tournamentRequestList.setAdapter(adapter);
 		loadRequests();
 	}

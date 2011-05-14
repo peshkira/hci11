@@ -21,6 +21,7 @@
 		<activity android:name=".CompanionsView"
 			android:windowSoftInputMode="adjustPan"></activity>
 		<activity android:name=".AddCompanionView"></activity>
+		<activity android:name=".CompanionRequestsView"></activity>
 		<activity android:name=".PlaceDetailsView"
 			android:screenOrientation="portrait"></activity>
 		<activity android:name=".QuestionView"></activity>

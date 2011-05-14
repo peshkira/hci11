@@ -135,6 +135,18 @@ public class ModelManager {
         }
         return null;
     }
+    
+    public List<Companionship> getCompanionshipRequestsForUser(User user) {
+        try {
+            QueryBuilder<Companionship, Integer> requests = queryBuilder(Companionship.class);
+            requests.where().eq(Companionship.CONFIRMER_UUID, user.getUuid()).and().eq(Companionship.CONFIRMED, false);
+
+            return db().getCachedDao(Companionship.class).query(requests.prepare());
+        } catch (SQLException e) {
+            handleException(e);
+        }
+        return new ArrayList<Companionship>();
+    }
 
     public List<User> getCompanionsForUser(User user) {
         try {
