@@ -1,5 +1,6 @@
 package com.questo.android;
 
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.questo.android.common.Constants;
 import com.questo.android.model.Companionship;
 import com.questo.android.model.User;
 import com.questo.android.view.TopBar;
@@ -23,6 +25,7 @@ import com.questo.android.view.TopBar;
 public class CompanionRequestsView extends Activity {
 
     private App app;
+    private CompanionRequestListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +52,18 @@ public class CompanionRequestsView extends Activity {
 
         ListView list = (ListView) findViewById(R.id.requestlist);
         list.setEmptyView(findViewById(R.id.empty_companionrequestlist_text));
-        CompanionRequestListAdapter adapter = new CompanionRequestListAdapter(this, R.layout.requests_list_item);
+        adapter = new CompanionRequestListAdapter(this, R.layout.requests_list_item);
         list.setAdapter(adapter);
-        this.loadRequests(adapter);
+        loadRequests();
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        loadRequests();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void loadRequests(CompanionRequestListAdapter adapter) {
+    private void loadRequests() {
         adapter.clear();
         List<Companionship> requests = app.getModelManager().getCompanionshipRequestsForUser(app.getLoggedinUser());
         for (Companionship cs : requests) {
@@ -83,7 +92,7 @@ public class CompanionRequestsView extends Activity {
             final Companionship current = this.getItem(position);
             TextView reqDescription = (TextView) v.findViewById(R.id.request_description);
 
-            User requestor = app.getModelManager().getGenericObjectByUuid(current.getInitiator(), User.class);
+            final User requestor = app.getModelManager().getGenericObjectByUuid(current.getInitiator(), User.class);
             String requestorName = requestor.getName() == null ? "Someone" : requestor.getName();
 
             reqDescription.setText(Html.fromHtml("<b>" + requestorName + "</b> wants to be your companion."));
@@ -92,8 +101,10 @@ public class CompanionRequestsView extends Activity {
             acceptBtn.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // app.getModelManager().acceptTournamentRequest(current);
-                    // loadRequests();
+                    current.setConfirmed(true);
+                    current.setConfirmedAt(new Date());
+                    app.getModelManager().update(current, Companionship.class);
+                    loadRequests();
                 }
             });
 
@@ -101,9 +112,8 @@ public class CompanionRequestsView extends Activity {
             rejectBtn.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // app.getModelManager().delete(current,
-                    // TournamentRequest.class);
-                    // loadRequests();
+                    app.getModelManager().delete(current, Companionship.class);
+                    loadRequests();
                 }
             });
 
@@ -111,11 +121,10 @@ public class CompanionRequestsView extends Activity {
             detailsBtn.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Intent intent = new Intent(CompanionRequestsView.this,
-                    // ProfileView.class);
-                    // intent.putExtra(Constants.TRANSITION_OBJECT_UUID,
-                    // tournament.getUuid());
-                    // startActivity(intent);
+                    Intent intent = new Intent(CompanionRequestsView.this, ProfileView.class);
+                    intent.putExtra(Constants.TRANSITION_OBJECT_UUID, requestor.getUuid()).putExtra(
+                            Constants.PROFILE_BTN_TYPE, Constants.PROFILE_BTN_TYPES[3]);
+                    startActivityForResult(intent, RESULT_CANCELED);
                 }
             });
 

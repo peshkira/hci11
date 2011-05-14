@@ -61,7 +61,6 @@ public class ProfileView extends TabActivity {
             topbar.setLabel(user.getName());
             state.setText(Html.fromHtml(user.getName() + " is a Peasant<br/>Points earned: 12"));
 
-
             String type = extras.getString(Constants.PROFILE_BTN_TYPE);
             
             this.switchButtonTo(type, user);
@@ -102,7 +101,6 @@ public class ProfileView extends TabActivity {
         if (this.popup != null) {
             ((LinearLayout) this.popup).findViewById(R.id.popup_shakable).startAnimation(new ShakeAnimation());
         } else {
-            finishActivity(RESULT_OK);
             super.onBackPressed();
         }
     }
@@ -137,15 +135,15 @@ public class ProfileView extends TabActivity {
                 }
                 ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[0], confirmer);
                 //cancel companionship
-            } else {
+            } else if (this.action.equals(Constants.PROFILE_BTN_TYPES[2])) {
                 Companionship c1 = mngr.getCompanionshipFor(app.getLoggedinUser(), confirmer);
                 Companionship c2 = mngr.getCompanionshipFor(confirmer, app.getLoggedinUser());
                 
-                if (c1 != null && c2 == null) {
+                if (c1 != null) {
                     System.out.println("REMOVING COMPANIONSHIP");
                     mngr.delete(c1, Companionship.class);
                    
-                } else if (c2 != null && c1 == null) {
+                } else if (c2 != null) {
                     System.out.println("REMOVING COMPANIONSHIP");
                     mngr.delete(c2, Companionship.class);
                     
@@ -154,6 +152,15 @@ public class ProfileView extends TabActivity {
                 }
                 
                 ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[0], confirmer);
+                
+                //accept companionship
+            } else {
+                Companionship companionship = mngr.getCompanionshipFor(confirmer, app.getLoggedinUser());
+                companionship.setConfirmed(true);
+                companionship.setConfirmedAt(new Date());
+                mngr.update(companionship, Companionship.class);
+                
+                ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[2], confirmer);
             }
         }
         
@@ -238,8 +245,12 @@ public class ProfileView extends TabActivity {
             btn = (Button) findViewById(R.id.btn_cancel_request);
             
             //cancel companionship
-        } else {
+        } else if (type.equals(Constants.PROFILE_BTN_TYPES[2])){
             btn = (Button) findViewById(R.id.btn_cancel_companionship);
+            
+            //accept companionship
+        } else {
+            btn = (Button) findViewById(R.id.btn_accept_companionship);
         }
 
         if (btnAction != null) {

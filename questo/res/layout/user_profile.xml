@@ -27,9 +27,13 @@
 			android:layout_gravity="bottom" style="@style/MediumRoundButtonAlternative"
 			android:text="Cancel Companion Request" android:visibility="gone" />
 		<Button android:id="@+id/btn_cancel_companionship"
-            android:layout_width="fill_parent" android:layout_height="wrap_content"
-            android:layout_gravity="bottom" style="@style/MediumRoundButtonAlternative"
-            android:text="Cancel Companionship" android:visibility="gone"/>
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_gravity="bottom" style="@style/MediumRoundButtonAlternative"
+			android:text="Cancel Companionship" android:visibility="gone" />
+		<Button android:id="@+id/btn_accept_companionship"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_gravity="bottom" style="@style/MediumRoundButton"
+			android:text="Accept Companionship" android:visibility="gone" />
 	</LinearLayout>
 	<TabHost android:id="@android:id/tabhost" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:layout_below="@id/UserProfileImg"

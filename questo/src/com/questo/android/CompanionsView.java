@@ -33,6 +33,7 @@ public class CompanionsView extends Activity {
     private App app;
     private ModelManager mngr;
     private CompanionsListAdapter adapter;
+    private CompanionItemListener itemListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +55,12 @@ public class CompanionsView extends Activity {
         });
 
         adapter = new CompanionsListAdapter(companions);
+        itemListener = new CompanionItemListener(companions);
 
         ListView companionsList = (ListView) findViewById(R.id.list_companion);
         companionsList.setEmptyView(findViewById(R.id.empty_companions_text));
         companionsList.setAdapter(adapter);
-        companionsList.setOnItemClickListener(new CompanionItemListener(companions));
+        companionsList.setOnItemClickListener(itemListener);
 
         EditText searchbox = (EditText) findViewById(R.id.search_box);
         searchbox.addTextChangedListener(new SearchBoxTextWatcher(adapter));
@@ -70,8 +72,9 @@ public class CompanionsView extends Activity {
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("THIS DOES NOT GET CALLED!");
-        adapter.setData(mngr.getCompanionsForUser(app.getLoggedinUser()));
+        List<User> list = mngr.getCompanionsForUser(app.getLoggedinUser());
+        adapter.setData(list);
+        itemListener.setCompanions(list);
         super.onActivityResult(requestCode, resultCode, data);
     }
     
@@ -96,6 +99,10 @@ public class CompanionsView extends Activity {
         private List<User> companions;
 
         public CompanionItemListener(List<User> companions) {
+            this.companions = companions;
+        }
+        
+        public void setCompanions(List<User> companions) {
             this.companions = companions;
         }
 

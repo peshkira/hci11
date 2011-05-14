@@ -120,7 +120,6 @@ public class ModelManager {
     
     public Companionship getCompanionshipFor(User initiator, User confirmer) {
         try {
-
             QueryBuilder<Companionship, Integer> companionship = queryBuilder(Companionship.class);
             companionship.where().eq(Companionship.INITIATOR_UUID, initiator.getUuid()).and().eq(Companionship.CONFIRMER_UUID, confirmer.getUuid());
 
@@ -169,7 +168,7 @@ public class ModelManager {
         return new ArrayList<User>();
     }
     
-    //TODO very inefficient, however it does not matter as this functionality will be handled by the server
+    //very inefficient, however it does not matter as this functionality will be handled by the server
     // and not by the local db...
     public List<User> getNonCompanionsForUser(User user) {
         try {
