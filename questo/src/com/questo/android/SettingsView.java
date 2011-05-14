@@ -15,7 +15,9 @@ public class SettingsView extends PreferenceActivity {
     }
 
     private void init() {
-        //App app = (App) this.getApplicationContext();
-        
+        // App app = (App) this.getApplicationContext();
+        // TopBar topbar = (TopBar) findViewById(R.id.topbar);
+
     }
+
 }

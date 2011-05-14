@@ -1,7 +1,6 @@
 package com.questo.android;
 
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,10 +12,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,7 +26,6 @@ import android.widget.TextView;
 
 import com.questo.android.common.Constants;
 import com.questo.android.model.User;
-import com.questo.android.view.ProfileTabThrophies;
 import com.questo.android.view.TopBar;
 
 public class CompanionsView extends Activity {
@@ -51,7 +51,20 @@ public class CompanionsView extends Activity {
 
         EditText searchbox = (EditText) findViewById(R.id.search_box);
         searchbox.addTextChangedListener(new SearchBoxTextWatcher(adapter));
+        
+        Button btnAdd = (Button) findViewById(R.id.btn_add_companion);
+        btnAdd.setOnClickListener(new AddCompanionListener());
 
+    }
+    
+    private class AddCompanionListener implements OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(CompanionsView.this, AddCompanionView.class));
+            overridePendingTransition(R.anim.push_up_in, R.anim.no_change_out);
+        }
+        
     }
     
     private class CompanionItemListener implements OnItemClickListener {

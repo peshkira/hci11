@@ -20,6 +20,7 @@
 		<activity android:name=".TrophyRoomView"></activity>
 		<activity android:name=".CompanionsView"
 			android:windowSoftInputMode="adjustPan"></activity>
+		<activity android:name=".AddCompanionView"></activity>
 		<activity android:name=".PlaceDetailsView"
 			android:screenOrientation="portrait"></activity>
 		<activity android:name=".QuestionView"></activity>
@@ -31,7 +32,8 @@
 		<activity android:name=".LoginView"></activity>
 		<activity android:name=".TournamentsView"></activity>
 		<activity android:name=".TournamentRequestView"></activity>
-		<activity android:name=".NewTournamentView" android:windowSoftInputMode="adjustPan"></activity>
+		<activity android:name=".NewTournamentView"
+			android:windowSoftInputMode="adjustPan"></activity>
 		<activity android:name=".CompanionChooserView"
 			android:windowSoftInputMode="adjustPan"></activity>
 		<activity android:name=".TournamentDetailsView"></activity>
