@@ -24,6 +24,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.questo.android.common.Constants;
+import com.questo.android.common.Level;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Companionship;
 import com.questo.android.model.User;
@@ -49,6 +50,7 @@ public class ProfileView extends TabActivity {
 
     private void initView(Bundle extras) {
         User user;
+        String text;
         app = (App) getApplicationContext();
         mngr = app.getModelManager();
 
@@ -59,20 +61,23 @@ public class ProfileView extends TabActivity {
             String userUuid = extras.getString(Constants.TRANSITION_OBJECT_UUID);
             user = mngr.getGenericObjectByUuid(userUuid, User.class);
             topbar.setLabel(user.getName());
-            state.setText(Html.fromHtml(user.getName() + " is a Peasant<br/>Points earned: 12"));
+            Integer points = mngr.getPointsForUser(user);
+            text = user.getName() + " is a <b>" + Level.getHumanReadableCode(points) + "</b><br/>Points earned: " + points;  
 
             String type = extras.getString(Constants.PROFILE_BTN_TYPE);
-            
             this.switchButtonTo(type, user);
             
         } else {
             user = app.getLoggedinUser();
             topbar.setLabel("You");
-            state.setText(Html.fromHtml("You are a King<br/>Points earned: 2337"));
+            Integer points = mngr.getPointsForUser(user);
+            text = "You are a <b>" + Level.getHumanReadableCode(points) + "</b><br/>Points earned: " + points;
             Button btn = (Button) topbar.addButtonLeftMost(this, "Logout");
             btn.setOnClickListener(new LogoutClickListener(app));
 
         }
+        
+        state.setText(Html.fromHtml(text));
 
         this.tabHost = getTabHost();
         TabSpec spec;

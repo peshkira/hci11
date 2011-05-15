@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.questo.android.common.Constants;
 import com.questo.android.helper.FontHelper;
+import com.questo.android.model.User;
 import com.questo.android.view.TopBar;
 
 public class QuestCompleteView extends Activity {
@@ -47,6 +48,12 @@ public class QuestCompleteView extends Activity {
         
         Button complete = (Button) findViewById(R.id.btn_quest_complete);
         complete.setOnClickListener(new QuestCompleteClickListener());
+        
+        App app = (App) getApplicationContext();
+        User user = app.getLoggedinUser();
+        app.getModelManager().refresh(user, User.class);
+        user.incrementPointsBy(correctAns);
+        app.getModelManager().update(user, User.class);
     }
     
     private class QuestCompleteClickListener implements OnClickListener {

@@ -263,6 +263,22 @@ public class ModelManager {
         }
         return new ArrayList<Trophy>();
     }
+    
+    public List<Trophy> getTrophyForUserAndPlace(User user, String placeUuid) {
+        try {
+
+            QueryBuilder<TrophyForUser, Integer> tfup = queryBuilder(TrophyForUser.class);
+            tfup.selectColumns(TrophyForUser.TROPHY_UUID).where().eq(TrophyForUser.USER, user).and().eq(TrophyForUser.PLACE_UUID, placeUuid).prepare();
+
+            QueryBuilder<Trophy, Integer> trophies = queryBuilder(Trophy.class);
+            trophies.where().in(Trophy.UUID, tfup).and().eq(Trophy.TYPE, Trophy.Type.FOR_PLACE);
+
+            return db().getCachedDao(Trophy.class).query(trophies.prepare());
+        } catch (SQLException e) {
+            handleException(e);
+        }
+        return new ArrayList<Trophy>();
+    }
 
     public List<Tournament> getTournamentsForUser(User user, boolean initializeObjects) {
         try {
@@ -452,6 +468,24 @@ public class ModelManager {
             handleException(e);
         }
         return null;
+    }
+    
+    public Integer getPointsForUser(User user) {
+        try {
+            QueryBuilder<User, Integer> users = queryBuilder(User.class);
+            users.where().eq(User.UUID, user.getUuid());
+            
+            List<User> list = db().getCachedDao(User.class).query(users.prepare());
+            
+            if (list.isEmpty()) {
+                return -1;
+            } else {
+                return list.get(0).getPoints();
+            }
+        } catch (SQLException e) {
+            handleException(e);
+        }
+        return -1;
     }
 
 }

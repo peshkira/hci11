@@ -130,7 +130,7 @@ public class PlaceDetailsView extends Activity {
         ListView trophyList = (ListView) findViewById(R.id.placetrophies);
         trophyList.setEmptyView(findViewById(R.id.empty_trophylist_text));
         PlaceTrophyAdapter adapt = new PlaceTrophyAdapter();
-        List<Trophy> trophies = mngr.getTrophyForType(this.app.getLoggedinUser(), Type.FOR_PLACE);
+        List<Trophy> trophies = mngr.getTrophyForUserAndPlace(this.app.getLoggedinUser(), this.place.getUuid());
         if (trophies != null) {
             adapt.addItems(trophies);
         }

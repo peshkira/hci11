@@ -141,16 +141,16 @@ public class TestData {
                 com.questo.android.model.Trophy.Type.FOR_QUEST);
         manager.create(sword, Trophy.class);
         
-        TrophyForUser tfu1 = new TrophyForUser(UUIDgen.getUUID(), mainuser, threeHeadedMonkey.getUuid(), new Date());
+        TrophyForUser tfu1 = new TrophyForUser(UUIDgen.getUUID(), mainuser, threeHeadedMonkey.getUuid(), null, null, new Date());
         manager.create(tfu1, TrophyForUser.class);
         
-        TrophyForUser tfu2 = new TrophyForUser(UUIDgen.getUUID(), mainuser, theonering.getUuid(), new Date());
+        TrophyForUser tfu2 = new TrophyForUser(UUIDgen.getUUID(), mainuser, theonering.getUuid(), stephansdom.getUuid(), null, new Date());
         manager.create(tfu2, TrophyForUser.class);
         
-        TrophyForUser tfu3 = new TrophyForUser(UUIDgen.getUUID(), mainuser, thelight.getUuid(), new Date());
+        TrophyForUser tfu3 = new TrophyForUser(UUIDgen.getUUID(), mainuser, thelight.getUuid(), peterskirche.getUuid(), null, new Date());
         manager.create(tfu3, TrophyForUser.class);
         
-        TrophyForUser tfu4 = new TrophyForUser(UUIDgen.getUUID(), mainuser, sword.getUuid(), new Date());
+        TrophyForUser tfu4 = new TrophyForUser(UUIDgen.getUUID(), mainuser, sword.getUuid(), null, null, new Date());
         manager.create(tfu4, TrophyForUser.class);
 
         return mainuser;

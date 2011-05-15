@@ -40,6 +40,8 @@ public class User {
 	@ForeignCollectionField(eager = false)
 	ForeignCollection<PlaceVisitation> placeVisitations;
 	@DatabaseField
+	private Integer points;
+	@DatabaseField
 	private Date signedUpAt;
 	@DatabaseField
 	private String jsonifiedProfile;
@@ -60,6 +62,7 @@ public class User {
 		super();
 		this.uuid = uuid;
 		this.signedUpAt = signedUpAt;
+		this.points = 0;
 	}
 
 	public String getUuid() {
@@ -142,15 +145,27 @@ public class User {
 		return settings;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (!this.getClass().equals(o.getClass()))
-			return false;
-		User other = (User) o;
-		return other.id.equals(this.id);
-	}
+	public void setPoints(Integer points) {
+        this.points = points;
+    }
 
-	public class Profile extends JSONKeyValueStore {
+    public Integer getPoints() {
+        return points;
+    }
+    
+    public void incrementPointsBy(int incr) {
+        this.points += incr;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!this.getClass().equals(o.getClass()))
+            return false;
+        User other = (User) o;
+        return other.id.equals(this.id);
+    }
+    
+    public class Profile extends JSONKeyValueStore {
 		
 		public static final String PROFILE_PIC = "PROFILE_PIC";
 		//TODO Add your own values!
