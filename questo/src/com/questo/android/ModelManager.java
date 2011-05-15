@@ -14,6 +14,7 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.questo.android.common.Constants;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Companionship;
+import com.questo.android.model.Notification;
 import com.questo.android.model.Place;
 import com.questo.android.model.PlaceVisitation;
 import com.questo.android.model.Tournament;
@@ -486,6 +487,26 @@ public class ModelManager {
             handleException(e);
         }
         return -1;
+    }
+    
+    public List<Notification> getNotificationsForUserAndOffset(User user, int offset) {
+        try {
+            QueryBuilder<Notification, Integer> notifications = queryBuilder(Notification.class);
+            notifications.where().eq(Notification.USER, user);
+            notifications.orderBy(Notification.DATE, false);
+            notifications.offset(offset);
+            notifications.limit(10);
+            
+            return db().getCachedDao(Notification.class).query(notifications.prepare());
+            
+        } catch (SQLException e) {
+            handleException(e);
+        }
+        return new ArrayList<Notification>();
+    }
+    
+    public List<Notification> getNotificationsForUser(User user) {
+        return this.getNotificationsForUserAndOffset(user, 0);
     }
 
 }

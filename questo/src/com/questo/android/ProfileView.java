@@ -27,6 +27,7 @@ import com.questo.android.common.Constants;
 import com.questo.android.common.Level;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Companionship;
+import com.questo.android.model.Notification;
 import com.questo.android.model.User;
 import com.questo.android.view.ProfileTabPlaces;
 import com.questo.android.view.ProfileTabThrophies;
@@ -125,8 +126,13 @@ public class ProfileView extends TabActivity {
         public void onClick(View v) {
             //send request
             if (this.action.equals(Constants.PROFILE_BTN_TYPES[0])) {
+                String text = "<b>" + app.getLoggedinUser().getName() + "</b> wants to be your companion.";
+                Notification notification = new Notification(UUIDgen.getUUID(), Notification.Type.COMPANIONSHIP_REQUEST, text, confirmer, null, new Date());
+
                 Companionship companionship = new Companionship(UUIDgen.getUUID(), app.getLoggedinUser().getUuid(), confirmer.getUuid(), new Date());
                 companionship.setConfirmed(false);
+                
+                mngr.create(notification, Notification.class);
                 mngr.create(companionship, Companionship.class);
                 ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[1], confirmer);
                 
@@ -160,11 +166,15 @@ public class ProfileView extends TabActivity {
                 
                 //accept companionship
             } else {
+                String text = "<b>" + app.getLoggedinUser().getName() + "</b> is your companion now.";
+                Notification notification = new Notification(UUIDgen.getUUID(), Notification.Type.COMPANIONSHIP_ACCEPTED, text, confirmer, null, new Date());
+                
                 Companionship companionship = mngr.getCompanionshipFor(confirmer, app.getLoggedinUser());
                 companionship.setConfirmed(true);
                 companionship.setConfirmedAt(new Date());
-                mngr.update(companionship, Companionship.class);
                 
+                mngr.update(companionship, Companionship.class);
+                mngr.create(notification, Notification.class);
                 ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[2], confirmer);
             }
         }

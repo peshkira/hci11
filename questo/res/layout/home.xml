@@ -20,30 +20,9 @@
 		android:cacheColorHint="#00000000" android:divider="#2b0201"
 		android:dividerHeight="1px" android:fadingEdge="vertical"
 		android:fadingEdgeLength="10dp" />
-	<!-- <TextView android:id="@+id/lblQuests" android:text="@string/quests" 
-		android:layout_below="@id/imgQuests" android:textColor="#000" android:layout_height="wrap_content" 
-		android:layout_width="110dip" /> <TextView android:id="@+id/lblTournaments" 
-		android:text="@string/tournaments" android:layout_below="@id/imgTournaments" 
-		android:textColor="#000" android:layout_height="wrap_content" android:layout_width="wrap_content" 
-		android:paddingLeft="115dip" /> <TextView android:id="@+id/lblProfile" android:text="@string/profile" 
-		android:layout_below="@id/imgProfile" android:textColor="#000" android:layout_height="wrap_content" 
-		android:layout_width="wrap_content" android:paddingLeft="245dip" /> <TextView 
-		android:id="@+id/dummy" android:layout_width="fill_parent" android:layout_height="wrap_content" 
-		android:layout_below="@id/lblQuests" android:layout_marginBottom="20dip" 
-		/> <ImageView android:id="@+id/imgCompanions" android:layout_width="110dip" 
-		android:layout_height="wrap_content" android:layout_alignParentLeft="true" 
-		android:layout_below="@id/dummy" android:src="@drawable/companions" /> <TextView 
-		android:id="@+id/lblCompanions" android:text="@string/companions" android:layout_below="@id/imgCompanions" 
-		android:textColor="#000" android:layout_height="wrap_content" android:layout_width="wrap_content" 
-		android:paddingLeft="10dip" /> <ImageView android:id="@+id/imgTrophies" android:layout_width="110dip" 
-		android:layout_height="wrap_content" android:layout_below="@id/dummy" android:layout_centerHorizontal="true" 
-		android:src="@drawable/trophies" /> <TextView android:id="@+id/lblTrophies" 
-		android:text="@string/trophyroom" android:layout_below="@id/imgTrophies" 
-		android:textColor="#000" android:layout_height="wrap_content" android:layout_width="wrap_content" 
-		android:paddingLeft="115dip" /> <ImageView android:id="@+id/imgSettings" 
-		android:layout_width="110dip" android:layout_height="wrap_content" android:layout_alignParentRight="true" 
-		android:layout_below="@id/dummy" android:src="@drawable/settings" /> <TextView 
-		android:id="@+id/lblSettings" android:text="@string/settings" android:layout_below="@id/imgSettings" 
-		android:textColor="#000" android:layout_height="wrap_content" android:layout_width="wrap_content" 
-		android:paddingLeft="237dip" /> </RelativeLayout> -->
+	<TextView android:id="@+id/txt_empty_watchtower"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:text="The messenger hasn't returened yet!" style="@style/WhiteShadowedFont"
+		android:gravity="center_horizontal" android:background="@color/winered_dark"
+		android:textSize="14sp" android:paddingTop="10dip" />
 </LinearLayout>

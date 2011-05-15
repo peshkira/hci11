@@ -1,7 +1,8 @@
 package com.questo.android;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,15 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.questo.android.helper.UUIDgen;
+import com.questo.android.helper.NotificationComparator;
 import com.questo.android.model.Notification;
-import com.questo.android.model.Notification.Type;
 import com.questo.android.view.FlexibleImageView;
 import com.questo.android.view.TopBar;
 
@@ -45,6 +47,8 @@ public class HomeView extends Activity {
 	}
 
 	private void initViews() {
+	    App app = (App) this.getApplicationContext();
+	    
 		iconsGrid = (GridView) findViewById(R.id.homeGrid);
 		iconsGrid.setAdapter(new ImageAdapter());
 
@@ -52,21 +56,14 @@ public class HomeView extends Activity {
 		topbar.setSpecialFont(true, this);
 		
 		ListView watchtower = (ListView) findViewById(R.id.watchtower);
+		TextView emptyWatchtower = (TextView) findViewById(R.id.txt_empty_watchtower);
+		watchtower.setEmptyView(emptyWatchtower);
 
-		QuestoListAdapter adapt = new QuestoListAdapter();
-		adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST,
-				"<b>Cato</b> has completed quest <b>Chillhouse of Terror</b>.", null, null, new Date()));
-		adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "<b>Nuno</b> completed a quest.",
-				null, null, new Date()));
-		adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST,
-				"<b>Lolcat</b> completed a quest.", null, null, new Date()));
-		adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST,
-				"<b>Aragorn</b> completed a quest.", null, null, new Date()));
-		adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST, "<b>Cato</b> completed a quest.",
-				null, null, new Date()));
-		adapt.addItem(new Notification(UUIDgen.getUUID(), Type.USER_COMPLETED_QUEST,
-				"<b>Gandalf</b> completed a quest.", null, null, new Date()));
+		List<Notification> notifications = app.getModelManager().getNotificationsForUser(app.getLoggedinUser());
+		NotificationListAdapter adapt = new NotificationListAdapter(notifications);
+
 		watchtower.setAdapter(adapt);
+		watchtower.setOnItemClickListener(new NotificationItemClickListener(notifications));
 
 	}
 
@@ -96,29 +93,71 @@ public class HomeView extends Activity {
 			HomeView.this.navigate(iconWrapper);
 		}
 	}
+	
+	private class NotificationItemClickListener implements OnItemClickListener {
 
-	private class QuestoListAdapter extends BaseAdapter {
+	    private List<Notification> notifications;
 
-		private ArrayList<Notification> mData = new ArrayList<Notification>();
+        public NotificationItemClickListener(List<Notification> notifications) {
+	        this.notifications = notifications;
+	    }
+	    
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+            this.showNotificationResult(this.notifications.get(pos));
+        }
+        
+        private void showNotificationResult(Notification notification) {
+            switch (notification.getType()) {
+            case COMPANIONSHIP_REQUEST:
+                startActivity(new Intent(HomeView.this, CompanionRequestsView.class));
+                break;
+            case COMPANIONSHIP_ACCEPTED:
+                startActivity(new Intent(HomeView.this, CompanionsView.class));
+                break;
+                default: //do nothing
+            }
+        }
+	    
+	}
+
+	private class NotificationListAdapter extends BaseAdapter {
+
+		private List<Notification> notifications;
 		private LayoutInflater mInflater;
+		private NotificationComparator comparator;
 
-		public QuestoListAdapter() {
-			mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		public NotificationListAdapter() {
+		    super();
+		    this.notifications = new ArrayList<Notification>();
+			this.mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			this.comparator = new NotificationComparator();
+		}
+		
+		public NotificationListAdapter(List<Notification> notifications) {
+		    this();
+		    this.notifications = notifications;
 		}
 
 		public void addItem(final Notification item) {
-			mData.add(item);
+			this.notifications.add(item);
+			Collections.sort(this.notifications, this.comparator);
+			
+			while (this.notifications.size() > 10) {
+			    this.notifications.remove(this.notifications.size() - 1);
+			}
+			
 			notifyDataSetChanged();
 		}
 
 		@Override
 		public int getCount() {
-			return mData.size();
+			return notifications.size();
 		}
 
 		@Override
 		public String getItem(int position) {
-			return mData.get(position).getText();
+			return notifications.get(position).getText();
 		}
 
 		@Override
