@@ -16,13 +16,13 @@
 		android:gravity="fill" android:listSelector="@android:color/transparent">
 	</GridView>
 	<ListView android:id="@+id/watchtower" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:background="@color/winered_verydark"
-		android:cacheColorHint="#00000000" android:divider="#2b0201"
-		android:dividerHeight="1px" android:fadingEdge="vertical"
+		android:layout_height="fill_parent" android:background="@drawable/bg_darklist"
+		android:dividerHeight="1px" android:cacheColorHint="#00000000"
+		android:divider="@color/dark_separator" android:fadingEdge="vertical"
 		android:fadingEdgeLength="10dp" />
 	<TextView android:id="@+id/txt_empty_watchtower"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:text="The messenger hasn't returened yet!" style="@style/WhiteShadowedFont"
-		android:gravity="center_horizontal" android:background="@color/winered_dark"
+		android:text="The messenger has not returned, yet!" style="@style/ListPlaceholderFont"
+		android:gravity="center_horizontal|center_vertical" android:background="@drawable/bg_darklist"
 		android:textSize="14sp" android:paddingTop="10dip" />
 </LinearLayout>

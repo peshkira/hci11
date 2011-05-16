@@ -74,6 +74,7 @@ public class TournamentRequestView extends Activity {
 				public void onClick(View v) {
 					Intent intent = new Intent(TournamentRequestView.this, TournamentDetailsView.class);
 	                intent.putExtra(Constants.TRANSITION_OBJECT_UUID, tournament.getUuid());
+	                intent.putExtra(TournamentDetailsView.EXTRA_STARTED_BY, TournamentDetailsView.StartedBy.STARTED_BY_TOURNAMENT_REQUESTS.ordinal());
 	                startActivity(intent);
 				}
 			});
@@ -100,11 +101,6 @@ public class TournamentRequestView extends Activity {
 				startActivity(new Intent(TournamentRequestView.this, TournamentsView.class));
 			}
 		});
-		TextView description = (TextView) findViewById(R.id.description);
-		description
-				.setText(Html
-						.fromHtml("Your herald has delivered to you the following <b>requests for tournament participation</b>:"));
-
 		ListView tournamentRequestList = (ListView) findViewById(R.id.requestlist);
 		tournamentRequestList.setEmptyView(findViewById(R.id.empty_tournamentrequestlist_text));
 		String[] listContent = new String[] { "foo", "bla" };

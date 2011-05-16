@@ -102,6 +102,7 @@ public class TournamentsView extends Activity {
 				Tournament tournament = (Tournament)parent.getItemAtPosition(position);
 				Intent intent = new Intent(TournamentsView.this, TournamentDetailsView.class);
                 intent.putExtra(Constants.TRANSITION_OBJECT_UUID, tournament.getUuid());
+                intent.putExtra(TournamentDetailsView.EXTRA_STARTED_BY, TournamentDetailsView.StartedBy.STARTED_BY_TOURNAMENTS_OVERVIEW.ordinal());
                 startActivity(intent);
 			}
 		});

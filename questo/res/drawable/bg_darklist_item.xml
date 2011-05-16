@@ -2,8 +2,14 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 	<item>
 		<shape android:shape="rectangle">
-			<gradient android:startColor="@color/winered" android:endColor="@color/winered_shadowed"
-				android:type="linear" android:angle="270" android:dither="true"/>
+			<solid android:color="#6b271d" />
+		</shape>
+	</item>
+	<item android:top="1dp">
+		<shape android:shape="rectangle">
+			<gradient android:startColor="@color/winered"
+				android:endColor="@color/winered_shadowed" android:type="linear"
+				android:angle="270" android:dither="true" />
 		</shape>
 	</item>
 </layer-list>
