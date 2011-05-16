@@ -10,11 +10,11 @@
 	<LinearLayout android:id="@+id/newTournamentLayout"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:gravity="left" android:orientation="vertical"
-		android:layout_alignParentBottom="true" android:background="@drawable/bg_darkgreen">
+		android:layout_alignParentBottom="true" android:background="@drawable/bg_darkgreen" android:padding="20dp">
 		<Button android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/tournament_create"
 			android:text="New Tournament" style="@style/MediumRoundButton"
-			android:layout_gravity="center_horizontal" android:layout_margin="20dp" />
+			android:layout_gravity="center_horizontal" />
 	</LinearLayout>
 	<ListView android:layout_height="fill_parent"
 		android:layout_width="fill_parent" android:id="@+id/tournamentlist"
