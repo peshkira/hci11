@@ -7,12 +7,9 @@
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		questo:label="@string/quests" questo:label_centered="false" />
-	<TextView android:id="@+id/description" android:layout_width="fill_parent" android:layout_height="wrap_content" android:padding="20dp"
-	android:text="These places are in your immediate neighborhood:" style="@style/BlackShadowedFont"
-	android:layout_below="@+id/topbar"/>
 	<ListView android:layout_width="match_parent"
 		android:layout_height="fill_parent" android:layout_alignParentLeft="true"
-		android:id="@+id/QuestList" android:layout_below="@+id/description"
-		android:background="@color/winered_verydark" android:dividerHeight="1px"
-		android:cacheColorHint="#00000000" android:divider="#2b0201" />
+		android:id="@+id/QuestList" android:layout_below="@+id/topbar"
+		android:background="@drawable/bg_darklist" android:dividerHeight="1px"
+		android:cacheColorHint="#00000000" android:divider="#2b0201" android:fadingEdgeLength="2dp"/>
 </RelativeLayout>

@@ -6,14 +6,16 @@
 	<color name="winered_verylight">#c0857d</color>
 	<color name="winered_dark">#4b0d03</color>
 	<color name="winered_verydark">#330902</color>
-	<color name="winered_gone_dark">#2f0000</color>
+	<color name="winered_gone_dark">#290000</color>
 	<color name="winered_light">#781c0c</color>
-	<color name="papyrus_start">#f5eec1</color>
-	<color name="papyrus_end">#d2c08f</color>
+	<color name="papyrus_start">#ffe6b0</color>
+	<color name="papyrus_end">#e4bf7b</color>
 	<color name="papyrus_shadowed_start">#5e4124</color>
-	<color name="papyrus_shadowed_end">#957e5a</color>
+	<color name="papyrus_shadowed_end">#b49363</color>
 	
-	<color name="text_greyed_out">#afafaf</color>
+	<color name="dark_separator">#2b0201</color>
+	
+	<color name="text_greyed_out">#a66b6b</color>
 	<color name="grey_gradient_start">#919191</color>
 	<color name="grey_gradient_end">#515151</color>
 	

@@ -1,35 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:id="@+id/TournamentRelativeLayout" android:orientation="vertical"
-	android:background="@drawable/bg_papyrus">
+	android:id="@+id/TournamentRelativeLayout" android:background="@drawable/bg_papyrus">
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" questo:label="@string/tournaments"
 		questo:label_centered="false" />
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:gravity="left"
-		android:padding="10dp" android:orientation="vertical">
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" style="@style/NormalBlackFont"
-			android:text="You can organize a new tournament and invite your companions or opponents:" />
+	<LinearLayout android:id="@+id/newTournamentLayout"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:gravity="left" android:orientation="vertical"
+		android:layout_alignParentBottom="true" android:background="@drawable/bg_darkgreen">
 		<Button android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/tournament_create"
 			android:text="New Tournament" style="@style/MediumRoundButton"
 			android:layout_gravity="center_horizontal" android:layout_margin="20dp" />
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" style="@style/NormalBlackFont"
-			android:text="...or view your current tournaments:" />
 	</LinearLayout>
 	<ListView android:layout_height="fill_parent"
 		android:layout_width="fill_parent" android:id="@+id/tournamentlist"
-		android:background="@color/winered_verydark" android:dividerHeight="1px"
-		android:cacheColorHint="#00000000" android:divider="#2b0201"
-		android:fadingEdge="vertical" android:fadingEdgeLength="10dp" />
+		android:background="@drawable/bg_darklist" android:dividerHeight="1px"
+		android:cacheColorHint="#00000000" android:divider="@color/dark_separator"
+		android:fadingEdge="vertical" android:fadingEdgeLength="10dp"
+		android:layout_above="@+id/newTournamentLayout" android:layout_below="@+id/topbar" />
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:id="@+id/empty_tournamentlist_text"
-		android:text="No tournaments at the moment." style="@style/WhiteShadowedFont"
-		android:padding="10dp" android:background="@color/winered_verydark"
-		android:gravity="center_horizontal" android:textSize="14sp" />
-</LinearLayout>
+		android:text="You are not taking part in any tournaments at the moment."
+		style="@style/ListPlaceholderFont" android:padding="10dp"
+		android:background="@drawable/bg_darklist" android:gravity="center_horizontal|center_vertical"
+		android:layout_above="@+id/newTournamentLayout" android:layout_below="@+id/topbar" />
+</RelativeLayout>
