@@ -6,48 +6,86 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
+import com.google.android.maps.MapView;
+import com.google.android.maps.OverlayItem;
+import com.questo.android.App;
+import com.questo.android.ModelManager;
+import com.questo.android.PlaceDetailsView;
 import com.questo.android.R;
+import com.questo.android.common.Constants;
+import com.questo.android.helper.DisplayHelper;
 import com.questo.android.model.Place;
 
 public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 
 	private List<QuestoOverlayItem> items;
 	private Context context;
+	private Place currentPlace;
+	private ModelManager manager;
 	private Map<String, Place> selectedPlaces;
 	private List<Place> nearbyPlaces;
+	private GeoPoint currentLocation;
+	private QuestoMapView map;
 
 	private RelativeLayout placeDetails;
 	private Drawable normal;
 	private Drawable selected;
 	private boolean selectable;
 
-	public QuestoMapOverlay(Drawable defaultMarker) {
+	public QuestoMapOverlay(Context context, QuestoMapView map,
+			Drawable defaultMarker) {
 		super(boundCenterBottom(defaultMarker));
-		init();
+		this.init(context, map);
 	}
 
 	public void setSelectionEnabled(boolean selectable) {
 		this.selectable = selectable;
 	}
-	
-	public boolean isSelectionEnabled(){
+
+	public boolean isSelectionEnabled() {
 		return selectable;
 	}
-	
-	public Map<String, Place> getSelectedPlaces(){
+
+	public Map<String, Place> getSelectedPlaces() {
 		return this.selectedPlaces;
 	}
 
-	private void init() {
-		initIcons();
+	public void setLocation(GeoPoint location) {
+		this.currentLocation = location;
+	}
+
+	public void refreshPlaces() {
+		if (currentLocation != null) {
+			nearbyPlaces = manager.getPlacesNearby(
+					currentLocation.getLatitudeE6() / 1e6,
+					currentLocation.getLongitudeE6() / 1e6);
+			if (placeDetails != null) {
+				placeDetails.setVisibility(View.INVISIBLE);
+			}
+			refreshOverlayItems();
+		}
+	}
+
+	private void init(Context context, QuestoMapView map) {
+		this.context = context;
+		this.map = map;
+		App application = (App) context.getApplicationContext();
+		manager = application.getModelManager();
 		items = new ArrayList<QuestoOverlayItem>();
 		selectedPlaces = new HashMap<String, Place>();
 		nearbyPlaces = new ArrayList<Place>();
+		initIcons();
+		refreshPlaces();
 	}
 
 	private void initIcons() {
@@ -94,8 +132,69 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 				selectedPlaces.remove(place.getUuid());
 
 			populate();
+		} else {
+			QuestoOverlayItem item = items.get(index);
+			currentPlace = nearbyPlaces.get(index);
+			togglePlaceDetails(currentPlace, item);
 		}
+
 		return true;
+	}
+
+	private void togglePlaceDetails(Place place, QuestoOverlayItem item) {
+		if (placeDetails == null)
+			createPlaceDetails();
+
+		if (placeDetails.getVisibility() == View.INVISIBLE) {
+			updatePlaceDetails(place);
+			placeDetails.setVisibility(View.VISIBLE);
+			map.removeView(placeDetails);
+			map.addView(placeDetails,
+			 new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
+			 MapView.LayoutParams.WRAP_CONTENT, item.getPoint(),
+			 0, DisplayHelper.dpToPixel(-57, context),
+			 MapView.LayoutParams.BOTTOM_CENTER));
+		} else {
+			this.placeDetails.setVisibility(View.INVISIBLE);
+		}
+	}
+
+	private void createPlaceDetails() {
+		if (placeDetails == null) {
+			LayoutInflater inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			placeDetails = (RelativeLayout) inflater.inflate(
+					R.layout.quest_map_item, null);
+			placeDetails.setVisibility(View.INVISIBLE);
+			this.placeDetails.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if (currentPlace != null) {
+						Intent placeDetails = new Intent(context,
+								PlaceDetailsView.class);
+						placeDetails.putExtra(Constants.TRANSITION_OBJECT_UUID,
+								currentPlace.getUuid());
+						context.startActivity(placeDetails);
+					}
+				}
+			});
+		}
+	}
+
+	private void updatePlaceDetails(Place place) {
+		int questionCount = 0;
+		if (place.getQuestions() != null) {
+			questionCount = place.getQuestions().size();
+		}
+
+		TextView placeNameText = (TextView) placeDetails
+				.findViewById(R.id.QuestMapPlaceDetailsName);
+		TextView questionCountText = (TextView) placeDetails
+				.findViewById(R.id.QuestMapPlaceDetailsQuestionCount);
+		placeNameText.setText(place.getName());
+		questionCountText.setText("Questions: "
+				+ Integer.toString(questionCount));
 	}
 
 	@Override

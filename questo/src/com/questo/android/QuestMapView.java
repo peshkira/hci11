@@ -30,6 +30,7 @@ import com.google.android.maps.OverlayItem;
 import com.questo.android.common.Constants;
 import com.questo.android.helper.DisplayHelper;
 import com.questo.android.model.Place;
+import com.questo.android.view.QuestoMapView;
 import com.questo.android.view.TopBar;
 
 public class QuestMapView extends MapActivity {
@@ -37,13 +38,13 @@ public class QuestMapView extends MapActivity {
 	public final static int ADD_PLACE_REQUEST_CODE = 1;
 	public final static int ADD_QUESTION_REQUEST_CODE = 2;
 
-	private MapView questMap;
+	private QuestoMapView questMap;
 	private List<Place> nearbyPlaces;
 	private GeoPoint currentLocation;
 	private Place currentPlace;
 	private ModelManager modelManager;
 	private App application;
-	private MapOverlay overlay;
+//	private MapOverlay overlay;
 	private MyLocationOverlay myLocationOverlay;
 
 	@Override
@@ -54,7 +55,7 @@ public class QuestMapView extends MapActivity {
 		this.modelManager = application.getModelManager();
 		initView();
 		this.currentLocation = this.questMap.getMapCenter();
-		refreshMap();
+//		refreshMap();		
 	}
 
 	@Override
@@ -93,51 +94,12 @@ public class QuestMapView extends MapActivity {
 	}
 
 	private void initMapView() {
-		this.questMap = (MapView) findViewById(R.id.QuestMap);
-		questMap.setBuiltInZoomControls(true);
-		List<Overlay> mapOverlays = questMap.getOverlays();
-		Drawable target = this.getResources().getDrawable(
-				R.drawable.img_questo_q_stand);
-
-		this.overlay = new MapOverlay(target);
-		this.myLocationOverlay = new MyLocationOverlay(this, this.questMap);
-		this.myLocationOverlay.enableMyLocation();
-		this.myLocationOverlay.enableCompass();
-		mapOverlays.add(this.overlay);
-		mapOverlays.add(this.myLocationOverlay);
-
-		LocationManager locationManager = (LocationManager) this
-				.getSystemService(Context.LOCATION_SERVICE);
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-				0, new MapListener());
-
-		this.questMap.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				QuestMapView.this.overlay.togglePlaceDetails();
-			}
-		});
-
-		this.questMap.getController().setZoom(18);
+		this.questMap = (QuestoMapView) findViewById(R.id.QuestMap);
 	}
 
 	@Override
 	public void onBackPressed() {
 		startActivity(new Intent(this, HomeView.class));
-	}
-
-	private void refreshMap() {
-		if (this.currentLocation != null) {
-			this.nearbyPlaces = QuestMapView.this.modelManager.getPlacesNearby(
-					this.currentLocation.getLatitudeE6() / 1e6,
-					this.currentLocation.getLongitudeE6() / 1e6);
-			if (this.overlay.placeDetails != null) {
-				this.overlay.placeDetails.setVisibility(View.INVISIBLE);
-			}
-			this.overlay.refreshOverlayItems();
-			this.questMap.invalidate();
-		}
 	}
 
 	@Override
@@ -192,106 +154,106 @@ public class QuestMapView extends MapActivity {
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		this.refreshMap();
+//		this.refreshMap();
 	}
 
-	public class MapOverlay extends ItemizedOverlay<OverlayItem> {
-
-		private List<OverlayItem> items;
-		private RelativeLayout placeDetails;
-
-		public MapOverlay(Drawable defaultMarker) {
-			super(boundCenterBottom(defaultMarker));
-
-			this.items = new ArrayList<OverlayItem>();
-		}
-
-		private synchronized void refreshOverlayItems() {
-			this.items.clear();
-			for (Place place : QuestMapView.this.nearbyPlaces) {
-				GeoPoint placeLocation = new GeoPoint(
-						(int) (place.getLatitude() * 1E6),
-						(int) (place.getLongitude() * 1E6));
-				OverlayItem overlayItem = new OverlayItem(placeLocation,
-						place.getName(), "");
-				this.items.add(overlayItem);
-			}
-
-			setLastFocusedIndex(-1);
-			populate();
-		}
-
-		@Override
-		protected OverlayItem createItem(int index) {
-			return this.items.get(index);
-		}
-
-		@Override
-		public synchronized int size() {
-			return this.items.size();
-		}
-
-		@Override
-		protected boolean onTap(int index) {
-			OverlayItem item = items.get(index);
-			Place place = QuestMapView.this.nearbyPlaces.get(index);
-			int questionCount = 0;
-			if (place.getQuestions() != null) {
-				questionCount = place.getQuestions().size();
-			}
-
-			QuestMapView.this.currentPlace = place;
-
-			if (this.placeDetails == null) {
-				LayoutInflater inflater = (LayoutInflater) QuestMapView.this
-						.getApplicationContext().getSystemService(
-								Context.LAYOUT_INFLATER_SERVICE);
-				this.placeDetails = (RelativeLayout) inflater.inflate(
-						R.layout.quest_map_item, null);
-				this.placeDetails.setOnClickListener(new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						if (QuestMapView.this.currentPlace != null) {
-							Intent placeDetails = new Intent(QuestMapView.this,
-									PlaceDetailsView.class);
-							placeDetails.putExtra(
-									Constants.TRANSITION_OBJECT_UUID,
-									QuestMapView.this.currentPlace.getUuid());
-							startActivity(placeDetails);
-						}
-					}
-				});
-			}
-//			this.togglePlaceDetails();
-			this.placeDetails.setVisibility(View.VISIBLE);
-			QuestMapView.this.questMap.removeView(this.placeDetails);
-			QuestMapView.this.questMap.addView(this.placeDetails,
-					new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
-							MapView.LayoutParams.WRAP_CONTENT, item.getPoint(),
-							0, DisplayHelper.dpToPixel(-57, QuestMapView.this),
-							MapView.LayoutParams.BOTTOM_CENTER));
-
-			TextView placeNameText = (TextView) this.placeDetails
-					.findViewById(R.id.QuestMapPlaceDetailsName);
-			TextView questionCountText = (TextView) this.placeDetails
-					.findViewById(R.id.QuestMapPlaceDetailsQuestionCount);
-			placeNameText.setText(place.getName());
-			questionCountText.setText("Questions: "
-					+ Integer.toString(questionCount));
-
-			return true;
-		}
-
-		private void togglePlaceDetails() {
-			if (this.placeDetails != null) {
-				if (this.placeDetails.getVisibility() == View.INVISIBLE)
-					this.placeDetails.setVisibility(View.VISIBLE);
-				else
-					this.placeDetails.setVisibility(View.INVISIBLE);
-			}
-		}
-	}
+//	public class MapOverlay extends ItemizedOverlay<OverlayItem> {
+//
+//		private List<OverlayItem> items;
+//		private RelativeLayout placeDetails;
+//
+//		public MapOverlay(Drawable defaultMarker) {
+//			super(boundCenterBottom(defaultMarker));
+//
+//			this.items = new ArrayList<OverlayItem>();
+//		}
+//
+//		private synchronized void refreshOverlayItems() {
+//			this.items.clear();
+//			for (Place place : QuestMapView.this.nearbyPlaces) {
+//				GeoPoint placeLocation = new GeoPoint(
+//						(int) (place.getLatitude() * 1E6),
+//						(int) (place.getLongitude() * 1E6));
+//				OverlayItem overlayItem = new OverlayItem(placeLocation,
+//						place.getName(), "");
+//				this.items.add(overlayItem);
+//			}
+//
+//			setLastFocusedIndex(-1);
+//			populate();
+//		}
+//
+//		@Override
+//		protected OverlayItem createItem(int index) {
+//			return this.items.get(index);
+//		}
+//
+//		@Override
+//		public synchronized int size() {
+//			return this.items.size();
+//		}
+//
+//		@Override
+//		protected boolean onTap(int index) {
+//			OverlayItem item = items.get(index);
+//			Place place = QuestMapView.this.nearbyPlaces.get(index);
+//			int questionCount = 0;
+//			if (place.getQuestions() != null) {
+//				questionCount = place.getQuestions().size();
+//			}
+//
+//			QuestMapView.this.currentPlace = place;
+//
+//			if (this.placeDetails == null) {
+//				LayoutInflater inflater = (LayoutInflater) QuestMapView.this
+//						.getApplicationContext().getSystemService(
+//								Context.LAYOUT_INFLATER_SERVICE);
+//				this.placeDetails = (RelativeLayout) inflater.inflate(
+//						R.layout.quest_map_item, null);
+//				this.placeDetails.setOnClickListener(new OnClickListener() {
+//
+//					@Override
+//					public void onClick(View v) {
+//						if (QuestMapView.this.currentPlace != null) {
+//							Intent placeDetails = new Intent(QuestMapView.this,
+//									PlaceDetailsView.class);
+//							placeDetails.putExtra(
+//									Constants.TRANSITION_OBJECT_UUID,
+//									QuestMapView.this.currentPlace.getUuid());
+//							startActivity(placeDetails);
+//						}
+//					}
+//				});
+//			}
+////			this.togglePlaceDetails();
+//			this.placeDetails.setVisibility(View.VISIBLE);
+//			QuestMapView.this.questMap.removeView(this.placeDetails);
+//			QuestMapView.this.questMap.addView(this.placeDetails,
+//					new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
+//							MapView.LayoutParams.WRAP_CONTENT, item.getPoint(),
+//							0, DisplayHelper.dpToPixel(-57, QuestMapView.this),
+//							MapView.LayoutParams.BOTTOM_CENTER));
+//
+//			TextView placeNameText = (TextView) this.placeDetails
+//					.findViewById(R.id.QuestMapPlaceDetailsName);
+//			TextView questionCountText = (TextView) this.placeDetails
+//					.findViewById(R.id.QuestMapPlaceDetailsQuestionCount);
+//			placeNameText.setText(place.getName());
+//			questionCountText.setText("Questions: "
+//					+ Integer.toString(questionCount));
+//
+//			return true;
+//		}
+//
+//		private void togglePlaceDetails() {
+//			if (this.placeDetails != null) {
+//				if (this.placeDetails.getVisibility() == View.INVISIBLE)
+//					this.placeDetails.setVisibility(View.VISIBLE);
+//				else
+//					this.placeDetails.setVisibility(View.INVISIBLE);
+//			}
+//		}
+//	}
 
 	private class MapListener implements LocationListener {
 
@@ -303,7 +265,7 @@ public class QuestMapView extends MapActivity {
 				// (int) (location.getLongitude() * 1e6));
 				// QuestMapView.this.questMap.getController().setCenter(current);
 				// QuestMapView.this.currentLocation = current;
-				QuestMapView.this.refreshMap();
+//				QuestMapView.this.refreshMap();
 			}
 		}
 
