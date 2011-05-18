@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.google.android.maps.GeoPoint;
+import com.questo.android.ModelManager;
 import com.questo.android.model.Place;
 
 public abstract class AbstractMapCache {
@@ -15,8 +16,9 @@ public abstract class AbstractMapCache {
 	}
 
 	public void setLocation(GeoPoint location) {
+		GeoPoint previousLocation = this.location;
 		this.location = location;
-		onLocationChange();
+		onLocationChange(previousLocation);
 	}
 
 	public int getZoom() {
@@ -31,5 +33,5 @@ public abstract class AbstractMapCache {
 
 	public abstract Collection<Place> getPlaces();
 	
-	public abstract void onLocationChange();
+	public abstract void onLocationChange(GeoPoint previousLocation);
 }
