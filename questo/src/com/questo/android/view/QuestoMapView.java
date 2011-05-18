@@ -43,21 +43,38 @@ public class QuestoMapView extends MapView {
 			manager = application.getModelManager();
 			Drawable defMarker = getContext().getResources().getDrawable(
 					R.drawable.img_questo_q_stand);
-			this.overlay = new QuestoMapOverlay(getContext(), this, defMarker);
-			this.locationOverlay = new MyLocationOverlay(this.getContext(),
+			overlay = new QuestoMapOverlay(getContext(), this, defMarker);
+			locationOverlay = new MyLocationOverlay(this.getContext(),
 					this);
+			locationOverlay.enableMyLocation();
+			locationOverlay.enableCompass();			
 			getOverlays().add(overlay);
 			getOverlays().add(locationOverlay);
 
 			mapListener = new QuestoMapListener();
-			LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-			locationManager.requestLocationUpdates(
-					LocationManager.GPS_PROVIDER, 0, 0, mapListener);
+			initLocationUpdates();
 			setBuiltInZoomControls(true);
-//			getController().setZoom(18);
+			
+			overlay.refreshPlaces();
 		} catch (Exception e) {
 			Log.e(TAG, "Could not initialize questo map view");
 			e.printStackTrace();
+		}
+	}
+	
+	private void initLocationUpdates(){
+		LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(
+				LocationManager.GPS_PROVIDER, 0, 0, mapListener);
+		Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		if(location!=null){
+			GeoPoint current = new GeoPoint(
+					(int) (location.getLatitude() * 1e6),
+					(int) (location.getLongitude() * 1e6));
+			QuestoMapView.this.getController().setCenter(current);
+			QuestoMapView.this.currentLocation = current;
+			QuestoMapView.this.overlay.setLocation(current);
+			QuestoMapView.this.overlay.refreshPlaces();
 		}
 	}
 
@@ -91,6 +108,10 @@ public class QuestoMapView extends MapView {
 
 		return placeList;
 	}
+	
+	public void setSelectedPlacesUuid(String[] uuids){
+		overlay.setSelectedPlaces(uuids);
+	}
 
 	private class QuestoMapListener implements LocationListener {
 
@@ -103,7 +124,6 @@ public class QuestoMapView extends MapView {
 			QuestoMapView.this.currentLocation = current;
 			QuestoMapView.this.overlay.setLocation(current);
 			QuestoMapView.this.overlay.refreshPlaces();
-//			QuestoMapView.this.invalidate();
 		}
 
 		@Override

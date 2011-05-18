@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;
-import com.google.android.maps.OverlayItem;
 import com.questo.android.App;
 import com.questo.android.ModelManager;
 import com.questo.android.PlaceDetailsView;
@@ -67,6 +66,14 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 
 	public Map<String, Place> getSelectedPlaces() {
 		return this.selectedPlaces;
+	}
+	
+	public void setSelectedPlaces(String[] uuids){
+		for(String uuid: uuids){
+			Place place = manager.getGenericObjectByUuid(uuid, Place.class);
+			selectedPlaces.put(uuid, place);
+		}
+		refreshPlaces();
 	}
 
 	public void setLocation(GeoPoint location) {
