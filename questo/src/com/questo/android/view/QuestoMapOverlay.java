@@ -41,6 +41,7 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 	private Drawable normal;
 	private Drawable selected;
 	private boolean selectable;
+	private boolean showDetails;
 
 	public QuestoMapOverlay(Context context, QuestoMapView map,
 			Drawable defaultMarker) {
@@ -50,6 +51,14 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 
 	public void setSelectionEnabled(boolean selectable) {
 		this.selectable = selectable;
+	}
+
+	public boolean isShowDetails() {
+		return showDetails;
+	}
+
+	public void setShowDetails(boolean showDetails) {
+		this.showDetails = showDetails;
 	}
 
 	public boolean isSelectionEnabled() {
@@ -142,20 +151,22 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 	}
 
 	private void togglePlaceDetails(Place place, QuestoOverlayItem item) {
-		if (placeDetails == null)
-			createPlaceDetails();
-
-		if (placeDetails.getVisibility() == View.INVISIBLE) {
-			updatePlaceDetails(place);
-			placeDetails.setVisibility(View.VISIBLE);
-			map.removeView(placeDetails);
-			map.addView(placeDetails,
-			 new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
-			 MapView.LayoutParams.WRAP_CONTENT, item.getPoint(),
-			 0, DisplayHelper.dpToPixel(-57, context),
-			 MapView.LayoutParams.BOTTOM_CENTER));
-		} else {
-			this.placeDetails.setVisibility(View.INVISIBLE);
+		if(showDetails){
+			if (placeDetails == null)
+				createPlaceDetails();
+			
+			if (placeDetails.getVisibility() == View.INVISIBLE) {
+				updatePlaceDetails(place);
+				placeDetails.setVisibility(View.VISIBLE);
+				map.removeView(placeDetails);
+				map.addView(placeDetails,
+				 new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
+				 MapView.LayoutParams.WRAP_CONTENT, item.getPoint(),
+				 0, DisplayHelper.dpToPixel(-57, context),
+				 MapView.LayoutParams.BOTTOM_CENTER));
+			} else {
+				this.placeDetails.setVisibility(View.INVISIBLE);
+			}
 		}
 	}
 

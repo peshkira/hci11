@@ -94,7 +94,8 @@ public class QuestMapView extends MapActivity {
 	}
 
 	private void initMapView() {
-		this.questMap = (QuestoMapView) findViewById(R.id.QuestMap);
+		questMap = (QuestoMapView) findViewById(R.id.QuestMap);
+		questMap.setShowDetails(true);
 	}
 
 	@Override

@@ -73,6 +73,14 @@ public class QuestoMapView extends MapView {
 		return overlay.getSelectedPlaces().values();
 	}
 
+	public boolean isShowDetails() {
+		return overlay.isShowDetails();
+	}
+
+	public void setShowDetails(boolean showDetails) {
+		overlay.setShowDetails(showDetails);
+	}
+	
 	public List<String> getSelectedPlacesUuid() {
 		List<String> placeList = new ArrayList<String>();
 
