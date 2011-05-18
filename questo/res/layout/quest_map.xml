@@ -8,7 +8,7 @@
 	<AbsoluteLayout android:id="@+id/QuestMapLayout"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:layout_below="@id/topbar">
-		<com.google.android.maps.MapView
+		<com.questo.android.view.QuestoMapView
 			android:id="@+id/QuestMap" android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:enabled="true"
 			android:clickable="true" android:apiKey="@string/apikey"
