@@ -51,10 +51,10 @@ public class QuestListView extends Activity {
 		setContentView(R.layout.quest_list);
 
 		TopBar topBar = (TopBar) findViewById(R.id.topbar);
-		Button addQuestionBtn = topBar.addButtonLeftMost(
-				this.getApplicationContext(), "+");
-		Button showMapBtn = topBar.addToggleButtonLeftMost(
-				this.getApplicationContext(), "List", true);
+		Button addQuestionBtn = topBar.addImageButtonLeftMost(
+				this.getApplicationContext(), R.drawable.img_plus);
+		Button showMapBtn = topBar.addImageToggleButtonLeftMost(
+				this.getApplicationContext(), R.drawable.img_list, true);
 
 		addQuestionBtnId = addQuestionBtn.getId();
 		showMapBtnId = showMapBtn.getId();

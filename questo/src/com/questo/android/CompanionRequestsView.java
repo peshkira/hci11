@@ -38,17 +38,13 @@ public class CompanionRequestsView extends Activity {
     private void init() {
         this.app = (App) getApplicationContext();
         TopBar topbar = (TopBar) findViewById(R.id.topbar);
-        Button requestButton = topbar.addToggleButtonLeftMost(this, "Requests", true);
+        Button requestButton = topbar.addImageToggleButtonLeftMost(this, R.drawable.img_request, true);
         requestButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(CompanionRequestsView.this, CompanionsView.class));
             }
         });
-
-        TextView description = (TextView) findViewById(R.id.description);
-        description.setText(Html
-                .fromHtml("Your herald has delivered to you the following <b>requests for companionship</b>:"));
 
         ListView list = (ListView) findViewById(R.id.requestlist);
         list.setEmptyView(findViewById(R.id.empty_companionrequestlist_text));

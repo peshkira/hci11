@@ -39,10 +39,10 @@ public class QuestMapView extends MapActivity {
 	private void initView() {
 		setContentView(R.layout.quest_map);
 		TopBar topBar = (TopBar) findViewById(R.id.topbar);
-		Button addQuestionBtn = topBar.addButtonLeftMost(
-				this.getApplicationContext(), "+");
-		Button showListBtn = topBar.addToggleButtonLeftMost(
-				this.getApplicationContext(), "List", false);
+		Button addQuestionBtn = topBar.addImageButtonLeftMost(
+				this.getApplicationContext(), R.drawable.img_plus);
+		Button showListBtn = topBar.addImageToggleButtonLeftMost(
+				this.getApplicationContext(), R.drawable.img_list, false);
 		showListBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
