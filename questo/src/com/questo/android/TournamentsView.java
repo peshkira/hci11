@@ -14,11 +14,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.questo.android.common.Constants;
+import com.questo.android.helper.DisplayHelper;
 import com.questo.android.model.Tournament;
 import com.questo.android.model.TournamentTask;
 import com.questo.android.view.TopBar;
@@ -76,7 +78,8 @@ public class TournamentsView extends Activity {
 		this.setContentView(R.layout.tournaments);
 
 		TopBar topBar = (TopBar) findViewById(R.id.topbar);
-		Button requestButton = topBar.addToggleButtonLeftMost(this, "Requests", false);
+		//Button requestButton = topBar.addToggleButtonLeftMost(this, "Requests", false);
+		Button requestButton = topBar.addImageToggleButtonLeftMost(this, R.drawable.img_request, false);
 		requestButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

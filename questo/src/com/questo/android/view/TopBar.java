@@ -2,20 +2,31 @@ package com.questo.android.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.questo.android.R;
+import com.questo.android.helper.DisplayHelper;
 import com.questo.android.helper.FontHelper;
 
 public class TopBar extends LinearLayout {
 
 	private static final String TAG = "LabeledNumberInput";
+	private static final int IMAGE_PADDING_LEFT_DP = 3;
+	private static final int IMAGE_PADDING_DP = 7;
+	private static final int BUTTON_WIDTH_AND_HEIGHT_DP = 51;
 
 	private String labelStr;
 	private boolean labelCentered;
@@ -64,6 +75,18 @@ public class TopBar extends LinearLayout {
 		return newButton;
 	}
 
+	public Button addImageToggleButtonLeftMost(final Context ctx, int bitmapResource, boolean checked) {
+		Button btn = addToggleButtonLeftMost(ctx, "", checked);
+		BitmapDrawable bitmapDrawable = DisplayHelper.bitmapWithConstraints(bitmapResource, ctx,
+				BUTTON_WIDTH_AND_HEIGHT_DP, IMAGE_PADDING_DP);
+
+		float topOffset = DisplayHelper.dpToPixel(IMAGE_PADDING_DP, ctx);
+
+		btn.setCompoundDrawablesWithIntrinsicBounds(null, bitmapDrawable, null, null);
+		btn.setPadding(DisplayHelper.dpToPixel(IMAGE_PADDING_LEFT_DP, ctx), Math.round(topOffset), 0, 0);
+		return btn;
+	}
+
 	public Button addToggleButtonLeftMost(final Context ctx, CharSequence label, boolean checked) {
 		Button newButton = (ToggleButton) LayoutInflater.from(ctx).inflate(R.layout.topbar_togglebutton, null);
 		((ToggleButton) newButton).setTextOn(label);
@@ -74,7 +97,7 @@ public class TopBar extends LinearLayout {
 		return newButton;
 	}
 
-	private void addButtonToLayout(Button newButton) {
+	private void addButtonToLayout(View newButton) {
 		LinearLayout buttonsContainer = (LinearLayout) findViewById(R.id.buttons_container);
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
 				LinearLayout.LayoutParams.FILL_PARENT);

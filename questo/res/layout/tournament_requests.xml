@@ -5,7 +5,7 @@
 	android:background="@drawable/bg_papyrus" android:orientation="vertical">
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" questo:label="@string/tournaments"
+		android:layout_height="wrap_content" questo:label="@string/tournament_requests"
 		questo:label_centered="false" />
 	<ListView android:layout_height="fill_parent"
 		android:layout_width="fill_parent" android:id="@+id/requestlist"
