@@ -2,8 +2,17 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 	<item>
 		<shape android:shape="rectangle">
-			<gradient android:startColor="@color/winered" android:endColor="@color/winered_gone_dark"
-				android:type="linear" android:angle="270" android:dither="true"/>
+			<solid android:color="#4e1610" />
 		</shape>
+	</item>
+	<item android:top="1dp">
+		<shape android:shape="rectangle">
+			<gradient android:startColor="#390601" android:endColor="#440802"
+				android:type="linear" android:angle="270" android:dither="true" />
+		</shape>
+	</item>
+	<item>
+		<nine-patch xmlns:android="http://schemas.android.com/apk/res/android"
+			android:src="@drawable/img_shadow_bottom" android:dither="true" />
 	</item>
 </layer-list>

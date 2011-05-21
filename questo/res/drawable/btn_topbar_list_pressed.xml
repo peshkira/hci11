@@ -12,13 +12,9 @@
 				android:type="linear" android:angle="270" android:dither="true" />
 		</shape>
 	</item>
-	<item android:left="1dp">
-		<nine-patch xmlns:android="http://schemas.android.com/apk/res/android"
-			android:src="@drawable/img_shadow_bottom" android:dither="true" />
-	</item>
 	<item android:left="2dp" android:top="1dp">
 		<shape android:shape="rectangle">
-			<gradient android:startColor="@color/winered_light" android:endColor="@color/winered_gone_dark"
+			<gradient android:startColor="@color/winered_gone_dark" android:endColor="@color/winered_verydark"
 				android:type="linear" android:angle="270" android:dither="true" />
 		</shape>
 	</item>

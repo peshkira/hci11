@@ -7,7 +7,6 @@
 	</item>
 	<item>
 		<nine-patch xmlns:android="http://schemas.android.com/apk/res/android"
-			android:src="@drawable/shadow" android:dither="true" />
-	
+			android:src="@drawable/img_shadow_top" android:dither="true" />
 	</item>
 </layer-list>
