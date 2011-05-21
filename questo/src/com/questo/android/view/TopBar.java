@@ -74,9 +74,20 @@ public class TopBar extends LinearLayout {
 		addButtonToLayout(newButton);
 		return newButton;
 	}
+	
+	public Button addImageButtonLeftMost(final Context ctx, int bitmapResource) {
+		Button btn = addButtonLeftMost(ctx, "");
+		addImageToButton(ctx, bitmapResource, btn);
+		return btn;
+	}
 
 	public Button addImageToggleButtonLeftMost(final Context ctx, int bitmapResource, boolean checked) {
 		Button btn = addToggleButtonLeftMost(ctx, "", checked);
+		addImageToButton(ctx, bitmapResource, btn);
+		return btn;
+	}
+	
+	private void addImageToButton(Context ctx, int bitmapResource, Button btn) {
 		BitmapDrawable bitmapDrawable = DisplayHelper.bitmapWithConstraints(bitmapResource, ctx,
 				BUTTON_WIDTH_AND_HEIGHT_DP, IMAGE_PADDING_DP);
 
@@ -84,7 +95,6 @@ public class TopBar extends LinearLayout {
 
 		btn.setCompoundDrawablesWithIntrinsicBounds(null, bitmapDrawable, null, null);
 		btn.setPadding(DisplayHelper.dpToPixel(IMAGE_PADDING_LEFT_DP, ctx), Math.round(topOffset), 0, 0);
-		return btn;
 	}
 
 	public Button addToggleButtonLeftMost(final Context ctx, CharSequence label, boolean checked) {
