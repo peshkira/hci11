@@ -174,7 +174,7 @@ public class CompanionsView extends Activity {
 
             if (data.isEmpty()) {
                 TextView tv = (TextView) findViewById(R.id.empty_companions_text);
-                tv.setText("No companion with that name!");
+                tv.setText("You have no companion with that name!");
             }
 
             notifyDataSetChanged();
