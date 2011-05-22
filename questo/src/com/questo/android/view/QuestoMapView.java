@@ -114,6 +114,10 @@ public class QuestoMapView extends MapView {
 	public void setSelectedPlacesUuid(String[] uuids){
 		overlay.setSelectedPlaces(uuids);
 	}
+	
+	public void refresh(){
+		overlay.refreshPlaces();
+	}
 
 	private class QuestoMapListener implements LocationListener {
 
