@@ -154,6 +154,9 @@ public class ProfileView extends TabActivity {
         private String action;
         
         private User confirmer;
+        
+        private PopupWindow pw;
+        
 
         public ProfileButtonActionListener(String action, User user) {
             this.action = action;
@@ -164,43 +167,14 @@ public class ProfileView extends TabActivity {
         public void onClick(View v) {
             //send request
             if (this.action.equals(Constants.PROFILE_BTN_TYPES[0])) {
-                String text = "<b>" + app.getLoggedinUser().getName() + "</b> wants to be your companion.";
-                Notification notification = new Notification(UUIDgen.getUUID(), Notification.Type.COMPANIONSHIP_REQUEST, text, confirmer, null, new Date());
-
-                Companionship companionship = new Companionship(UUIDgen.getUUID(), app.getLoggedinUser().getUuid(), confirmer.getUuid(), new Date());
-                companionship.setConfirmed(false);
-                
-                mngr.create(notification, Notification.class);
-                mngr.create(companionship, Companionship.class);
-                ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[1], confirmer);
-                
+                this.displayPopup("Are you sure you want to send a companion request?");
                 //cancel request
             } else if (this.action.equals(Constants.PROFILE_BTN_TYPES[1])) {
-                Companionship companionship = mngr.getCompanionshipFor(app.getLoggedinUser(), confirmer);
-                if (companionship != null) {
-                    mngr.delete(companionship, Companionship.class);
-                } else {
-                    System.out.println("SOMETHING MUST HAVE GONE WRONG");
-                }
-                ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[0], confirmer);
+                this.displayPopup("Are you sure you want to cancel this companionship request?");
+                
                 //cancel companionship
             } else if (this.action.equals(Constants.PROFILE_BTN_TYPES[2])) {
-                Companionship c1 = mngr.getCompanionshipFor(app.getLoggedinUser(), confirmer);
-                Companionship c2 = mngr.getCompanionshipFor(confirmer, app.getLoggedinUser());
-                
-                if (c1 != null) {
-                    System.out.println("REMOVING COMPANIONSHIP");
-                    mngr.delete(c1, Companionship.class);
-                   
-                } else if (c2 != null) {
-                    System.out.println("REMOVING COMPANIONSHIP");
-                    mngr.delete(c2, Companionship.class);
-                    
-                } else {
-                    System.out.println("SOMETHING MUST HAVE GONE WRONG");
-                }
-                
-                ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[0], confirmer);
+                this.displayPopup("Are you sure you want to cancel this companionship?");
                 
                 //accept companionship
             } else {
@@ -217,6 +191,96 @@ public class ProfileView extends TabActivity {
             }
         }
         
+        private void displayPopup(String msg) {
+            this.createPopup();
+            
+            final TextView txt = (TextView) pw.getContentView().findViewById(R.id.poput_txt);
+            txt.setText(Html.fromHtml("<big><b>" + msg + "</b></big>"));
+
+            final Button button1 = (Button) pw.getContentView().findViewById(R.id.popup_menu_button1);
+            button1.setText("Yes");
+            button1.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View vv) {
+                    pw.dismiss();
+                    if (action.equals(Constants.PROFILE_BTN_TYPES[0])) {
+                        sendCompanionshipRequest();
+                    } else if (action.equals(Constants.PROFILE_BTN_TYPES[1])) {
+                        cancelCompanionshipRequest();
+                    } else if (action.equals(Constants.PROFILE_BTN_TYPES[2])) {
+                        cancelCompanionship();
+                    }
+                }
+            });
+
+            final Button button2 = (Button) popup.findViewById(R.id.popup_menu_button2);
+            button2.setText("No");
+            button2.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View vv) {
+                    // close the popup
+                    pw.dismiss();
+                    ProfileView.this.popup = null;
+
+                }
+            });
+            
+            pw.showAtLocation(pw.getContentView(), Gravity.CENTER, 0, 0);
+        }
+        
+
+        private void createPopup() {
+            LayoutInflater inflater = (LayoutInflater) ProfileView.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            ProfileView.this.popup = inflater.inflate(R.layout.popup_window_logout, (ViewGroup) findViewById(R.id.popup_logout));
+
+            Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+            int width = (int) (display.getWidth() * 0.80);
+            int height = (int) (display.getHeight() * 0.3);
+
+            this.pw = new PopupWindow(popup, width, height);
+        }
+        
+        private void cancelCompanionship() {
+            Companionship c1 = mngr.getCompanionshipFor(app.getLoggedinUser(), confirmer);
+            Companionship c2 = mngr.getCompanionshipFor(confirmer, app.getLoggedinUser());
+            
+            if (c1 != null) {
+                System.out.println("REMOVING COMPANIONSHIP");
+                mngr.delete(c1, Companionship.class);
+               
+            } else if (c2 != null) {
+                System.out.println("REMOVING COMPANIONSHIP");
+                mngr.delete(c2, Companionship.class);
+                
+            } else {
+                System.out.println("SOMETHING MUST HAVE GONE WRONG");
+            }
+            
+            ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[0], confirmer);
+        }
+        
+        private void cancelCompanionshipRequest() {
+            Companionship companionship = mngr.getCompanionshipFor(app.getLoggedinUser(), confirmer);
+            if (companionship != null) {
+                mngr.delete(companionship, Companionship.class);
+            } else {
+                System.out.println("SOMETHING MUST HAVE GONE WRONG");
+            }
+            ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[0], confirmer);
+        }
+        
+        private void sendCompanionshipRequest() {
+            String text = "<b>" + app.getLoggedinUser().getName() + "</b> wants to be your companion.";
+            Notification notification = new Notification(UUIDgen.getUUID(), Notification.Type.COMPANIONSHIP_REQUEST, text, confirmer, null, new Date());
+
+            Companionship companionship = new Companionship(UUIDgen.getUUID(), app.getLoggedinUser().getUuid(), confirmer.getUuid(), new Date());
+            companionship.setConfirmed(false);
+            
+            mngr.create(notification, Notification.class);
+            mngr.create(companionship, Companionship.class);
+            ProfileView.this.switchButtonTo(Constants.PROFILE_BTN_TYPES[1], confirmer);
+        }
     }
 
     private class LogoutClickListener implements OnClickListener {

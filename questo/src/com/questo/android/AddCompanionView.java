@@ -41,7 +41,7 @@ public class AddCompanionView extends Activity {
         ModelManager mngr = app.getModelManager();
 
         TopBar topbar = (TopBar) findViewById(R.id.topbar);
-        Button btnInvite = topbar.addImageButtonLeftMost(this, R.drawable.img_invite);
+        Button btnInvite = topbar.addImageButtonLeftMost(this, R.drawable.img_plus);
         btnInvite.setOnClickListener(new InviteListener());
 
         // TODO query non companions...
