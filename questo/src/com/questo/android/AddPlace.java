@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
@@ -74,9 +75,15 @@ public class AddPlace extends MapActivity {
 		public void onClick(View v) {
 			if (v.getId() == R.id.AddPlaceCreateBtn) {
 				AddPlace.this.refreshObject();
-				AddPlace.this.modelManager.create(AddPlace.this.place,
-						Place.class);
-				AddPlace.this.finish();
+				if(AddPlace.this.place.getName().length()==0){
+					Toast noNameToast = Toast.makeText(AddPlace.this, R.string.error_add_place_no_name, Toast.LENGTH_LONG);
+					noNameToast.show();
+				}
+				else{
+					AddPlace.this.modelManager.create(AddPlace.this.place,
+							Place.class);
+					AddPlace.this.finish();
+				}
 			}
 			if (v.getId() == R.id.AddPlaceCancelBtn) {
 				AddPlace.this.finish();
