@@ -68,9 +68,9 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 	public Map<String, Place> getSelectedPlaces() {
 		return this.selectedPlaces;
 	}
-	
-	public void setSelectedPlaces(String[] uuids){
-		for(String uuid: uuids){
+
+	public void setSelectedPlaces(String[] uuids) {
+		for (String uuid : uuids) {
 			Place place = manager.getGenericObjectByUuid(uuid, Place.class);
 			selectedPlaces.put(uuid, place);
 		}
@@ -82,15 +82,20 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 	}
 
 	public void refreshPlaces() {
-		if (currentLocation != null) {
-			nearbyPlaces = manager.getPlacesNearby(
-					currentLocation.getLatitudeE6() / 1e6,
-					currentLocation.getLongitudeE6() / 1e6);
-			if (placeDetails != null) {
-				placeDetails.setVisibility(View.INVISIBLE);
-			}
-			refreshOverlayItems();
+		// if (currentLocation != null) {
+		// nearbyPlaces = manager.getPlacesNearby(
+		// currentLocation.getLatitudeE6() / 1e6,
+		// currentLocation.getLongitudeE6() / 1e6);
+		GeoPoint leftUpper = map.getProjection().fromPixels(0, 0);
+		GeoPoint rightBottom = map.getProjection().fromPixels(map.getWidth(), map.getHeight());
+		map.getCache().setViewDimensions(leftUpper, rightBottom);
+		nearbyPlaces.clear();
+		nearbyPlaces.addAll(map.getCache().getPlaces());
+		if (placeDetails != null) {
+			placeDetails.setVisibility(View.INVISIBLE);
 		}
+		refreshOverlayItems();
+		// }
 	}
 
 	private void init(Context context, QuestoMapView map) {
@@ -160,19 +165,19 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 	}
 
 	private void togglePlaceDetails(Place place, QuestoOverlayItem item) {
-		if(showDetails){
+		if (showDetails) {
 			if (placeDetails == null)
 				createPlaceDetails();
-			
+
 			if (placeDetails.getVisibility() == View.INVISIBLE) {
 				updatePlaceDetails(place);
 				placeDetails.setVisibility(View.VISIBLE);
 				map.removeView(placeDetails);
-				map.addView(placeDetails,
-				 new MapView.LayoutParams(MapView.LayoutParams.WRAP_CONTENT,
-				 MapView.LayoutParams.WRAP_CONTENT, item.getPoint(),
-				 0, DisplayHelper.dpToPixel(-57, context),
-				 MapView.LayoutParams.BOTTOM_CENTER));
+				map.addView(placeDetails, new MapView.LayoutParams(
+						MapView.LayoutParams.WRAP_CONTENT,
+						MapView.LayoutParams.WRAP_CONTENT, item.getPoint(), 0,
+						DisplayHelper.dpToPixel(-57, context),
+						MapView.LayoutParams.BOTTOM_CENTER));
 			} else {
 				this.placeDetails.setVisibility(View.INVISIBLE);
 			}

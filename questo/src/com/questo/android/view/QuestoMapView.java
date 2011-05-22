@@ -12,8 +12,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
-import android.widget.PopupWindow;
+import android.view.MotionEvent;
+import android.widget.ZoomButtonsController.OnZoomListener;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -21,6 +21,8 @@ import com.google.android.maps.MyLocationOverlay;
 import com.questo.android.App;
 import com.questo.android.ModelManager;
 import com.questo.android.R;
+import com.questo.android.map.AbstractMapCache;
+import com.questo.android.map.MapCacheImpl;
 import com.questo.android.model.Place;
 
 public class QuestoMapView extends MapView {
@@ -28,12 +30,12 @@ public class QuestoMapView extends MapView {
 	private GeoPoint currentLocation;
 	private ModelManager manager;
 	private App application;
+	private AbstractMapCache cache;
 	private QuestoMapOverlay overlay;
 	private MyLocationOverlay locationOverlay;
 	private QuestoMapListener mapListener;
 	private static final String TAG = "ModelManager";
 
-	
 	public QuestoMapView(Context context, AttributeSet attributes) {
 		super(context, attributes);
 		init();
@@ -43,6 +45,7 @@ public class QuestoMapView extends MapView {
 		try {
 			application = (App) getContext().getApplicationContext();
 			manager = application.getModelManager();
+			cache = new MapCacheImpl(manager);	
 			Drawable defMarker = getContext().getResources().getDrawable(
 					R.drawable.img_questo_q_stand);
 			overlay = new QuestoMapOverlay(getContext(), this, defMarker);
@@ -56,20 +59,20 @@ public class QuestoMapView extends MapView {
 			mapListener = new QuestoMapListener();
 			initLocationUpdates();
 			setBuiltInZoomControls(true);
-			
-			overlay.refreshPlaces();
 		} catch (Exception e) {
 			Log.e(TAG, "Could not initialize questo map view");
 			e.printStackTrace();
 		}
 	}
-	
-	private void initLocationUpdates(){
-		LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-		locationManager.requestLocationUpdates(
-				LocationManager.GPS_PROVIDER, 0, 0, mapListener);
-		Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		if(location!=null){
+
+	private void initLocationUpdates() {
+		LocationManager locationManager = (LocationManager) getContext()
+				.getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+				0, mapListener);
+		Location location = locationManager
+				.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		if (location != null) {
 			GeoPoint current = new GeoPoint(
 					(int) (location.getLatitude() * 1e6),
 					(int) (location.getLongitude() * 1e6));
@@ -87,7 +90,7 @@ public class QuestoMapView extends MapView {
 	public boolean isSelectionEnabled() {
 		return overlay.isSelectionEnabled();
 	}
-	
+
 	public Collection<Place> getSelectedPlaces() {
 		return overlay.getSelectedPlaces().values();
 	}
@@ -99,7 +102,11 @@ public class QuestoMapView extends MapView {
 	public void setShowDetails(boolean showDetails) {
 		overlay.setShowDetails(showDetails);
 	}
-	
+
+	public AbstractMapCache getCache() {
+		return cache;
+	}
+
 	public List<String> getSelectedPlacesUuid() {
 		List<String> placeList = new ArrayList<String>();
 
@@ -110,16 +117,24 @@ public class QuestoMapView extends MapView {
 
 		return placeList;
 	}
-	
-	public void setSelectedPlacesUuid(String[] uuids){
+
+	public void setSelectedPlacesUuid(String[] uuids) {
 		overlay.setSelectedPlaces(uuids);
 	}
-	
-	public void refresh(){
+
+	public void refresh() {
 		overlay.refreshPlaces();
 	}
 
-	private class QuestoMapListener implements LocationListener {
+	@Override
+	public boolean onTouchEvent(MotionEvent ev) {
+		if (ev.getAction() == MotionEvent.ACTION_UP) {
+			refresh();
+		}
+		return super.onTouchEvent(ev);
+	}
+
+	private class QuestoMapListener implements LocationListener{
 
 		@Override
 		public void onLocationChanged(Location location) {

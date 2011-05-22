@@ -9,7 +9,13 @@ import com.questo.android.model.Place;
 
 public abstract class AbstractMapCache {
 	private GeoPoint location;
+	private GeoPoint[] dimensions;
 	private int zoom;
+	
+	
+	public AbstractMapCache(){
+		dimensions = new GeoPoint[2];
+	}
 
 	public GeoPoint getLocation() {
 		return location;
@@ -18,7 +24,6 @@ public abstract class AbstractMapCache {
 	public void setLocation(GeoPoint location) {
 		GeoPoint previousLocation = this.location;
 		this.location = location;
-		onLocationChange(previousLocation);
 	}
 
 	public int getZoom() {
@@ -27,11 +32,24 @@ public abstract class AbstractMapCache {
 
 	public void setZoom(int zoom) {
 		this.zoom = zoom;
+		zoomChanged(zoom);
+	}
+	
+	public void setViewDimensions(GeoPoint leftUpper, GeoPoint rightBottom){
+		dimensions[0] = leftUpper;
+		dimensions[1] = rightBottom;
+		dimensionsChanged(dimensions);
+	}
+	
+	public GeoPoint[] getViewDimensions(){
+		return dimensions;
 	}
 
 	public abstract Map<String, Place> getPlaceMap();
 
 	public abstract Collection<Place> getPlaces();
 	
-	public abstract void onLocationChange(GeoPoint previousLocation);
+	protected abstract void zoomChanged(int zoom);
+	
+	protected abstract void dimensionsChanged(GeoPoint[] dimensions);
 }
