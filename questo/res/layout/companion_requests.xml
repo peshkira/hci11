@@ -15,7 +15,6 @@
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:id="@+id/empty_companionrequestlist_text"
 		android:text="You have not received any new companionship requests."
-		style="@style/ListPlaceholderFont" android:padding="10dp"
-		android:background="@drawable/bg_darklist" android:gravity="center_horizontal|center_vertical"
+		style="@style/ListPlaceholder"
 		android:layout_above="@+id/newTournamentLayout" />
 </LinearLayout>

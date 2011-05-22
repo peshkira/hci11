@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="QuestoTheme" parent="@android:Theme.NoTitleBar">
+		<item name="android:tabWidgetStyle">@style/QuestoTabWidget</item>
+	</style>
+	<style name="QuestoTabWidget" parent="@android:style/Widget.TabWidget">
+		<item name="android:textAppearance">@style/TabFont</item>
+	</style>
+
+</resources>
