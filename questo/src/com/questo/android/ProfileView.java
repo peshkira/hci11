@@ -72,7 +72,7 @@ public class ProfileView extends TabActivity {
             user = mngr.getGenericObjectByUuid(userUuid, User.class);
             topbar.setLabel(user.getName());
             Integer points = mngr.getPointsForUser(user);
-            text = "<b>" + user.getName() + "</b><br/>Degree: <b>" + Level.getHumanReadableCode(points) + "</b><br/>Points earned: <b>" + points + "</b>";  
+            text = "<b>" + user.getName() + "</b><br/>Level: <b>" + Level.getHumanReadableCode(points) + "</b><br/>Points earned: <b>" + points + "</b>";  
 
             String type = extras.getString(Constants.PROFILE_BTN_TYPE);
             this.switchButtonTo(type, user);
@@ -253,6 +253,7 @@ public class ProfileView extends TabActivity {
                 @Override
                 public void onClick(View vv) {
                     LogoutClickListener.this.app.logout();
+                    pw.dismiss();
                     startActivity(new Intent(ProfileView.this, LoginView.class));
                 }
             });

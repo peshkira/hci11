@@ -18,7 +18,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.questo.android.common.Constants;
+import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Companionship;
+import com.questo.android.model.Notification;
 import com.questo.android.model.User;
 import com.questo.android.view.TopBar;
 
@@ -100,6 +102,9 @@ public class CompanionRequestsView extends Activity {
                     current.setConfirmed(true);
                     current.setConfirmedAt(new Date());
                     app.getModelManager().update(current, Companionship.class);
+                    String text = "<b>" + app.getLoggedinUser().getName() + "</b> is your companion now.";
+                    Notification notification = new Notification(UUIDgen.getUUID(), Notification.Type.COMPANIONSHIP_ACCEPTED, text, requestor, null, new Date());
+                    app.getModelManager().create(notification, Notification.class);
                     loadRequests();
                 }
             });
