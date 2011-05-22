@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+	<item>
+		<shape>
+			<gradient android:startColor="#4d0d03" android:endColor="#4e0d02"
+				android:type="linear" android:angle="270" android:dither="true" />
+			<corners android:bottomRightRadius="0dp"
+				android:bottomLeftRadius="0dp" android:topLeftRadius="7dp"
+				android:topRightRadius="7dp" />
+		</shape>
+	</item>
+	<item android:left="1dp">
+		<nine-patch xmlns:android="http://schemas.android.com/apk/res/android"
+			android:src="@drawable/img_shadow_bottom" android:dither="true" />
+	</item>
+</layer-list>

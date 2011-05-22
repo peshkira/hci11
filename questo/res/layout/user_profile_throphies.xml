@@ -3,11 +3,9 @@
 	android:layout_width="match_parent" android:layout_height="match_parent">
 	<ListView android:layout_height="fill_parent"
 		android:layout_width="match_parent" android:layout_alignParentLeft="true"
-		android:id="@+id/ProfileThrophyList" android:background="@color/winered_verydark" />
+		android:id="@+id/ProfileThrophyList" style="@style/DarkList" />
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:id="@+id/empty_trophy_text"
-		android:text="No trophies earned yet!" style="@style/WhiteShadowedFont"
-		android:padding="10dp" android:gravity="center_horizontal"
-		android:textSize="14sp" android:layout_above="@+id/bottombar"
-		android:background="@color/winered_verydark" />
+		android:text="No trophies earned yet!" style="@style/ListPlaceholder"
+		android:layout_above="@+id/bottombar" />
 </RelativeLayout>
