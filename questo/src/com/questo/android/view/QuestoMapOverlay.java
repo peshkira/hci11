@@ -8,6 +8,7 @@ import java.util.Map;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,7 +46,7 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 	public QuestoMapOverlay(Context context, QuestoMapView map,
 			Drawable defaultMarker) {
 		super(boundCenterBottom(defaultMarker));
-		this.init(context, map);
+		init(context, map);
 	}
 
 	public void setSelectionEnabled(boolean selectable) {
@@ -101,6 +102,7 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 		selectedPlaces = new HashMap<String, Place>();
 		nearbyPlaces = new ArrayList<Place>();
 		initIcons();
+		populate();
 		refreshPlaces();
 	}
 
