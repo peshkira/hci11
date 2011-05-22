@@ -20,7 +20,8 @@ public final class Constants {
     public static final String EXTRA_COMPANION_UUID_ARRAY = "app.questo.extra.companion.uuid";
     public static final String EXTRA_ADD_QUESTION_PLACE_UUID = "app.questo.extra.add.question.place.uuid";
     
-    public static final double MAP_PLACES_NEARBY = 2;
+    public static final long MAP_PLACES_NEARBY = 2;
+    public static final long MAP_REFRESH_PERIOD = 200;
     public static final String EXTRA_LATITUDE = "app.questo.extra.latitude";
     public static final String EXTRA_LONGITUDE = "app.questo.extra.longitude";
 

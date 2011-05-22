@@ -19,12 +19,12 @@ public class MapCacheImpl extends AbstractMapCache {
 	}
 
 	@Override
-	public Map<String, Place> getPlaceMap() {
+	public synchronized Map<String, Place> getPlaceMap() {
 		return places;
 	}
 
 	@Override
-	public Collection<Place> getPlaces() {
+	public synchronized Collection<Place> getPlaces() {
 		return places.values();
 	}
 
