@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent" android:layout_height="match_parent">
+	android:layout_width="fill_parent" android:layout_height="fill_parent" android:minHeight="150dp">
 	<ListView android:layout_height="fill_parent"
-		android:layout_width="match_parent" android:layout_alignParentLeft="true"
-		android:id="@+id/ProfileThrophyList" style="@style/DarkList" />
+		android:layout_width="fill_parent" android:layout_alignParentLeft="true"
+		android:id="@+id/ProfileThrophyList" style="@style/DarkList" android:minHeight="150dp"/>
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:id="@+id/empty_trophy_text"
 		android:text="No trophies earned yet!" style="@style/ListPlaceholder"
-		android:layout_above="@+id/bottombar" />
+		android:layout_above="@+id/bottombar" android:minHeight="150dp"/>
 </RelativeLayout>

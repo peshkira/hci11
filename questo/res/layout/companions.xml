@@ -31,8 +31,7 @@
 		</ListView>
 		<TextView android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:id="@+id/empty_companions_text"
-			android:text="You don't have any companions yet!" style="@style/BlackShadowedFont"
-			android:padding="10dp" android:gravity="center_horizontal"
-			android:textSize="14sp" android:layout_above="@+id/bottombar" />
+			android:text="You don't have any companions yet!" style="@style/ListPlaceholder"
+			android:layout_above="@+id/bottombar" />
 	</RelativeLayout>
 </LinearLayout>
