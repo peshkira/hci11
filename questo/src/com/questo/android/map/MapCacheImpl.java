@@ -4,12 +4,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.android.maps.GeoPoint;
+import com.questo.android.ModelManager;
 import com.questo.android.model.Place;
 
 public class MapCacheImpl extends AbstractMapCache {
 	private Map<String, Place> places;
+	private ModelManager manager;
 	
-	public MapCacheImpl(){
+	public MapCacheImpl(ModelManager manager){
+		this.manager = manager;		
 		places = new HashMap<String, Place>();
 	}
 
@@ -24,7 +28,7 @@ public class MapCacheImpl extends AbstractMapCache {
 	}
 
 	@Override
-	public void onLocationChange() {
+	public void onLocationChange(GeoPoint previousLocation){
 		// TODO Auto-generated method stub
 	}
 

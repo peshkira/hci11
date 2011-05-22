@@ -203,11 +203,15 @@ public class ModelManager {
         double highLatitude = latitude + Constants.MAP_PLACES_NEARBY;
         double lowLongitude = longitude - Constants.MAP_PLACES_NEARBY;
         double highLongitude = longitude + Constants.MAP_PLACES_NEARBY;
-
+        
+    	return getPlacesBetween(lowLatitude, lowLongitude, highLatitude, highLongitude);
+    }
+    
+    public List<Place> getPlacesBetween(Double latitude1, Double longitude1, Double latitude2, Double longitude2){
         try {
             QueryBuilder<Place, Integer> placeQBuilder = db().getCachedDao(Place.class).queryBuilder();
-            placeQBuilder.where().between("latitude", lowLatitude, highLatitude).and()
-                    .between("longitude", lowLongitude, highLongitude);
+            placeQBuilder.where().between("latitude", latitude1, latitude2).and()
+                    .between("longitude", longitude1, longitude2);
             PreparedQuery<Place> preparedQuery = placeQBuilder.prepare();
             List<Place> places = db().getCachedDao(Place.class).query(preparedQuery);
             return places;
