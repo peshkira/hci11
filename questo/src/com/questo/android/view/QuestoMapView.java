@@ -3,6 +3,8 @@ package com.questo.android.view;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -13,7 +15,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.ZoomButtonsController.OnZoomListener;
+import android.view.View;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -21,6 +23,7 @@ import com.google.android.maps.MyLocationOverlay;
 import com.questo.android.App;
 import com.questo.android.ModelManager;
 import com.questo.android.R;
+import com.questo.android.common.Constants;
 import com.questo.android.map.AbstractMapCache;
 import com.questo.android.map.MapCacheImpl;
 import com.questo.android.model.Place;
@@ -34,6 +37,10 @@ public class QuestoMapView extends MapView {
 	private QuestoMapOverlay overlay;
 	private MyLocationOverlay locationOverlay;
 	private QuestoMapListener mapListener;
+	private int oldZoomLevel;
+	private GeoPoint oldLeftUpper, oldRightBottom;
+	private Timer refreshTimer;
+	private long lastRefreshTime;
 	private static final String TAG = "ModelManager";
 
 	public QuestoMapView(Context context, AttributeSet attributes) {
@@ -45,14 +52,13 @@ public class QuestoMapView extends MapView {
 		try {
 			application = (App) getContext().getApplicationContext();
 			manager = application.getModelManager();
-			cache = new MapCacheImpl(manager);	
+			cache = new MapCacheImpl(manager);
 			Drawable defMarker = getContext().getResources().getDrawable(
 					R.drawable.img_questo_q_stand);
 			overlay = new QuestoMapOverlay(getContext(), this, defMarker);
-			locationOverlay = new MyLocationOverlay(this.getContext(),
-					this);
+			locationOverlay = new MyLocationOverlay(this.getContext(), this);
 			locationOverlay.enableMyLocation();
-			locationOverlay.enableCompass();			
+			locationOverlay.enableCompass();
 			getOverlays().add(overlay);
 			getOverlays().add(locationOverlay);
 
@@ -122,19 +128,63 @@ public class QuestoMapView extends MapView {
 		overlay.setSelectedPlaces(uuids);
 	}
 
-	public void refresh() {
+	public synchronized void refresh() {
 		overlay.refreshPlaces();
 	}
 
-	@Override
-	public boolean onTouchEvent(MotionEvent ev) {
-		if (ev.getAction() == MotionEvent.ACTION_UP) {
+	public synchronized void refreshWhenViewChanged() {
+		boolean doRefresh = false;
+		if (getZoomLevel() != oldZoomLevel)
+			doRefresh = true;
+		if (!getProjection().fromPixels(0, 0).equals(oldLeftUpper))
+			doRefresh = true;
+		if (!getProjection().fromPixels(getWidth(), getHeight()).equals(
+				oldRightBottom))
+			doRefresh = true;
+
+		if (doRefresh) {
 			refresh();
+
+			oldZoomLevel = getZoomLevel();
+			oldLeftUpper = getProjection().fromPixels(0, 0);
+			oldRightBottom = getProjection()
+					.fromPixels(getWidth(), getHeight());
+		}
+	}
+
+	@Override
+	public boolean onTouchEvent(android.view.MotionEvent ev) {
+		if ((ev.getAction() == MotionEvent.ACTION_DOWN)
+				|| (ev.getAction() == MotionEvent.ACTION_MOVE)) {
+			long time = System.currentTimeMillis();
+			if (time >= lastRefreshTime + Constants.MAP_REFRESH_PERIOD) {
+				lastRefreshTime = time;
+				Thread refreshThread = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						refresh();
+					}
+				});
+				refreshThread.run();
+			}
+		}
+		if ((ev.getAction() == MotionEvent.ACTION_UP)
+				|| (ev.getAction() == MotionEvent.ACTION_CANCEL)
+				|| (ev.getAction() == MotionEvent.ACTION_OUTSIDE)) {
+			Thread refreshThread = new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					refresh();
+				}
+			});
+			refreshThread.run();
 		}
 		return super.onTouchEvent(ev);
 	}
 
-	private class QuestoMapListener implements LocationListener{
+	private class QuestoMapListener implements LocationListener {
 
 		@Override
 		public void onLocationChanged(Location location) {

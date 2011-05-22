@@ -8,7 +8,6 @@ import java.util.Map;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -81,11 +80,7 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 		this.currentLocation = location;
 	}
 
-	public void refreshPlaces() {
-		// if (currentLocation != null) {
-		// nearbyPlaces = manager.getPlacesNearby(
-		// currentLocation.getLatitudeE6() / 1e6,
-		// currentLocation.getLongitudeE6() / 1e6);
+	public synchronized void refreshPlaces() {
 		GeoPoint leftUpper = map.getProjection().fromPixels(0, 0);
 		GeoPoint rightBottom = map.getProjection().fromPixels(map.getWidth(), map.getHeight());
 		map.getCache().setViewDimensions(leftUpper, rightBottom);
@@ -95,7 +90,6 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 			placeDetails.setVisibility(View.INVISIBLE);
 		}
 		refreshOverlayItems();
-		// }
 	}
 
 	private void init(Context context, QuestoMapView map) {
@@ -227,12 +221,12 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 		return this.items.size();
 	}
 
-	public List<QuestoOverlayItem> getItems() {
+	public synchronized List<QuestoOverlayItem> getItems() {
 		return this.items;
 	}
 
 	@Override
-	protected QuestoOverlayItem createItem(int index) {
+	protected synchronized QuestoOverlayItem createItem(int index) {
 		return this.items.get(index);
 	}
 }
