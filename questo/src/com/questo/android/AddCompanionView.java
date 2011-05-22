@@ -41,8 +41,8 @@ public class AddCompanionView extends Activity {
         ModelManager mngr = app.getModelManager();
 
         TopBar topbar = (TopBar) findViewById(R.id.topbar);
-        Button btnRecruit = topbar.addButtonLeftMost(this, "Recruit");
-        btnRecruit.setOnClickListener(new RecruitListener());
+        Button btnInvite = topbar.addImageButtonLeftMost(this, R.drawable.img_invite);
+        btnInvite.setOnClickListener(new InviteListener());
 
         // TODO query non companions...
         List<User> noncompanions = mngr.getNonCompanionsForUser(app.getLoggedinUser());
@@ -63,11 +63,11 @@ public class AddCompanionView extends Activity {
         overridePendingTransition(R.anim.no_change_out, R.anim.push_down_in);
     }
 
-    private class RecruitListener implements OnClickListener {
+    private class InviteListener implements OnClickListener {
 
         @Override
         public void onClick(View v) {
-            // start activity
+            startActivity(new Intent(AddCompanionView.this, InviteView.class));
         }
 
     }
@@ -143,7 +143,7 @@ public class AddCompanionView extends Activity {
 
                 if (data.isEmpty()) {
                     ((TextView) findViewById(R.id.empty_users_text))
-                            .setText("No user by that name! Click on recruit to send out an invite");
+                            .setText("No user by that name! Click on the '+' sign to send out an invite");
                 }
             } else {
                 ((TextView) findViewById(R.id.empty_users_text))
