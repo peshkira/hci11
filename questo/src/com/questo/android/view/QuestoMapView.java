@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.PopupWindow;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -32,6 +33,7 @@ public class QuestoMapView extends MapView {
 	private QuestoMapListener mapListener;
 	private static final String TAG = "ModelManager";
 
+	
 	public QuestoMapView(Context context, AttributeSet attributes) {
 		super(context, attributes);
 		init();
