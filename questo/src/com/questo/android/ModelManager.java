@@ -252,6 +252,28 @@ public class ModelManager {
         }
         return new ArrayList<Trophy>();
     }
+    
+    public Trophy getNewTrophyForUser(User user, Type type) {
+        try {
+
+            QueryBuilder<TrophyForUser, Integer> tfu = queryBuilder(TrophyForUser.class);
+            tfu.selectColumns(TrophyForUser.TROPHY_UUID).where().not().eq(TrophyForUser.USER, user).prepare();
+
+            QueryBuilder<Trophy, Integer> trophies = queryBuilder(Trophy.class);
+            trophies.where().in(Trophy.UUID, tfu).and().eq(Trophy.TYPE, type);
+            
+            List<Trophy> list = db().getCachedDao(Trophy.class).query(trophies.prepare());
+            if (list.isEmpty()) {
+                return null;
+            } else {
+                return list.get(0);
+            }
+            
+        } catch (SQLException e) {
+            handleException(e);
+        }
+        return null;
+    }
 
     public List<Trophy> getTrophyForType(User user, Type type) {
         try {

@@ -1,7 +1,6 @@
 package com.questo.android.model;
 
 import com.j256.ormlite.dao.ForeignCollection;
-import com.j256.ormlite.dao.LazyForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -21,6 +20,8 @@ public class Place {
 	private Double longitude;
 	@DatabaseField
 	private String name;
+	@DatabaseField(canBeNull=true, foreign=true)
+	private Trophy trophy;
 	@ForeignCollectionField(eager = false)
 	ForeignCollection<Question> questions;
 
@@ -69,7 +70,15 @@ public class Place {
 		this.longitude = longitude;
 	}
 
-	/**
+	public void setTrophy(Trophy trophy) {
+        this.trophy = trophy;
+    }
+
+    public Trophy getTrophy() {
+        return trophy;
+    }
+
+    /**
 	 * Gets all connected Questions. This should not be used to add new
 	 * questions - rather change the Question and set this Place on it.
 	 * @return

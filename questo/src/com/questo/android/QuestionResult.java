@@ -106,6 +106,7 @@ public class QuestionResult extends Activity {
                 intent = new Intent(QuestionResult.this, QuestCompleteView.class);
                 intent.putExtra(Constants.QUEST_SIZE, size);
                 intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, QuestionResult.this.correctQtnAnswer);
+                intent.putExtra(Constants.TRANSITION_OBJECT_UUID, QuestionResult.this.questUuid);
             }
 
             startActivity(intent);
