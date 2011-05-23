@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -12,10 +11,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -182,6 +181,12 @@ public class QuestoMapView extends MapView {
 			refreshThread.run();
 		}
 		return super.onTouchEvent(ev);
+	}
+	
+	@Override
+	protected void onSizeChanged (int w, int h, int oldw, int oldh){
+		super.onSizeChanged(w, h, oldw, oldh);
+		this.refresh();
 	}
 
 	private class QuestoMapListener implements LocationListener {
