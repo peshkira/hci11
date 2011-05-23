@@ -7,47 +7,76 @@
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:layout_marginBottom="20dip"
 		questo:label="@string/quests" questo:label_centered="true" />
-	<EditText android:id="@+id/AddQuestionQuestion"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:text="" android:layout_below="@id/topbar" android:textSize="15sp"
-		android:textColor="#000000" android:hint="Fragetext" />
-	<RadioGroup android:id="@+id/AddQuestionQuestionType"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_below="@id/AddQuestionQuestion">
-		<RadioButton android:id="@+id/QuestionTypeText"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:text="Text" android:textSize="15sp" android:textColor="#000000" />
-		<RadioButton android:id="@+id/QuestionTypeNumberGuessing"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:text="Number Guessing" android:textSize="15sp"
-			android:textColor="#000000" />		
-		<RadioButton android:id="@+id/QuestionTypeMultipleChoice"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:text="Multiple Choice" android:textSize="15sp"
-			android:textColor="#000000" />
-	</RadioGroup>
-	<RelativeLayout android:id="@+id/TypeMultipleChoice"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_below="@id/AddQuestionQuestionType" android:visibility="visible">
-	</RelativeLayout>
-	<RelativeLayout android:id="@+id/TypeText"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_below="@id/AddQuestionQuestionType" android:visibility="gone">
-		<EditText android:id="@+id/TextEdit" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" />
-	</RelativeLayout>
-	<RelativeLayout android:id="@+id/TypeNumberGuessing"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_below="@id/AddQuestionQuestionType" android:visibility="gone">
-		<EditText android:id="@+id/NumberGuessingEdit"
-			android:layout_width="fill_parent" android:layout_height="wrap_content" />
-	</RelativeLayout>
-	<Button android:id="@+id/AddQuestionCancelBtn"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true" android:text="Cancel" />
-	<Button android:id="@+id/AddQuestionCreateBtn"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/AddQuestionCancelBtn"
-		android:layout_alignParentBottom="true"
-		android:layout_alignParentRight="true" android:text="Create Question" />
+	<ScrollView android:fillViewport="true"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:fadingEdge="none" 
+		android:layout_below="@id/topbar">
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:orientation="vertical">
+			<EditText android:id="@+id/AddQuestionQuestion"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:text="" android:layout_below="@id/topbar" android:textSize="15sp"
+				android:textColor="#000000" android:hint="Fragetext"
+				android:layout_margin="10dp" />
+			<RadioGroup android:id="@+id/AddQuestionQuestionType"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_below="@id/AddQuestionQuestion"
+				android:layout_margin="10dp">
+				<RadioButton android:id="@+id/QuestionTypeText"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="Text" android:textSize="15sp" android:textColor="#000000" />
+				<RadioButton android:id="@+id/QuestionTypeNumberGuessing"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="Number Guessing" android:textSize="15sp"
+					android:textColor="#000000" />
+				<RadioButton android:id="@+id/QuestionTypeMultipleChoice"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="Multiple Choice" android:textSize="15sp"
+					android:textColor="#000000" />
+			</RadioGroup>
+			<LinearLayout android:id="@+id/QuestionTypeLayout"
+				android:layout_height="wrap_content" android:layout_width="fill_parent"
+				android:layout_below="@id/AddQuestionQuestionType" android:padding="10dp">
+				<LinearLayout android:id="@+id/TypeMultipleChoiceLayout"
+					android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical"
+					android:visibility="gone">
+					<LinearLayout android:id="@+id/TypeMultipleChoice"
+						android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical"/>
+					<Button android:id="@+id/MultipleChoiceAddBtn"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:layout_alignParentBottom="true" style="@style/MediumRoundButton"
+						android:layout_gravity="right" android:text="+" />
+				</LinearLayout>
+				<RelativeLayout android:id="@+id/TypeText"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:visibility="gone">
+					<EditText android:id="@+id/TextEdit" android:layout_width="fill_parent"
+						android:layout_height="wrap_content" />
+				</RelativeLayout>
+				<RelativeLayout android:id="@+id/TypeNumberGuessing"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:visibility="gone">
+					<EditText android:id="@+id/NumberGuessingEdit"
+						android:layout_width="fill_parent" android:layout_height="wrap_content" />
+				</RelativeLayout>
+			</LinearLayout>
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_alignParentBottom="true" android:orientation="horizontal"
+				android:padding="10dp" android:layout_below="@id/QuestionTypeLayout">
+				<Button android:id="@+id/AddQuestionCreateBtn"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:layout_alignParentBottom="true" style="@style/MediumRoundButton"
+					android:layout_gravity="center_horizontal"
+					android:layout_marginRight="10dp" android:layout_alignParentRight="true"
+					android:layout_weight="1" android:text="Create" />
+				<Button android:id="@+id/AddQuestionCancelBtn"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:layout_alignParentBottom="true"
+					style="@style/MediumRoundButtonAlternative" android:layout_gravity="center_horizontal"
+					android:layout_weight="1" android:layout_toRightOf="@id/AddQuestionCreateBtn"
+					android:text="Cancel" />
+			</LinearLayout>
+		</LinearLayout>
+	</ScrollView>
 </RelativeLayout>

@@ -73,9 +73,9 @@ public class QuestMapView extends MapActivity {
 						places.toArray(array));
 				startActivityForResult(addQuestionIntent,
 						ADD_QUESTION_REQUEST_CODE);
-				LinearLayout doneBtnLayout = (LinearLayout) QuestMapView.this
-						.findViewById(R.id.PlaceSelectLayout);
-				doneBtnLayout.setVisibility(View.GONE);
+				Button doneBtn = (Button) QuestMapView.this
+						.findViewById(R.id.PlaceSelectDone);
+				doneBtn.setVisibility(View.GONE);
 				QuestMapView.this.questMap.setSelectionEnabled(false);
 				QuestMapView.this.questMap.setShowDetails(true);						
 			}
@@ -114,9 +114,9 @@ public class QuestMapView extends MapActivity {
 			public boolean onMenuItemClick(MenuItem item) {
 				QuestMapView.this.questMap.setSelectionEnabled(true);
 				QuestMapView.this.questMap.setShowDetails(false);
-				LinearLayout doneBtnLayout = (LinearLayout) QuestMapView.this
-						.findViewById(R.id.PlaceSelectLayout);
-				doneBtnLayout.setVisibility(View.VISIBLE);
+				Button doneBtn = (Button) QuestMapView.this
+						.findViewById(R.id.PlaceSelectDone);
+				doneBtn.setVisibility(View.VISIBLE);
 				Toast.makeText(QuestMapView.this,
 						R.string.add_question_select_place, Toast.LENGTH_LONG)
 						.show();

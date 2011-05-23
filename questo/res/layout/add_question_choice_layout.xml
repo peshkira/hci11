@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/MultipleChoiceLayout" android:layout_width="fill_parent"
+	android:layout_height="wrap_content" android:orientation="horizontal">
+	<EditText android:id="@+id/MultipleChoiceEdit"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:hint="possible answer..." />
+	<CheckBox android:id="@+id/MultipleChoiceCorrectAnswer"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:textColor="#000000" />
+	<Button android:id="@+id/MultipleChoiceRemoveBtn"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		style="@style/MediumRoundButtonAlternative" android:layout_margin="10dp"
+		android:layout_gravity="right" android:textColor="#ffffff"
+		android:text="-" />
+</LinearLayout>

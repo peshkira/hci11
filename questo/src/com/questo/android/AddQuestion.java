@@ -1,11 +1,14 @@
 package com.questo.android;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
@@ -31,7 +34,7 @@ public class AddQuestion extends Activity {
 		modelManager = ((App) getApplication()).getModelManager();
 		String[] uuids = this.getIntent().getStringArrayExtra(
 				Constants.TRANSITION_OBJECT_UUID);
-		if((uuids.length>=1) && (uuids[0]!=null)){
+		if ((uuids.length >= 1) && (uuids[0] != null)) {
 			place = modelManager.getGenericObjectByUuid(uuids[0], Place.class);
 		}
 
@@ -77,19 +80,32 @@ public class AddQuestion extends Activity {
 		Button cancelButton = (Button) findViewById(R.id.AddQuestionCancelBtn);
 		createButton.setOnClickListener(new AddQuestionListener());
 		cancelButton.setOnClickListener(new AddQuestionListener());
-		RadioGroup questionType = (RadioGroup)findViewById(R.id.AddQuestionQuestionType);
+		RadioGroup questionType = (RadioGroup) findViewById(R.id.AddQuestionQuestionType);
 		questionType.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
+
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				RelativeLayout multipleChoice = (RelativeLayout)findViewById(R.id.TypeMultipleChoice);
-				RelativeLayout numberGuessing = (RelativeLayout)findViewById(R.id.TypeNumberGuessing);
-				RelativeLayout text = (RelativeLayout)findViewById(R.id.TypeText);
-				switch(checkedId){
+				LinearLayout multipleChoice = (LinearLayout) findViewById(R.id.TypeMultipleChoiceLayout);
+				RelativeLayout numberGuessing = (RelativeLayout) findViewById(R.id.TypeNumberGuessing);
+				RelativeLayout text = (RelativeLayout) findViewById(R.id.TypeText);
+				switch (checkedId) {
 				case R.id.QuestionTypeMultipleChoice:
 					multipleChoice.setVisibility(View.VISIBLE);
 					numberGuessing.setVisibility(View.GONE);
 					text.setVisibility(View.GONE);
+
+					LayoutInflater inflater = (LayoutInflater) AddQuestion.this
+							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					LinearLayout parent = (LinearLayout) findViewById(R.id.TypeMultipleChoice);					
+					LinearLayout inflated = (LinearLayout)inflater
+							.inflate(R.layout.add_question_choice_layout,
+									parent);
+					LinearLayout self = (LinearLayout)inflated.findViewById(R.id.MultipleChoiceLayout);
+					EditText choiceEdit = (EditText) inflated
+							.findViewById(R.id.MultipleChoiceEdit);
+					Button removeBtn = (Button)inflated.findViewById(R.id.MultipleChoiceRemoveBtn);
+					removeBtn.setOnClickListener(new RemoveClickListener(inflated, self));
+					
 					break;
 				case R.id.QuestionTypeNumberGuessing:
 					multipleChoice.setVisibility(View.GONE);
@@ -106,6 +122,22 @@ public class AddQuestion extends Activity {
 				}
 			}
 		});
+	}
+
+	private class RemoveClickListener implements OnClickListener {
+
+		private LinearLayout parent;
+		private LinearLayout self;
+
+		public RemoveClickListener(LinearLayout parent, LinearLayout self) {
+			this.parent = parent;
+			this.self = self;
+		}
+
+		@Override
+		public void onClick(View v) {
+			parent.removeView(self);
+		}
 	}
 
 	private class AddQuestionListener implements OnClickListener {
