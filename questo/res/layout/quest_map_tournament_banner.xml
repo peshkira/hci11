@@ -1,0 +1,18 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:padding="10dp" android:background="@color/winered"
+	android:gravity="center_vertical" android:id="@+id/tournament_banner">
+	<Button android:layout_width="wrap_content"
+		android:layout_height="wrap_content" style="@style/SmallRoundButton"
+		android:layout_alignParentRight="true" android:id="@+id/show_all"
+		android:text="Show all" />
+	<com.questo.android.view.ScrollingTextView
+		android:id="@+id/tournament_banner_text" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" style="@style/WhiteShadowedFont"
+		android:gravity="center_vertical" android:layout_marginLeft="5dp"
+		android:singleLine="true" android:ellipsize="marquee"
+		android:marqueeRepeatLimit="marquee_forever"
+		android:scrollHorizontally="true" android:layout_toLeftOf="@+id/show_all"
+		android:layout_centerVertical="true" />
+</RelativeLayout>

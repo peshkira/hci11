@@ -20,6 +20,7 @@ import android.widget.ToggleButton;
 import com.questo.android.R;
 import com.questo.android.helper.DisplayHelper;
 import com.questo.android.helper.FontHelper;
+import com.questo.android.helper.UUIDgen;
 
 public class TopBar extends LinearLayout {
 
@@ -28,6 +29,8 @@ public class TopBar extends LinearLayout {
 	private static final int IMAGE_PADDING_DP = 7;
 	private static final int BUTTON_WIDTH_AND_HEIGHT_DP = 51;
 
+	private static int idcounter = 1000;
+	
 	private String labelStr;
 	private boolean labelCentered;
 
@@ -71,6 +74,7 @@ public class TopBar extends LinearLayout {
 	public Button addButtonLeftMost(final Context ctx, CharSequence label) {
 		Button newButton = (Button) LayoutInflater.from(ctx).inflate(R.layout.topbar_button, null);
 		newButton.setText(label);
+		newButton.setId(idcounter++);
 		addButtonToLayout(newButton);
 		return newButton;
 	}
@@ -98,11 +102,11 @@ public class TopBar extends LinearLayout {
 	}
 
 	public Button addToggleButtonLeftMost(final Context ctx, CharSequence label, boolean checked) {
-		Button newButton = (ToggleButton) LayoutInflater.from(ctx).inflate(R.layout.topbar_togglebutton, null);
-		((ToggleButton) newButton).setTextOn(label);
-		((ToggleButton) newButton).setTextOff(label);
-		((ToggleButton) newButton).setChecked(checked);
-
+		ToggleButton newButton = (ToggleButton) LayoutInflater.from(ctx).inflate(R.layout.topbar_togglebutton, null);
+		newButton.setTextOn(label);
+		newButton.setTextOff(label);
+		newButton.setChecked(checked);
+		newButton.setId(idcounter++);
 		addButtonToLayout(newButton);
 		return newButton;
 	}

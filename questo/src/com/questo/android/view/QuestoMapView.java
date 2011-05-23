@@ -25,7 +25,9 @@ import com.questo.android.R;
 import com.questo.android.common.Constants;
 import com.questo.android.map.AbstractMapCache;
 import com.questo.android.map.MapCacheImpl;
+import com.questo.android.map.TournamentMapCacheImpl;
 import com.questo.android.model.Place;
+import com.questo.android.model.Tournament;
 
 public class QuestoMapView extends MapView {
 
@@ -150,7 +152,15 @@ public class QuestoMapView extends MapView {
 					.fromPixels(getWidth(), getHeight());
 		}
 	}
+	
+	public void restrictToPlacesFromTournament(Tournament tournament) {
+		cache = new TournamentMapCacheImpl(manager, tournament);
+	}
 
+	public void showAllPlaces() {
+		cache = new MapCacheImpl(manager);
+	}
+	
 	@Override
 	public boolean onTouchEvent(android.view.MotionEvent ev) {
 		if ((ev.getAction() == MotionEvent.ACTION_DOWN)
