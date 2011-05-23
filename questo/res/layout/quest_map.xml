@@ -14,4 +14,17 @@
 			android:clickable="true" android:apiKey="@string/apikey"
 			android:layout_below="@id/topbar" />
 	</AbsoluteLayout>
+	<LinearLayout android:id="@+id/PlaceSelectLayout" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="vertical"
+		android:layout_alignParentBottom="true" android:layout_below="@id/QuestMap" 
+		android:visibility="gone">
+		<LinearLayout android:id="@+id/ZoomControls"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:layout_centerHorizontal="true" android:gravity="center_horizontal"/>		
+		<Button android:id="@+id/PlaceSelectDone"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:text="Add Question" style="@style/MediumRoundButton"
+			android:layout_margin="10dp" />
+	</LinearLayout>	
 </RelativeLayout>

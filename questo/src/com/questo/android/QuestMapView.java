@@ -4,13 +4,15 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.google.android.maps.MapActivity;
 import com.questo.android.common.Constants;
@@ -44,6 +46,7 @@ public class QuestMapView extends MapActivity {
 				this.getApplicationContext(), R.drawable.img_plus);
 		Button showListBtn = topBar.addImageToggleButtonLeftMost(
 				this.getApplicationContext(), R.drawable.img_list, false);
+		Button doneBtn = (Button) findViewById(R.id.PlaceSelectDone);
 		showListBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -58,9 +61,33 @@ public class QuestMapView extends MapActivity {
 				QuestMapView.this.openContextMenu(v);
 			}
 		});
+		doneBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				List<String> places = QuestMapView.this.questMap
+						.getSelectedPlacesUuid();
+				String[] array = new String[0];
+				Intent addQuestionIntent = new Intent(QuestMapView.this,
+						AddQuestion.class);
+				addQuestionIntent.putExtra(Constants.TRANSITION_OBJECT_UUID,
+						places.toArray(array));
+				startActivityForResult(addQuestionIntent,
+						ADD_QUESTION_REQUEST_CODE);
+				LinearLayout doneBtnLayout = (LinearLayout) QuestMapView.this
+						.findViewById(R.id.PlaceSelectLayout);
+				doneBtnLayout.setVisibility(View.GONE);
+				QuestMapView.this.questMap.setSelectionEnabled(false);
+				QuestMapView.this.questMap.setShowDetails(true);						
+			}
+		});
 		registerForContextMenu(addQuestionBtn);
 		questMap = (QuestoMapView) findViewById(R.id.QuestMap);
 		questMap.setShowDetails(true);
+		LinearLayout zoomLayout = (LinearLayout) findViewById(R.id.ZoomControls);
+		View zoomView = questMap.getZoomButtonsController().getZoomControls();
+		questMap.getZoomButtonsController().getContainer().removeView(zoomView);
+		zoomLayout.addView(zoomView, new LinearLayout.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 	}
 
 	@Override
@@ -85,25 +112,22 @@ public class QuestMapView extends MapActivity {
 		addQuestion.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
-				if (QuestMapView.this.currentPlace != null) {
-					List<String> places  = QuestMapView.this.questMap.getSelectedPlacesUuid();
-					String[] array = new String[0];
-					Intent addQuestionIntent = new Intent(QuestMapView.this,
-							AddQuestion.class);
-					addQuestionIntent.putExtra(
-							Constants.TRANSITION_OBJECT_UUID, places.toArray(array));
-					startActivityForResult(addQuestionIntent,
-							ADD_QUESTION_REQUEST_CODE);
-					return true;
-				}
-				return false;
+				QuestMapView.this.questMap.setSelectionEnabled(true);
+				QuestMapView.this.questMap.setShowDetails(false);
+				LinearLayout doneBtnLayout = (LinearLayout) QuestMapView.this
+						.findViewById(R.id.PlaceSelectLayout);
+				doneBtnLayout.setVisibility(View.VISIBLE);
+				Toast.makeText(QuestMapView.this,
+						R.string.add_question_select_place, Toast.LENGTH_LONG)
+						.show();
+				return true;
 			}
 		});
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(questMap!=null){
+		if (questMap != null) {	
 			questMap.refresh();
 		}
 	}

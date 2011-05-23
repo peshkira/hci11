@@ -27,22 +27,21 @@ public class AddQuestion extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		this.question = new Question();
-		this.modelManager = ((App) getApplication()).getModelManager();
-		String placeUuid = this.getIntent().getStringExtra(
-				Constants.EXTRA_ADD_QUESTION_PLACE_UUID);
-		if (placeUuid != null) {
-			this.place = this.modelManager.getGenericObjectByUuid(placeUuid,
-					Place.class);
+		question = new Question();
+		modelManager = ((App) getApplication()).getModelManager();
+		String[] uuids = this.getIntent().getStringArrayExtra(
+				Constants.TRANSITION_OBJECT_UUID);
+		if((uuids.length>=1) && (uuids[0]!=null)){
+			place = modelManager.getGenericObjectByUuid(uuids[0], Place.class);
 		}
 
 		this.initView();
 	}
 
 	private void refreshObject() {
-		this.question.setPlace(this.place);
+		question.setPlace(this.place);
 		EditText questionText = (EditText) findViewById(R.id.AddQuestionQuestion);
-		this.question.setQuestion(questionText.getText().toString());
+		question.setQuestion(questionText.getText().toString());
 
 		RadioGroup questionType = (RadioGroup) findViewById(R.id.AddQuestionQuestionType);
 		PossibleAnswer answer;

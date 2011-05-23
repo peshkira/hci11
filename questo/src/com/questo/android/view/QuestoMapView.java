@@ -89,7 +89,7 @@ public class QuestoMapView extends MapView {
 	}
 
 	public void setSelectionEnabled(boolean selectable) {
-		this.overlay.setSelectionEnabled(true);
+		this.overlay.setSelectionEnabled(selectable);
 	}
 
 	public boolean isSelectionEnabled() {
@@ -193,13 +193,13 @@ public class QuestoMapView extends MapView {
 
 		@Override
 		public void onLocationChanged(Location location) {
-			GeoPoint current = new GeoPoint(
-					(int) (location.getLatitude() * 1e6),
-					(int) (location.getLongitude() * 1e6));
-			QuestoMapView.this.getController().setCenter(current);
-			QuestoMapView.this.currentLocation = current;
-			QuestoMapView.this.overlay.setLocation(current);
-			QuestoMapView.this.overlay.refreshPlaces();
+//			GeoPoint current = new GeoPoint(
+//					(int) (location.getLatitude() * 1e6),
+//					(int) (location.getLongitude() * 1e6));
+//			QuestoMapView.this.getController().setCenter(current);
+//			QuestoMapView.this.currentLocation = current;
+//			QuestoMapView.this.overlay.setLocation(current);
+//			QuestoMapView.this.overlay.refreshPlaces();
 		}
 
 		@Override
