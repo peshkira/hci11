@@ -1,9 +1,10 @@
 package com.questo.android;
 
+import java.util.List;
+
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
@@ -85,11 +86,12 @@ public class QuestMapView extends MapActivity {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
 				if (QuestMapView.this.currentPlace != null) {
-					String uuid = QuestMapView.this.currentPlace.getUuid();
+					List<String> places  = QuestMapView.this.questMap.getSelectedPlacesUuid();
+					String[] array = new String[0];
 					Intent addQuestionIntent = new Intent(QuestMapView.this,
 							AddQuestion.class);
 					addQuestionIntent.putExtra(
-							Constants.EXTRA_ADD_QUESTION_PLACE_UUID, uuid);
+							Constants.TRANSITION_OBJECT_UUID, places.toArray(array));
 					startActivityForResult(addQuestionIntent,
 							ADD_QUESTION_REQUEST_CODE);
 					return true;
