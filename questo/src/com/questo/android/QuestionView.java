@@ -39,24 +39,19 @@ import com.questo.android.view.TopBar;
 public class QuestionView extends Activity {
 
     private TopBar topbar;
-
     private ModelManager mngr;
-
     private RadioGroup rg;
-
     private int currentQuestion;
-    
     private int correctQtnAnswer;
-
     private String questUuid;
-
     private Place place;
-
     private EditText input;
-    
     private QuestionTimer timer;
-
     private App app;
+    
+	// Only used for backbutton presses:
+	long lastBackPressTime = 0;
+	Toast backToast;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,10 +62,16 @@ public class QuestionView extends Activity {
     }
     
     public void onBackPressed() {
-        // TODO show popup and ask
-        // or show toast and ask to push back again
-        timer.cancel();
-        startActivity(new Intent(this, HomeView.class));
+    	if (this.lastBackPressTime < System.currentTimeMillis() - 2000) {
+			backToast = Toast.makeText(this, "Press 'Back' again to end this quest!", Toast.LENGTH_SHORT);
+			backToast.show();
+			this.lastBackPressTime = System.currentTimeMillis();
+		} else {
+			if (backToast != null)
+				backToast.cancel();
+			timer.cancel();
+	        startActivity(new Intent(this, HomeView.class));
+		}
     }
 
     private void init(Bundle extras) {
