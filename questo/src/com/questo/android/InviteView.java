@@ -60,9 +60,9 @@ public class InviteView extends Activity {
             String msg = text.getText().toString();
 
             if (addr == null || addr.equals("")) {
-                Toast.makeText(InviteView.this, "Please provide a valid email address.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(InviteView.this, "Please provide a valid email address.", Toast.LENGTH_SHORT);
             } else {
-                Toast.makeText(InviteView.this, "Please provide a valid email address.", Toast.LENGTH_LONG).show();
+                Toast.makeText(InviteView.this, "Please provide a valid email address.", Toast.LENGTH_LONG);
                 finish();
             }
         }

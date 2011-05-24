@@ -3,15 +3,28 @@
 	android:layout_width="match_parent" android:layout_height="match_parent">
 	<com.questo.android.view.TopBar
 		android:id="@+id/topbar" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" 
-		questo:label="@string/quests" questo:label_centered="false" />
-	<LinearLayout android:id="@+id/QuestMapLayout"
+		android:layout_height="wrap_content" questo:label="@string/quests"
+		questo:label_centered="false" />
+	<AbsoluteLayout android:id="@+id/QuestMapLayout"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:layout_below="@id/topbar" android:orientation="vertical">
+		android:layout_below="@id/topbar">
 		<com.questo.android.view.QuestoMapView
 			android:id="@+id/QuestMap" android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:enabled="true"
 			android:clickable="true" android:apiKey="@string/apikey"
 			android:layout_below="@id/topbar" />
+	</AbsoluteLayout>
+	<LinearLayout android:id="@+id/PlaceSelectLayout"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:orientation="vertical" android:layout_alignParentBottom="true"
+		android:layout_below="@id/QuestMap">
+		<LinearLayout android:id="@+id/ZoomControls"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:layout_centerHorizontal="true" android:gravity="center_horizontal" />
+		<Button android:id="@+id/PlaceSelectDone" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="Add Question"
+			style="@style/MediumRoundButton" android:layout_margin="10dp"
+			android:visibility="gone" />
 	</LinearLayout>
 </RelativeLayout>

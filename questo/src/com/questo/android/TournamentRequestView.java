@@ -74,7 +74,7 @@ public class TournamentRequestView extends Activity {
 				public void onClick(View v) {
 					Intent intent = new Intent(TournamentRequestView.this, TournamentDetailsView.class);
 	                intent.putExtra(Constants.TRANSITION_OBJECT_UUID, tournament.getUuid());
-	                intent.putExtra(TournamentDetailsView.EXTRA_STARTED_BY, TournamentDetailsView.ReturnTo.RETURN_TO_TOURNAMENT_REQUESTS.ordinal());
+	                intent.putExtra(TournamentDetailsView.EXTRA_STARTED_BY, TournamentDetailsView.StartedBy.STARTED_BY_TOURNAMENT_REQUESTS.ordinal());
 	                startActivity(intent);
 				}
 			});

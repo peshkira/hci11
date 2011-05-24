@@ -55,7 +55,7 @@ public class AddPlace extends MapActivity {
 		cancelBtn.setOnClickListener(this.listener);
 		createBtn.setOnClickListener(this.listener);
 
-		this.map.getController().setZoom(18);
+//		this.map.getController().setZoom(18);
 	}
 
 	private void refreshObject() {

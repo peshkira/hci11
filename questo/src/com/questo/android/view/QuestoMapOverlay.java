@@ -50,6 +50,8 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 
 	public void setSelectionEnabled(boolean selectable) {
 		this.selectable = selectable;
+		this.selectedPlaces.clear();
+		this.refreshOverlayItems();
 	}
 
 	public boolean isShowDetails() {

@@ -25,9 +25,7 @@ import com.questo.android.R;
 import com.questo.android.common.Constants;
 import com.questo.android.map.AbstractMapCache;
 import com.questo.android.map.MapCacheImpl;
-import com.questo.android.map.TournamentMapCacheImpl;
 import com.questo.android.model.Place;
-import com.questo.android.model.Tournament;
 
 public class QuestoMapView extends MapView {
 
@@ -91,7 +89,7 @@ public class QuestoMapView extends MapView {
 	}
 
 	public void setSelectionEnabled(boolean selectable) {
-		this.overlay.setSelectionEnabled(true);
+		this.overlay.setSelectionEnabled(selectable);
 	}
 
 	public boolean isSelectionEnabled() {
@@ -152,15 +150,7 @@ public class QuestoMapView extends MapView {
 					.fromPixels(getWidth(), getHeight());
 		}
 	}
-	
-	public void restrictToPlacesFromTournament(Tournament tournament) {
-		cache = new TournamentMapCacheImpl(manager, tournament);
-	}
 
-	public void showAllPlaces() {
-		cache = new MapCacheImpl(manager);
-	}
-	
 	@Override
 	public boolean onTouchEvent(android.view.MotionEvent ev) {
 		if ((ev.getAction() == MotionEvent.ACTION_DOWN)
@@ -203,13 +193,13 @@ public class QuestoMapView extends MapView {
 
 		@Override
 		public void onLocationChanged(Location location) {
-			GeoPoint current = new GeoPoint(
-					(int) (location.getLatitude() * 1e6),
-					(int) (location.getLongitude() * 1e6));
-			QuestoMapView.this.getController().setCenter(current);
-			QuestoMapView.this.currentLocation = current;
-			QuestoMapView.this.overlay.setLocation(current);
-			QuestoMapView.this.overlay.refreshPlaces();
+//			GeoPoint current = new GeoPoint(
+//					(int) (location.getLatitude() * 1e6),
+//					(int) (location.getLongitude() * 1e6));
+//			QuestoMapView.this.getController().setCenter(current);
+//			QuestoMapView.this.currentLocation = current;
+//			QuestoMapView.this.overlay.setLocation(current);
+//			QuestoMapView.this.overlay.refreshPlaces();
 		}
 
 		@Override

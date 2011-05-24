@@ -28,4 +28,6 @@
     <string name="select_places">Select Places</string>
     <string name="add_place">Add Place</string>
     <string name="error_add_place_no_name">The place needs a name!</string>
+    <string name="add_question_select_place">Select a place</string>
+    <string name="error_question_place_count">Please select exactly one place</string>
 </resources>
