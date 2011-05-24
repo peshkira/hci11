@@ -255,14 +255,22 @@ public class ModelManager {
     
     public Trophy getNewTrophyForUser(User user, Type type) {
         try {
-
-            QueryBuilder<TrophyForUser, Integer> tfu = queryBuilder(TrophyForUser.class);
-            tfu.selectColumns(TrophyForUser.TROPHY_UUID).where().not().eq(TrophyForUser.USER, user).prepare();
-
             QueryBuilder<Trophy, Integer> trophies = queryBuilder(Trophy.class);
-            trophies.where().in(Trophy.UUID, tfu).and().eq(Trophy.TYPE, type);
+            trophies.where().eq(Trophy.TYPE, type);
             
+            QueryBuilder<TrophyForUser, Integer> tfus = queryBuilder(TrophyForUser.class);
+            tfus.where().eq(TrophyForUser.USER, user);
+            
+            List<TrophyForUser> tfu = db().getCachedDao(TrophyForUser.class).query(tfus.prepare());
             List<Trophy> list = db().getCachedDao(Trophy.class).query(trophies.prepare());
+            for (TrophyForUser t : tfu) {
+                for (Trophy trophy : list) {
+                    if (!t.getTrophy().equals(trophy.getUuid())) {
+                        return trophy;
+                    }
+                }
+            }
+            
             if (list.isEmpty()) {
                 return null;
             } else {

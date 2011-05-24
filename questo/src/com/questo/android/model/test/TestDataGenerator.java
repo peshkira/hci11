@@ -12,6 +12,7 @@ import com.questo.android.model.PossibleAnswer;
 import com.questo.android.model.PossibleAnswerImpl;
 import com.questo.android.model.PossibleAnswerMultipleChoice;
 import com.questo.android.model.PossibleAnswerNumberGuessing;
+import com.questo.android.model.PossibleAnswerPlainText;
 import com.questo.android.model.Question;
 import com.questo.android.model.Question.Type;
 import com.questo.android.model.Tournament;
@@ -138,7 +139,66 @@ public class TestDataGenerator {
         manager.create(q_stephansdom_2, Question.class);
         q_stephansdom_2.setPlace(stephansdom);
         manager.update(q_stephansdom_2, Question.class);
+        
+        Question q_stephansdom_3 = new Question(UUIDgen.getUUID(), Type.NUMBERS_GUESSING, "How high is the shortest tower of Stephansdom");
+        PossibleAnswerImpl qs31 = new PossibleAnswerNumberGuessing("65");
+        q_stephansdom_3.getCorrectAnswer().set(qs31);
+        q_stephansdom_3.setPlace(stephansdom);
+        manager.create(q_stephansdom_3, Question.class);
+        
+        Question q_stephansdom_4 = new Question(UUIDgen.getUUID(), Type.NUMBERS_GUESSING, "How much does the biggest bell of Stephansdom weigh(kg)?");
+        PossibleAnswerImpl qs41 = new PossibleAnswerNumberGuessing("20130");
+        q_stephansdom_4.getCorrectAnswer().set(qs41);
+        q_stephansdom_4.setPlace(stephansdom);
+        manager.create(q_stephansdom_4, Question.class);
+        
+        Question q_stephansdom_5 = new Question(UUIDgen.getUUID(), Type.MULTIPLE_CHOICE, "The capitol of Bulgaria is:");
+        PossibleAnswerImpl qs51 = new PossibleAnswerMultipleChoice(1, "Athens", true);
+        PossibleAnswerImpl qs52 = new PossibleAnswerMultipleChoice(2, "Warsaw", false);
+        PossibleAnswerImpl qs53 = new PossibleAnswerMultipleChoice(2, "Beograd", false);
+        PossibleAnswerImpl qs54 = new PossibleAnswerMultipleChoice(2, "Sarajevo", false);
+        PossibleAnswer[] answers = new PossibleAnswer[] {qs51, qs52, qs53, qs54};
+        q_stephansdom_5.getPossibleAnswers().setAll(answers);
+        q_stephansdom_5.getCorrectAnswer().set(qs51);
+        q_stephansdom_5.setPlace(stephansdom);
+        manager.create(q_stephansdom_5, Question.class);
+        
+        Question q_stephansdom_6 = new Question(UUIDgen.getUUID(), Type.MULTIPLE_CHOICE, "True or False? There is no apostle clock at the cathedral.");
+        PossibleAnswerImpl qs61 = new PossibleAnswerMultipleChoice(1, "true", true);
+        PossibleAnswerImpl qs62 = new PossibleAnswerMultipleChoice(2, "false", false);
+        answers = new PossibleAnswer[] {qs61, qs62};
+        q_stephansdom_6.getPossibleAnswers().setAll(answers);
+        q_stephansdom_6.getCorrectAnswer().set(qs61);
+        q_stephansdom_6.setPlace(stephansdom);
+        manager.create(q_stephansdom_6, Question.class);
+        
+        Question q_stephansdom_7 = new Question(UUIDgen.getUUID(), Type.PLAINTEXT, "In which Austrian city is Stephansdom located?");
+        PossibleAnswerImpl qs71 = new PossibleAnswerPlainText("Vienna");
+        q_stephansdom_7.getCorrectAnswer().set(qs71);
+        q_stephansdom_7.setPlace(stephansdom);
+        manager.create(q_stephansdom_7, Question.class);
+        
+        Question q_stephansdom_8 = new Question(UUIDgen.getUUID(), Type.MULTIPLE_CHOICE, "True or False? The cathedral was largely initiated by Rudolf IV.");
+        PossibleAnswerImpl qs81 = new PossibleAnswerMultipleChoice(1, "true", true);
+        PossibleAnswerImpl qs82 = new PossibleAnswerMultipleChoice(2, "false", false);
+        answers = new PossibleAnswer[] {qs81, qs82};
+        q_stephansdom_8.getPossibleAnswers().setAll(answers);
+        q_stephansdom_8.getCorrectAnswer().set(qs81);
+        q_stephansdom_8.setPlace(stephansdom);
+        manager.create(q_stephansdom_8, Question.class);
+        
+        Question q_stephansdom_9 = new Question(UUIDgen.getUUID(), Type.PLAINTEXT, "What is the architectural style of Stephansdom?");
+        PossibleAnswerImpl qs91 = new PossibleAnswerPlainText("Gothic");
+        q_stephansdom_9.getCorrectAnswer().set(qs91);
+        q_stephansdom_9.setPlace(stephansdom);
+        manager.create(q_stephansdom_9, Question.class);  
 
+        Question q_stephansdom_10 = new Question(UUIDgen.getUUID(), Type.NUMBERS_GUESSING, "How long is Stephansdom(meters)?");
+        PossibleAnswerImpl qs101 = new PossibleAnswerNumberGuessing("107");
+        q_stephansdom_10.getCorrectAnswer().set(qs101);
+        q_stephansdom_10.setPlace(stephansdom);
+        manager.create(q_stephansdom_10, Question.class);
+        
     }
 
     private void generateTournaments() {
@@ -180,14 +240,14 @@ public class TestDataGenerator {
                 "One Ring to rule them all,<br /> One Ring to find them,<br /> "
                         + "One Ring to bring them all<br /> and in the darkness bind them.<br />",
                 com.questo.android.model.Trophy.Type.FOR_PLACE);
-        stephansdom.setTrophy(theonering);
+        stephansdom.setTrophy(theonering.getUuid());
         stephansdom = manager.update(stephansdom, Place.class);
         manager.create(theonering, Trophy.class);
 
         Trophy thelight = new Trophy(UUIDgen.getUUID(), "The Light Of Elendil",
                 "I give you the light of Elendil... our most beloved star!",
                 com.questo.android.model.Trophy.Type.FOR_PLACE);
-        karlskirche.setTrophy(thelight);
+        karlskirche.setTrophy(thelight.getUuid());
         karlskirche = manager.update(karlskirche, Place.class);
         manager.create(thelight, Trophy.class);
 

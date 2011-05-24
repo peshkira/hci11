@@ -20,8 +20,8 @@ public class Place {
 	private Double longitude;
 	@DatabaseField
 	private String name;
-	@DatabaseField(canBeNull=true, foreign=true)
-	private Trophy trophy;
+	@DatabaseField(canBeNull=true)
+	private String trophy;
 	@ForeignCollectionField(eager = false)
 	ForeignCollection<Question> questions;
 
@@ -70,11 +70,11 @@ public class Place {
 		this.longitude = longitude;
 	}
 
-	public void setTrophy(Trophy trophy) {
+	public void setTrophy(String trophy) {
         this.trophy = trophy;
     }
 
-    public Trophy getTrophy() {
+    public String getTrophy() {
         return trophy;
     }
 

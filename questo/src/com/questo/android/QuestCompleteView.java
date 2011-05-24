@@ -88,14 +88,14 @@ public class QuestCompleteView extends Activity {
         Quest quest = manager.getGenericObjectByUuid(questUuid, Quest.class);
         Place place = manager.refresh(quest.getPlace(), Place.class);
         System.out.println("PLACE: " + place.getName());
-        Trophy t = manager.refresh(place.getTrophy(), Trophy.class);
+        Trophy t = manager.getGenericObjectByUuid(place.getTrophy(), Trophy.class);
+        System.out.println("TROPHY: " + t.getName());
+        
         if (t != null) {
             t = manager.refresh(t, Trophy.class);
             TrophyForUser tfu = new TrophyForUser(UUIDgen.getUUID(), user, t.getUuid(), place.getUuid(), null,
                     new Date());
             manager.create(tfu, TrophyForUser.class);
-        } else {
-            System.out.println("NO TROPHY FOR YOU");
         }
 
     }
