@@ -339,6 +339,23 @@ public class ModelManager {
         }
         return new ArrayList<Place>();
     }
+ 
+    public TournamentTask getTournamentTaskForPlace(Tournament tournament, Place place) {
+    	refresh(tournament, Tournament.class);
+    	refresh(place, Place.class);
+    	
+    	try {
+    		QueryBuilder<TournamentTask, Integer> tasks = queryBuilder(TournamentTask.class);
+    		tasks.where().eq(TournamentTask.TOURNAMENT, tournament).and().eq(TournamentTask.PLACE_UUID, place.getUuid());
+    		List<TournamentTask> tasksList = db().getCachedDao(TournamentTask.class).query(tasks.prepare());
+    		if (tasksList.size() > 0)
+    			return tasksList.get(0);
+    	}
+    	catch (SQLException e) {
+            handleException(e);
+        }
+    	return null;
+    }
 
     public List<User> getContestantsForTournament(Tournament tournament) {
         try {
@@ -422,6 +439,36 @@ public class ModelManager {
             handleException(e);
         }
         return new ArrayList[] { new ArrayList<TournamentTaskDone>(), new ArrayList<TournamentTaskDone>() };
+    }
+    
+    public List<Place> getTournamentTasksDonePlaces(User user, Tournament tournament) {
+        try {
+            if (user.getUuid() == null)
+                refresh(user, User.class);
+            if (tournament.getUuid() == null)
+                refresh(tournament, Tournament.class);
+            // inner query: getting tournament-tasks for a spec. tournament:
+            QueryBuilder<TournamentTask, Integer> tournamentTasks = queryBuilder(TournamentTask.class);
+            tournamentTasks.selectColumns(TournamentTask.UUID);
+            tournamentTasks.where().eq(TournamentTask.TOURNAMENT, tournament);
+            // middle query: getting tournament-task-dones for the prev. gotten tournament-tasks:
+            QueryBuilder<TournamentTaskDone, Integer> tournamentTaskDones = queryBuilder(TournamentTaskDone.class);
+            tournamentTaskDones.selectColumns(TournamentTaskDone.TOURNAMENT_TASK_UUID);
+            tournamentTaskDones.where().eq(TournamentTaskDone.USER, user).and()
+                    .in(TournamentTaskDone.TOURNAMENT_TASK_UUID, tournamentTasks);
+            // outer-middle query: getting tournament-tasks for the prev. gotten tournament-task-dones:
+            QueryBuilder<TournamentTask, Integer> tournamentTaskDoneOuterTasks = queryBuilder(TournamentTask.class);
+            tournamentTaskDoneOuterTasks.selectColumns(TournamentTask.PLACE_UUID);
+            tournamentTaskDoneOuterTasks.where().in(TournamentTask.UUID, tournamentTaskDones);
+            // out-most query: getting the places connected with the prev. gotten tournament-tasks:
+            QueryBuilder<Place, Integer> places = queryBuilder(Place.class);
+            places.where().in(Place.UUID, tournamentTaskDoneOuterTasks);
+
+            return db().getCachedDao(Place.class).query(places.prepare());
+        } catch (SQLException e) {
+            handleException(e);
+        }
+    	return new ArrayList<Place>();
     }
 
     public List<TournamentRequest> getTournamentRequestsForUser(User user) {

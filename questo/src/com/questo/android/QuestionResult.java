@@ -19,15 +19,11 @@ import com.questo.android.view.TopBar;
 public class QuestionResult extends Activity {
 
     private TopBar topbar;
-
     private int currentQuestion;
-    
     private int correctQtnAnswer;
-
     private String questUuid;
-
     private String correctAnswer;
-
+    private String currentTournamentTaskUuid;
     private int size;
 
     @Override
@@ -52,6 +48,7 @@ public class QuestionResult extends Activity {
         currentQuestion = extras.getInt(Constants.NR_ANSWERED_QUESTIONS);
         correctQtnAnswer = extras.getInt(Constants.NR_ANSWERED_QUESTIONS_CORRECT);
         correctAnswer = extras.getString(Constants.CORRECT_ANSWER);
+        currentTournamentTaskUuid = extras.getString(Constants.CURRENT_TOURNAMENT_TASK_UUID);
         int count = 10;
         if (size < 10) {
             count = size;
@@ -101,14 +98,14 @@ public class QuestionResult extends Activity {
                 intent = new Intent(QuestionResult.this, QuestionView.class);
                 intent.putExtra(Constants.TRANSITION_OBJECT_UUID, QuestionResult.this.questUuid);
                 intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, QuestionResult.this.currentQuestion + 1);
-                intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, QuestionResult.this.correctQtnAnswer);
+                intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, QuestionResult.this.correctQtnAnswer);     
             } else {
                 intent = new Intent(QuestionResult.this, QuestCompleteView.class);
                 intent.putExtra(Constants.QUEST_SIZE, size);
                 intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, QuestionResult.this.correctQtnAnswer);
                 intent.putExtra(Constants.TRANSITION_OBJECT_UUID, QuestionResult.this.questUuid);
             }
-
+            intent.putExtra(Constants.CURRENT_TOURNAMENT_TASK_UUID, currentTournamentTaskUuid);
             startActivity(intent);
         }
 

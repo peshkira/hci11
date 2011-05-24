@@ -44,6 +44,7 @@ public class QuestionView extends Activity {
     private int currentQuestion;
     private int correctQtnAnswer;
     private String questUuid;
+    private String currentTournamentTaskUuid;
     private Place place;
     private EditText input;
     private QuestionTimer timer;
@@ -63,7 +64,7 @@ public class QuestionView extends Activity {
     
     public void onBackPressed() {
     	if (this.lastBackPressTime < System.currentTimeMillis() - 2000) {
-			backToast = Toast.makeText(this, "Press 'Back' again to end this quest!", Toast.LENGTH_SHORT);
+			backToast = Toast.makeText(this, "Press 'Back' again to end this quest - your progress will be lost!", Toast.LENGTH_SHORT);
 			backToast.show();
 			this.lastBackPressTime = System.currentTimeMillis();
 		} else {
@@ -81,6 +82,7 @@ public class QuestionView extends Activity {
         questUuid = extras.getString(Constants.TRANSITION_OBJECT_UUID);
         currentQuestion = extras.getInt(Constants.NR_ANSWERED_QUESTIONS);
         correctQtnAnswer = extras.getInt(Constants.NR_ANSWERED_QUESTIONS_CORRECT);
+        currentTournamentTaskUuid = extras.getString(Constants.CURRENT_TOURNAMENT_TASK_UUID);
 
         Quest quest = (Quest) mngr.getGenericObjectByUuid(questUuid, Quest.class);
 
@@ -182,6 +184,17 @@ public class QuestionView extends Activity {
     private int calcProgress(int q, int count) {
         return (int) ((q * 100) / count);
     }
+    
+    private void putExtrasForNextView(Intent intent, Question question, boolean questionCorrect) {
+        intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
+        intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, correctQtnAnswer);
+        intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
+        intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
+        intent.putExtra(Constants.QUESTION, question.getQuestion());
+        intent.putExtra(Constants.CORRECT_ANSWER, question.getCorrectAnswer().get().getAnswer());
+        intent.putExtra(Constants.BOOL_CORRECT_ANSWER, questionCorrect);
+        intent.putExtra(Constants.CURRENT_TOURNAMENT_TASK_UUID, currentTournamentTaskUuid);
+    }
 
     private class AnswerClickListener implements OnClickListener {
 
@@ -231,13 +244,7 @@ public class QuestionView extends Activity {
                 }
                 
                 Intent intent = new Intent(QuestionView.this, QuestionResult.class);
-                intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
-                intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, correctQtnAnswer);
-                intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
-                intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
-                intent.putExtra(Constants.QUESTION, question.getQuestion());
-                intent.putExtra(Constants.CORRECT_ANSWER, question.getCorrectAnswer().get().getAnswer());
-                intent.putExtra(Constants.BOOL_CORRECT_ANSWER, correct);
+                putExtrasForNextView(intent, question, correct);
                 QuestionView.this.timer.cancel();
                 startActivity(intent);
             }
@@ -257,13 +264,14 @@ public class QuestionView extends Activity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(QuestionView.this, QuestionResult.class);
-            intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
+            /*intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
             intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, correctQtnAnswer);
             intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
             intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
             intent.putExtra(Constants.QUESTION, question.getQuestion());
             intent.putExtra(Constants.CORRECT_ANSWER, question.getCorrectAnswer().get().getAnswer());
-            intent.putExtra(Constants.BOOL_CORRECT_ANSWER, false);
+            intent.putExtra(Constants.BOOL_CORRECT_ANSWER, false);*/
+            putExtrasForNextView(intent, question, false);
             QuestionView.this.timer.cancel();
             startActivity(intent);
 
@@ -293,13 +301,14 @@ public class QuestionView extends Activity {
             Toast.makeText(QuestionView.this, "Time is up!", Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(QuestionView.this, QuestionResult.class);
-            intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
+            /*intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
             intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, correctQtnAnswer);
             intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
             intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
             intent.putExtra(Constants.QUESTION, this.question.getQuestion());
             intent.putExtra(Constants.CORRECT_ANSWER, this.question.getCorrectAnswer().get().getAnswer());
-            intent.putExtra(Constants.BOOL_CORRECT_ANSWER, false);
+            intent.putExtra(Constants.BOOL_CORRECT_ANSWER, false);*/
+            putExtrasForNextView(intent, question, false);
             startActivity(intent);
             
         }

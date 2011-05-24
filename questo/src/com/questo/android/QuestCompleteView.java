@@ -19,20 +19,24 @@ import com.questo.android.model.Quest;
 import com.questo.android.model.Trophy;
 import com.questo.android.model.Trophy.Type;
 import com.questo.android.model.TrophyForUser;
+import com.questo.android.model.Tournament;
+import com.questo.android.model.TournamentTask;
+import com.questo.android.model.TournamentTaskDone;
 import com.questo.android.model.User;
 import com.questo.android.view.TopBar;
 
 public class QuestCompleteView extends Activity {
 
     private TopBar topbar;
+    private String currentTournamentTaskUuid;
     private App app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quest_complete);
-
-        this.init(this.getIntent().getExtras());
+        init(this.getIntent().getExtras());
+        saveTournamentTaskDone();
     }
 
     public void onBackPressed() {
@@ -46,6 +50,7 @@ public class QuestCompleteView extends Activity {
         int size = extras.getInt(Constants.QUEST_SIZE);
         int correctAns = extras.getInt(Constants.NR_ANSWERED_QUESTIONS_CORRECT);
         String questUuid = extras.getString(Constants.TRANSITION_OBJECT_UUID);
+        currentTournamentTaskUuid = extras.getString(Constants.CURRENT_TOURNAMENT_TASK_UUID);
 
         TextView congrats = (TextView) findViewById(R.id.txt_congrats);
         congrats.setTypeface(FontHelper.getMedievalFont(this));
@@ -95,10 +100,25 @@ public class QuestCompleteView extends Activity {
 
     }
 
+    private void saveTournamentTaskDone() {
+    	if (currentTournamentTaskUuid != null) {
+        	TournamentTaskDone done = new TournamentTaskDone(UUIDgen.getUUID(), app.getLoggedinUser(), currentTournamentTaskUuid, new Date());
+        	app.getModelManager().create(done, TournamentTaskDone.class);
+    	}
+    }
+    
     private class QuestCompleteClickListener implements OnClickListener {
 
         public void onClick(View v) {
-            startActivity(new Intent(QuestCompleteView.this, HomeView.class));
+        	if (currentTournamentTaskUuid == null)
+        		startActivity(new Intent(QuestCompleteView.this, QuestMapView.class));
+        	else {
+        		TournamentTask task = app.getModelManager().getGenericObjectByUuid(currentTournamentTaskUuid, TournamentTask.class);
+        		Tournament tournament = app.getModelManager().refresh(task.getTournament(), Tournament.class);
+        		Intent intent = new Intent(QuestCompleteView.this, QuestMapView.class);
+        		intent.putExtra(QuestMapView.EXTRA_TOURNAMENT_UUID, tournament.getUuid());
+        		startActivity(intent);
+        	}
 
         }
 

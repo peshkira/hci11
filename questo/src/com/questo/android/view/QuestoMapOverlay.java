@@ -23,7 +23,10 @@ import com.questo.android.PlaceDetailsView;
 import com.questo.android.R;
 import com.questo.android.common.Constants;
 import com.questo.android.helper.DisplayHelper;
+import com.questo.android.map.TournamentMapCacheImpl;
 import com.questo.android.model.Place;
+import com.questo.android.model.Tournament;
+import com.questo.android.model.TournamentTask;
 
 public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 
@@ -39,6 +42,7 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 	private RelativeLayout placeDetails;
 	private Drawable normal;
 	private Drawable selected;
+	private Drawable done;
 	private boolean selectable;
 	private boolean showDetails;
 
@@ -118,8 +122,13 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 		this.selected.setBounds(0, 0, this.selected.getIntrinsicWidth(),
 				this.selected.getIntrinsicHeight());
 		this.selected = this.boundCenterBottom(this.selected);
+		this.done = context.getResources().getDrawable(
+				R.drawable.img_questo_q_stand_done);
+		this.done.setBounds(0, 0, this.done.getIntrinsicWidth(),
+				this.done.getIntrinsicHeight());
+		this.done = this.boundCenterBottom(this.done);
 	}
-
+	
 	private synchronized void refreshOverlayItems() {
 		this.items.clear();
 		for (Place place : nearbyPlaces) {
@@ -128,10 +137,17 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 					(int) (place.getLongitude() * 1E6));
 			QuestoOverlayItem overlayItem = new QuestoOverlayItem(
 					placeLocation, place.getName(), "");
-			overlayItem.setDrawables(this.normal, this.selected);
+			overlayItem.setDrawables(this.normal, this.selected, this.done);
 			overlayItem.setPlace(place);
 			if (selectedPlaces.containsKey(place.getUuid())) {
 				overlayItem.toggleSelected();
+			}
+			if (isTournamentMode()) {
+				if (getTournamentPlacesDone().contains(place)) {
+					overlayItem.setDone(true);
+					overlayItem.setClickable(false);
+				}
+					
 			}
 			this.items.add(overlayItem);
 		}
@@ -153,8 +169,10 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 			populate();
 		} else {
 			QuestoOverlayItem item = items.get(index);
-			currentPlace = nearbyPlaces.get(index);
-			togglePlaceDetails(currentPlace, item);
+			if (item.isClickable()) {
+				currentPlace = nearbyPlaces.get(index);
+				togglePlaceDetails(currentPlace, item);
+			}
 		}
 
 		return true;
@@ -194,6 +212,12 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 					if (currentPlace != null) {
 						Intent placeDetails = new Intent(context,
 								PlaceDetailsView.class);
+						Tournament t;
+						if((t = getTournament()) != null) {
+							TournamentTask currentTTask = manager.getTournamentTaskForPlace(t, currentPlace);
+							placeDetails.putExtra(Constants.CURRENT_TOURNAMENT_TASK_UUID,
+									currentTTask.getUuid());
+						}
 						placeDetails.putExtra(Constants.TRANSITION_OBJECT_UUID,
 								currentPlace.getUuid());
 						context.startActivity(placeDetails);
@@ -201,6 +225,26 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 				}
 			});
 		}
+	}
+	
+	private Tournament getTournament() {
+		if (isTournamentMode()) {
+			TournamentMapCacheImpl tournamentCache = (TournamentMapCacheImpl) map.getCache();
+			return tournamentCache.getTournament();
+		}
+		return null;
+	}
+	
+	private List<Place> getTournamentPlacesDone() {
+		if (isTournamentMode()) {
+			TournamentMapCacheImpl tournamentCache = (TournamentMapCacheImpl) map.getCache();
+			return tournamentCache.getPlacesDoneInTournament();
+		}
+		return new ArrayList<Place>();
+	}
+	
+	private boolean isTournamentMode() {
+		return map.getCache() instanceof TournamentMapCacheImpl;
 	}
 
 	private void updatePlaceDetails(Place place) {
