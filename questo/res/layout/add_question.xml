@@ -43,9 +43,9 @@
 					<LinearLayout android:id="@+id/TypeMultipleChoice"
 						android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical"/>
 					<Button android:id="@+id/MultipleChoiceAddBtn"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:layout_width="80dp" android:layout_height="wrap_content"
 						android:layout_alignParentBottom="true" style="@style/MediumRoundButton"
-						android:layout_gravity="right" android:text="+" />
+						android:layout_gravity="right" android:text="+" android:layout_marginTop="10dp" />
 				</LinearLayout>
 				<RelativeLayout android:id="@+id/TypeText"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"

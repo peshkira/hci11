@@ -66,18 +66,23 @@ public class QuestMapView extends MapActivity {
 			public void onClick(View v) {
 				List<String> places = QuestMapView.this.questMap
 						.getSelectedPlacesUuid();
-				String[] array = new String[0];
-				Intent addQuestionIntent = new Intent(QuestMapView.this,
-						AddQuestion.class);
-				addQuestionIntent.putExtra(Constants.TRANSITION_OBJECT_UUID,
-						places.toArray(array));
-				startActivityForResult(addQuestionIntent,
-						ADD_QUESTION_REQUEST_CODE);
-				Button doneBtn = (Button) QuestMapView.this
-						.findViewById(R.id.PlaceSelectDone);
-				doneBtn.setVisibility(View.GONE);
-				QuestMapView.this.questMap.setSelectionEnabled(false);
-				QuestMapView.this.questMap.setShowDetails(true);						
+				if(places.size()!=1){
+					Toast.makeText(QuestMapView.this, R.string.error_question_place_count, Toast.LENGTH_LONG).show();
+				}
+				else{
+					String[] array = new String[0];	
+					Intent addQuestionIntent = new Intent(QuestMapView.this,
+							AddQuestion.class);
+					addQuestionIntent.putExtra(Constants.TRANSITION_OBJECT_UUID,
+							places.toArray(array));
+					startActivityForResult(addQuestionIntent,
+							ADD_QUESTION_REQUEST_CODE);
+					Button doneBtn = (Button) QuestMapView.this
+							.findViewById(R.id.PlaceSelectDone);
+					doneBtn.setVisibility(View.GONE);
+					QuestMapView.this.questMap.setSelectionEnabled(false);
+					QuestMapView.this.questMap.setShowDetails(true);
+				}
 			}
 		});
 		registerForContextMenu(addQuestionBtn);
