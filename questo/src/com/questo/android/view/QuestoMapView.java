@@ -159,6 +159,10 @@ public class QuestoMapView extends MapView {
 		List<Place> donePlaces = manager.getTournamentTasksDonePlaces(application.getLoggedinUser(), tournament);
 		cache = new TournamentMapCacheImpl(manager, tournament, donePlaces);
 	}
+	
+	public void showAllPlaces() {
+		cache = new MapCacheImpl(manager);
+	}
 
 	@Override
 	public boolean onTouchEvent(android.view.MotionEvent ev) {
