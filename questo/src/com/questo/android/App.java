@@ -1,6 +1,5 @@
 package com.questo.android;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,6 +16,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.questo.android.error.LoginError;
 import com.questo.android.helper.Security;
 import com.questo.android.model.User;
+import com.questo.android.model.test.TestDataGenerator;
 
 public class App extends Application {
 
@@ -68,6 +68,14 @@ public class App extends Application {
     public void setUserForDebugging(User user) {
         this.loggedinUser = user;
     }
+    
+    public void generateTestData() {
+        if (settings.isInserted() == null || !settings.isInserted().equals("inserted")) {
+            TestDataGenerator gen = new TestDataGenerator(this.getModelManager());
+            gen.generateTestData();
+            settings.setInserted("inserted");
+        }
+    }
 
     public boolean tryAutomaticLogin() {
         if (settings.getEmail() != null && settings.getPassword() != null) {
@@ -108,6 +116,8 @@ public class App extends Application {
 
         public static final String EMAIL = "EMAIL";
         public static final String PASSWORD = "PASSWORD";
+        public static final String TESTDATA = "TESTDATA_INSERTED";
+        
 
         @Override
         public synchronized Object put(Object key, Object value) {
@@ -159,6 +169,15 @@ public class App extends Application {
         public String getPassword() {
             return (String) this.get(PASSWORD);
         }
+        
+        public void setInserted(String inserted) {
+            this.put(TESTDATA, "inserted");
+        }
+        
+        public String isInserted() {
+            return (String) this.get(TESTDATA);
+        }
+        
 
     }
 
