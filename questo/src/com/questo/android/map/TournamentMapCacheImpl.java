@@ -2,6 +2,7 @@ package com.questo.android.map;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.android.maps.GeoPoint;
@@ -13,14 +14,16 @@ public class TournamentMapCacheImpl extends AbstractMapCache {
 	private Map<String, Place> places;
 	private ModelManager manager;
 	private Tournament tournament;
+	private List<Place> placesDoneInTournament;
 	
-	public TournamentMapCacheImpl(ModelManager manager, Tournament tournament){
+	public TournamentMapCacheImpl(ModelManager manager, Tournament tournament, List<Place> placesDoneInTournament){
 		this.manager = manager;		
 		this.tournament = tournament;
 		places = new HashMap<String, Place>();
 		for(Place place : manager.getPlacesForTournament(tournament)) {
 			places.put(place.getUuid(), place);
 		}
+		this.placesDoneInTournament = placesDoneInTournament;
 	}
 
 	@Override
@@ -40,6 +43,14 @@ public class TournamentMapCacheImpl extends AbstractMapCache {
 	
 	protected void dimensionsChanged(GeoPoint[] dimensions){
 		// Nothing to do here, right?
+	}
+	
+	public Tournament getTournament() {
+		return this.tournament;
+	}
+	
+	public List<Place> getPlacesDoneInTournament() {
+		return this.placesDoneInTournament; 
 	}
 
 }

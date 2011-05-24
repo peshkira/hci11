@@ -11,7 +11,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -25,10 +24,14 @@ import com.questo.android.R;
 import com.questo.android.common.Constants;
 import com.questo.android.map.AbstractMapCache;
 import com.questo.android.map.MapCacheImpl;
+import com.questo.android.map.TournamentMapCacheImpl;
 import com.questo.android.model.Place;
+import com.questo.android.model.Tournament;
 
 public class QuestoMapView extends MapView {
 
+	
+	
 	private GeoPoint currentLocation;
 	private ModelManager manager;
 	private App application;
@@ -149,6 +152,12 @@ public class QuestoMapView extends MapView {
 			oldRightBottom = getProjection()
 					.fromPixels(getWidth(), getHeight());
 		}
+	}
+
+	
+	public void restrictToPlacesFromTournament(Tournament tournament) {
+		List<Place> donePlaces = manager.getTournamentTasksDonePlaces(application.getLoggedinUser(), tournament);
+		cache = new TournamentMapCacheImpl(manager, tournament, donePlaces);
 	}
 
 	@Override

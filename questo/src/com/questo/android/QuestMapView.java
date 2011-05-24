@@ -21,6 +21,8 @@ import com.questo.android.view.QuestoMapView;
 import com.questo.android.view.TopBar;
 
 public class QuestMapView extends MapActivity {
+	
+	public static final String EXTRA_TOURNAMENT_UUID = "EXTRA_TOURNAMENT_UUID";
 
 	public final static int ADD_PLACE_REQUEST_CODE = 1;
 	public final static int ADD_QUESTION_REQUEST_CODE = 2;
@@ -129,6 +131,7 @@ public class QuestMapView extends MapActivity {
 			}
 		});
 	}
+	
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

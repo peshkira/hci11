@@ -44,14 +44,11 @@ import com.questo.android.view.TopBar;
 public class PlaceDetailsView extends Activity {
 
     private TopBar topbar;
-
     private Place place;
-
     private int questionCount;
-
     private ModelManager mngr;
-
     private App app;
+    private String currentTournamentTaskUuid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +70,7 @@ public class PlaceDetailsView extends Activity {
         if (extras != null) {
             id = extras.getString(Constants.TRANSITION_OBJECT_UUID);
             object = mngr.getGenericObjectByUuid(id, Place.class);
+            currentTournamentTaskUuid = extras.getString(Constants.CURRENT_TOURNAMENT_TASK_UUID);
         } else {
             object = mngr.getGenericObjectById(1, Place.class);
         }
@@ -175,6 +173,7 @@ public class PlaceDetailsView extends Activity {
             navTo.putExtra(Constants.TRANSITION_OBJECT_UUID, quest.getUuid());
             navTo.putExtra(Constants.NR_ANSWERED_QUESTIONS, 0);
             navTo.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, 0);
+            navTo.putExtra(Constants.CURRENT_TOURNAMENT_TASK_UUID, currentTournamentTaskUuid);
             startActivity(navTo);
 
         }
