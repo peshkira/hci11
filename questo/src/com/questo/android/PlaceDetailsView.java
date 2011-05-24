@@ -55,7 +55,10 @@ public class PlaceDetailsView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.place);
         this.topbar = (TopBar) findViewById(R.id.topbar);
-        this.topbar.addButtonLeftMost(getApplicationContext(), "+");
+        
+        // init + button...
+        Button b = this.topbar.addImageButtonLeftMost(getApplicationContext(), R.drawable.img_plus);
+        b.setOnClickListener(new AddQuestionListener());
         this.app = ((App) getApplicationContext());
         this.mngr = this.app.getModelManager();
 
@@ -107,11 +110,7 @@ public class PlaceDetailsView extends Activity {
             finishActivity(RESULT_CANCELED);
         }
 
-        // init + button...
-        Button b = (Button) findViewById(R.id.topbar_button);
-        b.setOnClickListener(new AddQuestionListener());
-
-        b = (Button) findViewById(R.id.start_quest);
+        Button b = (Button) findViewById(R.id.start_quest);
         if (questionCount > 0) {
             b.setOnClickListener(new StartQuestListener());
             int questionCountForQuest = Math.min(Constants.QUESTIONS_PER_PLACE, questionCount);

@@ -25,11 +25,11 @@ public class TournamentDetailsView extends Activity {
 
 	
 	public static final String EXTRA_STARTED_BY = "EXTRA_STARTED_BY";
-	public enum StartedBy {STARTED_BY_TOURNAMENT_REQUESTS, STARTED_BY_TOURNAMENTS_OVERVIEW}
+	public enum ReturnTo {RETURN_TO_TOURNAMENT_REQUESTS, RETURN_TO_TOURNAMENTS_OVERVIEW}
 
 	App app;
 	Tournament tournament;
-	StartedBy startedBy;
+	ReturnTo startedBy;
 
 	private class ParticipateOnClickListener implements OnClickListener {
 		@Override
@@ -159,7 +159,7 @@ public class TournamentDetailsView extends Activity {
 		if (extras != null) {
 			String tournament_uuid = extras.getString(Constants.TRANSITION_OBJECT_UUID);
 			int startedby_ordinal = extras.getInt(EXTRA_STARTED_BY);
-			startedBy = StartedBy.values()[startedby_ordinal];
+			startedBy = ReturnTo.values()[startedby_ordinal];
 			if (tournament_uuid != null)
 				tournament = app.getModelManager().getGenericObjectByUuid(tournament_uuid, Tournament.class);
 		}
@@ -168,6 +168,17 @@ public class TournamentDetailsView extends Activity {
 
 		TopBar topBar = (TopBar) findViewById(R.id.topbar);
 		topBar.setLabel(tournament.getName());
+		
+		Button executeTournamentBtn = (Button) findViewById(R.id.execute_tournament);
+        executeTournamentBtn.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        Intent intent = new Intent(TournamentDetailsView.this, QuestMapView.class);
+                        intent.putExtra(QuestMapView.EXTRA_TOURNAMENT_UUID, tournament.getUuid());
+                        startActivity(intent);
+                }
+        });
+
 
 		boolean userIsParticipant = loadContestants();
 		loadPlaces();
@@ -202,9 +213,9 @@ public class TournamentDetailsView extends Activity {
 	}
 
 	public void onBackPressed() {
-		if (startedBy.equals(StartedBy.STARTED_BY_TOURNAMENTS_OVERVIEW))
+		if (startedBy.equals(ReturnTo.RETURN_TO_TOURNAMENTS_OVERVIEW))
 			startActivity(new Intent(this, TournamentsView.class));
-		else if (startedBy.equals(StartedBy.STARTED_BY_TOURNAMENT_REQUESTS))
+		else if (startedBy.equals(ReturnTo.RETURN_TO_TOURNAMENT_REQUESTS))
 			startActivity(new Intent(this, TournamentRequestView.class));
 	}
 }

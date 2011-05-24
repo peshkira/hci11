@@ -2,13 +2,8 @@ package com.questo.android.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +26,8 @@ public class TopBar extends LinearLayout {
 	private String labelStr;
 	private boolean labelCentered;
 
+	private static int idcounter = 1000;
+	
 	public TopBar(Context context, AttributeSet attr) {
 		super(context, attr);
 		initializeLayoutBasics(context);
@@ -71,6 +68,7 @@ public class TopBar extends LinearLayout {
 	public Button addButtonLeftMost(final Context ctx, CharSequence label) {
 		Button newButton = (Button) LayoutInflater.from(ctx).inflate(R.layout.topbar_button, null);
 		newButton.setText(label);
+		newButton.setId(idcounter++);
 		addButtonToLayout(newButton);
 		return newButton;
 	}
@@ -98,10 +96,12 @@ public class TopBar extends LinearLayout {
 	}
 
 	public Button addToggleButtonLeftMost(final Context ctx, CharSequence label, boolean checked) {
-		Button newButton = (ToggleButton) LayoutInflater.from(ctx).inflate(R.layout.topbar_togglebutton, null);
-		((ToggleButton) newButton).setTextOn(label);
-		((ToggleButton) newButton).setTextOff(label);
-		((ToggleButton) newButton).setChecked(checked);
+		ToggleButton newButton = (ToggleButton) LayoutInflater.from(ctx).inflate(R.layout.topbar_togglebutton, null);
+		newButton.setTextOn(label);
+		newButton.setTextOff(label);
+		newButton.setChecked(checked);
+		
+		newButton.setId(idcounter++);
 
 		addButtonToLayout(newButton);
 		return newButton;

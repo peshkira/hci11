@@ -5,15 +5,15 @@
 		android:id="@+id/topbar" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" questo:label="@string/quests"
 		questo:label_centered="false" />
-	<AbsoluteLayout android:id="@+id/QuestMapLayout"
+	<LinearLayout android:id="@+id/QuestMapLayout"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:layout_below="@id/topbar">
+		android:layout_below="@id/topbar" android:orientation="vertical">
 		<com.questo.android.view.QuestoMapView
 			android:id="@+id/QuestMap" android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:enabled="true"
 			android:clickable="true" android:apiKey="@string/apikey"
 			android:layout_below="@id/topbar" />
-	</AbsoluteLayout>
+	</LinearLayout>
 	<LinearLayout android:id="@+id/PlaceSelectLayout"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:orientation="vertical" android:layout_alignParentBottom="true"
