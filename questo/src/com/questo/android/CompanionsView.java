@@ -55,7 +55,7 @@ public class CompanionsView extends Activity {
         List<User> companions = mngr.getCompanionsForUser(app.getLoggedinUser());
         System.out.println("SIZE: " + companions.size());
         TopBar topbar = (TopBar) findViewById(R.id.topbar);
-        Button requestButton = topbar.addImageToggleButtonLeftMost(this, R.drawable.img_request, false);
+        Button requestButton =  topbar.addToggleButtonLeftMost(this, "Requests", false);//topbar.addImageToggleButtonLeftMost(this, R.drawable.img_request, false);
         requestButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

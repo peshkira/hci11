@@ -3,13 +3,13 @@
 	android:id="@+id/topbar_container" android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:orientation="vertical" >
-	<TableLayout android:layout_width="fill_parent"
+<!-- <TableLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:stretchColumns="0"
 		android:background="@drawable/bg_topbar" android:padding="0dp">
 		<TableRow android:id="@+id/layout_row" android:gravity="center_vertical">
 			<com.questo.android.view.ScrollingTextView
 				android:id="@+id/label" android:textStyle="bold"
-				android:layout_width="wrap_content" android:layout_height="51dp"
+				android:layout_width="fill_parent" android:layout_height="51dp"
 				style="@style/TopBarFont" android:gravity="center_vertical"
 				android:layout_marginLeft="9dp" android:layout_marginRight="9dp"
 				android:singleLine="true" android:ellipsize="marquee"
@@ -21,4 +21,23 @@
 			</LinearLayout>
 		</TableRow>
 	</TableLayout>
+	 -->	
+	 <RelativeLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:background="@drawable/bg_topbar" android:padding="0dp">
+			<LinearLayout android:id="@+id/buttons_container"
+				android:orientation="horizontal" android:layout_width="wrap_content"
+				android:layout_height="51dp" android:layout_alignParentRight="true">
+			</LinearLayout>
+			<com.questo.android.view.ScrollingTextView
+				android:id="@+id/label" android:textStyle="bold"
+				android:layout_width="fill_parent" android:layout_height="51dp"
+				style="@style/TopBarFont" android:gravity="center_vertical"
+				android:layout_marginLeft="9dp" android:layout_marginRight="9dp"
+				android:singleLine="true" android:ellipsize="marquee"
+				android:marqueeRepeatLimit="marquee_forever"
+				android:scrollHorizontally="true"
+				android:layout_toLeftOf="@+id/buttons_container"/>
+	</RelativeLayout>
+	 
 </LinearLayout>
