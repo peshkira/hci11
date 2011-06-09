@@ -79,7 +79,9 @@ public class TournamentsView extends Activity {
 
 		TopBar topBar = (TopBar) findViewById(R.id.topbar);
 		//Button requestButton = topBar.addToggleButtonLeftMost(this, "Requests", false);
-		Button requestButton = topBar.addImageToggleButtonLeftMost(this, R.drawable.img_request, false);
+		Button requestButton = topBar.addToggleButtonLeftMost(this, "Requests", false);
+        if (app.getModelManager().getUserHasTournamentRequests(app.getLoggedinUser()))
+        	TopBar.setButtonHighlighted(requestButton);
 		requestButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

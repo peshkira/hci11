@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+	<item>
+		<shape android:shape="rectangle">
+			<gradient android:startColor="#2c0701" android:endColor="#000000"
+				android:type="linear" android:angle="270" android:dither="true" />
+		</shape>
+	</item>
+	<item android:left="1dp">
+		<shape android:shape="rectangle">
+			<gradient android:startColor="#722e26" android:endColor="#52110c"
+				android:type="linear" android:angle="270" android:dither="true" />
+		</shape>
+	</item>
+	<item android:left="1dp">
+		<nine-patch xmlns:android="http://schemas.android.com/apk/res/android"
+			android:src="@drawable/img_shadow_bottom" android:dither="true" />
+	</item>
+	<item android:left="2dp" android:top="1dp">
+		<shape android:shape="rectangle">
+			<gradient android:startColor="#ee3413" android:endColor="@color/winered_light"
+				android:type="linear" android:angle="270" android:dither="true" />
+			<padding android:left="11dp" android:top="0dp" android:right="10dp"
+				android:bottom="0dp" />
+		</shape>
+	</item>
+</layer-list>
