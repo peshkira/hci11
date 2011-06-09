@@ -108,6 +108,8 @@ public class QuestionView extends Activity {
 
         final Button counter = this.topbar.addButtonLeftMost(getApplicationContext(), "30");
         counter.setClickable(false);
+        counter.setTextSize(18.0f);
+        counter.setBackgroundResource(R.drawable.img_counter1);
 
         TextView question = (TextView) findViewById(R.id.question);
         question.setText(qtn.getQuestion());
@@ -264,13 +266,6 @@ public class QuestionView extends Activity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(QuestionView.this, QuestionResult.class);
-            /*intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
-            intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, correctQtnAnswer);
-            intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
-            intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
-            intent.putExtra(Constants.QUESTION, question.getQuestion());
-            intent.putExtra(Constants.CORRECT_ANSWER, question.getCorrectAnswer().get().getAnswer());
-            intent.putExtra(Constants.BOOL_CORRECT_ANSWER, false);*/
             putExtrasForNextView(intent, question, false);
             QuestionView.this.timer.cancel();
             startActivity(intent);
@@ -286,12 +281,16 @@ public class QuestionView extends Activity {
         private Vibrator v;
         private Button counter;
         private Question question;
+        private long calls;
+        private int call;
         
         public QuestionTimer(long time, long thick, Button counter, Question qtn) {
             super(time, thick);
             this.v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             this.counter = counter;
             this.question = qtn;
+            this.calls = (time / thick / 10);
+            this.call = 1;
         }
 
         @Override
@@ -301,13 +300,6 @@ public class QuestionView extends Activity {
             Toast.makeText(QuestionView.this, "Time is up!", Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(QuestionView.this, QuestionResult.class);
-            /*intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
-            intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, correctQtnAnswer);
-            intent.putExtra(Constants.TRANSITION_OBJECT_UUID, questUuid);
-            intent.putExtra(Constants.QUEST_SIZE, QuestionView.this.place.getQuestions().size());
-            intent.putExtra(Constants.QUESTION, this.question.getQuestion());
-            intent.putExtra(Constants.CORRECT_ANSWER, this.question.getCorrectAnswer().get().getAnswer());
-            intent.putExtra(Constants.BOOL_CORRECT_ANSWER, false);*/
             putExtrasForNextView(intent, question, false);
             startActivity(intent);
             
@@ -318,7 +310,27 @@ public class QuestionView extends Activity {
             long sec = (millisUntilFinished / 1000);
             counter.setTextColor(this.calcColor(sec));
             counter.setText("" + sec);
+            if (sec % this.calls == 0) {
+                counter.setBackgroundResource(this.calcCircleImage());
+            }
             
+        }
+        
+        private int calcCircleImage() {
+            this.call++;
+            switch (this.call) {
+                case 1: return R.drawable.img_counter1;
+                case 2: return R.drawable.img_counter2;
+                case 3: return R.drawable.img_counter3;
+                case 4: return R.drawable.img_counter4;
+                case 5: return R.drawable.img_counter5;
+                case 6: return R.drawable.img_counter6;
+                case 7: return R.drawable.img_counter7;
+                case 8: return R.drawable.img_counter8;
+                case 9: return R.drawable.img_counter9;
+                case 10: return R.drawable.img_counter10;
+                default: return R.drawable.img_counter1;
+            }
         }
         
         private int calcColor(long sec) {
