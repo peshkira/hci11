@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -74,14 +75,13 @@ public class QuestionResult extends Activity {
                     .fromHtml("<big><b>Your answer is incorrect!</b></big><br/><br/>The correct answer is:<br/><b>" + correctAnswer + "</b>"));
         }
 
+        
+        
         Button btnNext = (Button) findViewById(R.id.btn_next_question);
         btnNext.setOnClickListener(new NextQuestionClickListener());
         
-        ImageView flag = (ImageView) findViewById(R.id.btn_report);
-        flag.setOnClickListener(new ReportClickListener(qtn));
-        
-        TextView report = (TextView) findViewById(R.id.txt_report_btn);
-        report.setOnClickListener(new ReportClickListener(qtn));
+        LinearLayout reportLayout = (LinearLayout)findViewById(R.id.layout_report);
+        reportLayout.setOnClickListener(new ReportClickListener(qtn));
 
     }
 
