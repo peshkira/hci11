@@ -3,15 +3,10 @@ package com.questo.android;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.TextView;
-
-import com.questo.android.model.User;
-import com.questo.android.view.TopBar;
 
 public class TutorialView extends Activity {
 
@@ -26,7 +21,10 @@ public class TutorialView extends Activity {
         WebView browser = (WebView) findViewById(R.id.webview);
         browser.setVerticalScrollBarEnabled(false);
         browser.setHorizontalScrollBarEnabled(false);
-        browser.loadUrl("file:///android_asset/test.html");
+        browser.loadUrl("file:///android_asset/tutorial.html");
+        
+        Button play = (Button) findViewById(R.id.btn_play);
+        play.setOnClickListener(new ProceedOnClickListener());
     }
 
     private class ProceedOnClickListener implements OnClickListener {
