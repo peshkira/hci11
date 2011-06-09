@@ -17,11 +17,11 @@ public class Launcher extends Activity {
 		
 		// Production login routine:
 		
-		if (!app.tryAutomaticLogin())
+		//if (!app.tryAutomaticLogin())
 			startActivity(new Intent(this, LoginView.class));
-		else {
-			startActivity(new Intent(this, HomeView.class));
-		}
+//		else {
+//			startActivity(new Intent(this, HomeView.class));
+//		}
 	}
 	
 }
