@@ -11,8 +11,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,9 +25,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.questo.android.common.Constants;
+import com.questo.android.helper.QuestoFieldFocusListener;
 import com.questo.android.model.User;
 import com.questo.android.view.TopBar;
 
@@ -42,6 +48,10 @@ public class CompanionsView extends Activity {
 
         app = (App) this.getApplicationContext();
         mngr = app.getModelManager();
+        
+        ListView background = (ListView) findViewById(R.id.list_companion);
+        background.setOnTouchListener(new QuestoFieldFocusListener((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)));
+        
         List<User> companions = mngr.getCompanionsForUser(app.getLoggedinUser());
         System.out.println("SIZE: " + companions.size());
         TopBar topbar = (TopBar) findViewById(R.id.topbar);
@@ -69,7 +79,7 @@ public class CompanionsView extends Activity {
         btnAdd.setOnClickListener(new AddCompanionListener());
 
     }
-    
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         List<User> list = mngr.getCompanionsForUser(app.getLoggedinUser());
@@ -77,12 +87,11 @@ public class CompanionsView extends Activity {
         itemListener.setCompanions(list);
         super.onActivityResult(requestCode, resultCode, data);
     }
-    
+
     @Override
     public void onBackPressed() {
         startActivity(new Intent(this, HomeView.class));
     }
-    
 
     private class AddCompanionListener implements OnClickListener {
 
@@ -101,7 +110,7 @@ public class CompanionsView extends Activity {
         public CompanionItemListener(List<User> companions) {
             this.companions = companions;
         }
-        
+
         public void setCompanions(List<User> companions) {
             this.companions = companions;
         }
@@ -152,7 +161,7 @@ public class CompanionsView extends Activity {
             this.data = users;
             this.inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-        
+
         public void setData(List<User> users) {
             this.data = users;
             this.companions.clear();

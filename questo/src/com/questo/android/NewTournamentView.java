@@ -12,13 +12,16 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.questo.android.helper.QuestoFieldFocusListener;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
 import com.questo.android.model.Tournament;
@@ -146,13 +149,19 @@ public class NewTournamentView extends Activity {
 	private void initView(Bundle extras) {
 		this.setContentView(R.layout.tournament_new);
 
+		QuestoFieldFocusListener focusListener = new QuestoFieldFocusListener((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE));
+		ScrollView background = (ScrollView) findViewById(R.id.new_tournament_scroll);
+        background.setOnTouchListener(focusListener);
+		
 		ListView placesList = (ListView) findViewById(R.id.tournament_questlist);
 		placesAdapter = new PlacesAdapter(this, R.layout.tournament_details_places_item);
 		placesList.setAdapter(placesAdapter);
+		placesList.setOnTouchListener(focusListener);
 
 		ListView participantsList = (ListView) findViewById(R.id.tournament_contestantslist);
 		participantsAdapter = new ContestantsAdapter(this, R.layout.tournament_details_contestants_item);
 		participantsList.setAdapter(participantsAdapter);
+		participantsList.setOnTouchListener(focusListener);
 
 		Button addPlacesBtn = (Button) findViewById(R.id.add_place);
 		addPlacesBtn.setOnClickListener(new OnClickListener() {

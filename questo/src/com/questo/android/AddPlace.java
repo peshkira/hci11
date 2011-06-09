@@ -2,11 +2,14 @@ package com.questo.android;
 
 import java.util.List;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,6 +20,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.questo.android.helper.QuestoFieldFocusListener;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
 
@@ -39,7 +43,9 @@ public class AddPlace extends MapActivity {
 
 	private void initView() {
 		this.setContentView(R.layout.add_place);
+		
 		this.map = (MapView) findViewById(R.id.AddPlaceMap);
+		this.map.setOnTouchListener(new QuestoFieldFocusListener((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)));
 
 		this.map.setBuiltInZoomControls(true);
 		List<Overlay> mapOverlays = map.getOverlays();

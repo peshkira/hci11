@@ -12,20 +12,25 @@ import android.os.Vibrator;
 import android.text.Html;
 import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.questo.android.common.Constants;
 import com.questo.android.helper.DisplayHelper;
+import com.questo.android.helper.QuestoFieldFocusListener;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
 import com.questo.android.model.PossibleAnswer;
@@ -49,10 +54,10 @@ public class QuestionView extends Activity {
     private EditText input;
     private QuestionTimer timer;
     private App app;
-    
-	// Only used for backbutton presses:
-	long lastBackPressTime = 0;
-	Toast backToast;
+
+    // Only used for backbutton presses:
+    long lastBackPressTime = 0;
+    Toast backToast;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,18 +66,19 @@ public class QuestionView extends Activity {
         this.init(this.getIntent().getExtras());
 
     }
-    
+
     public void onBackPressed() {
-    	if (this.lastBackPressTime < System.currentTimeMillis() - 2000) {
-			backToast = Toast.makeText(this, "Press 'Back' again to end this quest - your progress will be lost!", Toast.LENGTH_SHORT);
-			backToast.show();
-			this.lastBackPressTime = System.currentTimeMillis();
-		} else {
-			if (backToast != null)
-				backToast.cancel();
-			timer.cancel();
-	        startActivity(new Intent(this, HomeView.class));
-		}
+        if (this.lastBackPressTime < System.currentTimeMillis() - 2000) {
+            backToast = Toast.makeText(this, "Press 'Back' again to end this quest - your progress will be lost!",
+                    Toast.LENGTH_SHORT);
+            backToast.show();
+            this.lastBackPressTime = System.currentTimeMillis();
+        } else {
+            if (backToast != null)
+                backToast.cancel();
+            timer.cancel();
+            startActivity(new Intent(this, HomeView.class));
+        }
     }
 
     private void init(Bundle extras) {
@@ -99,8 +105,8 @@ public class QuestionView extends Activity {
         String type = qtn.getType().name();
 
         this.topbar = (TopBar) findViewById(R.id.topbar);
-        this.topbar.setLabel(Constants.QUESTION_PROGRESS.replaceFirst("\\{\\}", currentQuestion + 1 + "")
-                .replace("{}", count + ""));
+        this.topbar.setLabel(Constants.QUESTION_PROGRESS.replaceFirst("\\{\\}", currentQuestion + 1 + "").replace("{}",
+                count + ""));
 
         ProgressBar bar = (ProgressBar) findViewById(R.id.progressbar);
         bar.setProgressDrawable(getResources().getDrawable(R.drawable.bg_progressbar));
@@ -110,6 +116,9 @@ public class QuestionView extends Activity {
         counter.setClickable(false);
         counter.setTextSize(18.0f);
         counter.setBackgroundResource(R.drawable.img_counter1);
+
+        ScrollView background = (ScrollView) findViewById(R.id.qtn_scroll);
+        background.setOnTouchListener(new QuestoFieldFocusListener((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)));
 
         TextView question = (TextView) findViewById(R.id.question);
         question.setText(qtn.getQuestion());
@@ -129,7 +138,7 @@ public class QuestionView extends Activity {
 
         LayoutInflater li = getLayoutInflater();
 
-        LinearLayout buttonsLayout = (LinearLayout)findViewById(R.id.qtn_answerbuttons);
+        LinearLayout buttonsLayout = (LinearLayout) findViewById(R.id.qtn_answerbuttons);
         View buttons = li.inflate(R.layout.answer_buttons, null);
         buttonsLayout.addView(buttons);
 
@@ -140,7 +149,7 @@ public class QuestionView extends Activity {
 
         this.timer = new QuestionTimer(30000, 1000, counter, qtn);
         this.timer.start();
-        
+
     }
 
     private void createNumberGuessView(LinearLayout layout) {
@@ -160,33 +169,35 @@ public class QuestionView extends Activity {
         input.setLayoutParams(params);
         input.setSingleLine();
         input.setHint("your answer");
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_DATETIME_VARIATION_NORMAL);
         layout.addView(input);
 
     }
 
-	private void createMultipleChoiceView(LinearLayout layout, PossibleAnswer[] answers) {
-		final RadioButton[] rb = new RadioButton[5];
-		rg = new RadioGroup(this);
-		rg.setOrientation(RadioGroup.VERTICAL);
-		for (int i = 0; i < answers.length; i++) {
-			rb[i] = new RadioButton(this);
-			rg.addView(rb[i]);
-			//TODO for some reason, the shadow is always grey! wtf?
-			//rb[i].setShadowLayer(1.0f, 1.0f, 1.0f, R.color.light_text_shadow);
-			rb[i].setText(Html.fromHtml("<big>" + ((PossibleAnswerImpl) answers[i]).getAnswer() + "</big>"));
-			rb[i].setTextColor(Color.BLACK);
-			
-			int paddingTopAndBottom = DisplayHelper.dpToPixel(5, this);
-			int paddingLeft = DisplayHelper.dpToPixel(50, this);
-			rb[i].setPadding(paddingLeft, paddingTopAndBottom, 0, paddingTopAndBottom);
-		}
-		layout.addView(rg);
-	}
+    private void createMultipleChoiceView(LinearLayout layout, PossibleAnswer[] answers) {
+        final RadioButton[] rb = new RadioButton[5];
+        rg = new RadioGroup(this);
+        rg.setOrientation(RadioGroup.VERTICAL);
+        for (int i = 0; i < answers.length; i++) {
+            rb[i] = new RadioButton(this);
+            rg.addView(rb[i]);
+            // TODO for some reason, the shadow is always grey! wtf?
+            // rb[i].setShadowLayer(1.0f, 1.0f, 1.0f,
+            // R.color.light_text_shadow);
+            rb[i].setText(Html.fromHtml("<big>" + ((PossibleAnswerImpl) answers[i]).getAnswer() + "</big>"));
+            rb[i].setTextColor(Color.BLACK);
+
+            int paddingTopAndBottom = DisplayHelper.dpToPixel(5, this);
+            int paddingLeft = DisplayHelper.dpToPixel(50, this);
+            rb[i].setPadding(paddingLeft, paddingTopAndBottom, 0, paddingTopAndBottom);
+        }
+        layout.addView(rg);
+    }
 
     private int calcProgress(int q, int count) {
         return (int) ((q * 100) / count);
     }
-    
+
     private void putExtrasForNextView(Intent intent, Question question, boolean questionCorrect) {
         intent.putExtra(Constants.NR_ANSWERED_QUESTIONS, currentQuestion);
         intent.putExtra(Constants.NR_ANSWERED_QUESTIONS_CORRECT, correctQtnAnswer);
@@ -238,13 +249,14 @@ public class QuestionView extends Activity {
             }
 
             if (selected) {
-                
+
                 if (correct) {
-                    QuestionAnswered qa = new QuestionAnswered(UUIDgen.getUUID(), app.getLoggedinUser(), this.question, new Date());
+                    QuestionAnswered qa = new QuestionAnswered(UUIDgen.getUUID(), app.getLoggedinUser(), this.question,
+                            new Date());
                     mngr.create(qa, QuestionAnswered.class);
                     correctQtnAnswer++;
                 }
-                
+
                 Intent intent = new Intent(QuestionView.this, QuestionResult.class);
                 putExtrasForNextView(intent, question, correct);
                 QuestionView.this.timer.cancel();
@@ -273,17 +285,17 @@ public class QuestionView extends Activity {
         }
 
     }
-    
+
     private class QuestionTimer extends CountDownTimer {
-        
-        private long[] secPattern = {0, 200, 100};
-        private long[] endPattern = {0, 300, 100, 200, 100};
+
+        private long[] secPattern = { 0, 200, 100 };
+        private long[] endPattern = { 0, 300, 100, 200, 100 };
         private Vibrator v;
         private Button counter;
         private Question question;
         private long calls;
         private int call;
-        
+
         public QuestionTimer(long time, long thick, Button counter, Question qtn) {
             super(time, thick);
             this.v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -302,7 +314,7 @@ public class QuestionView extends Activity {
             Intent intent = new Intent(QuestionView.this, QuestionResult.class);
             putExtrasForNextView(intent, question, false);
             startActivity(intent);
-            
+
         }
 
         @Override
@@ -313,26 +325,37 @@ public class QuestionView extends Activity {
             if (sec % this.calls == 0) {
                 counter.setBackgroundResource(this.calcCircleImage());
             }
-            
+
         }
-        
+
         private int calcCircleImage() {
             this.call++;
             switch (this.call) {
-                case 1: return R.drawable.img_counter1;
-                case 2: return R.drawable.img_counter2;
-                case 3: return R.drawable.img_counter3;
-                case 4: return R.drawable.img_counter4;
-                case 5: return R.drawable.img_counter5;
-                case 6: return R.drawable.img_counter6;
-                case 7: return R.drawable.img_counter7;
-                case 8: return R.drawable.img_counter8;
-                case 9: return R.drawable.img_counter9;
-                case 10: return R.drawable.img_counter10;
-                default: return R.drawable.img_counter1;
+            case 1:
+                return R.drawable.img_counter1;
+            case 2:
+                return R.drawable.img_counter2;
+            case 3:
+                return R.drawable.img_counter3;
+            case 4:
+                return R.drawable.img_counter4;
+            case 5:
+                return R.drawable.img_counter5;
+            case 6:
+                return R.drawable.img_counter6;
+            case 7:
+                return R.drawable.img_counter7;
+            case 8:
+                return R.drawable.img_counter8;
+            case 9:
+                return R.drawable.img_counter9;
+            case 10:
+                return R.drawable.img_counter10;
+            default:
+                return R.drawable.img_counter1;
             }
         }
-        
+
         private int calcColor(long sec) {
             int color = Color.GREEN;
 
@@ -341,8 +364,7 @@ public class QuestionView extends Activity {
             } else if (sec <= 5) {
                 color = Color.RED;
             }
-            
-            
+
             if (sec == 3) {
                 v.vibrate(secPattern, -1);
             } else if (sec == 2) {
@@ -354,6 +376,5 @@ public class QuestionView extends Activity {
             return color;
         }
 
-    
     }
 }

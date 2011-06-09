@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.questo.android.common.Constants;
+import com.questo.android.helper.QuestoFieldFocusListener;
 import com.questo.android.model.User;
 import com.questo.android.view.TopBar;
 
@@ -32,7 +34,7 @@ public class AddCompanionView extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_companion);
-
+        
         this.init();
     }
 
@@ -48,9 +50,13 @@ public class AddCompanionView extends Activity {
         List<User> noncompanions = mngr.getNonCompanionsForUser(app.getLoggedinUser());
         NonCompanionsListAdapter adapter = new NonCompanionsListAdapter(noncompanions);
 
+        TextView empty = (TextView) findViewById(R.id.empty_users_text);
+        empty.setOnTouchListener(new QuestoFieldFocusListener((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)));
+        
         ListView results = (ListView) findViewById(R.id.list_users);
-        results.setEmptyView(findViewById(R.id.empty_users_text));
+        results.setEmptyView(empty);
         results.setAdapter(adapter);
+        results.setOnTouchListener(new QuestoFieldFocusListener((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)));
 
         EditText searchBox = (EditText) findViewById(R.id.search_box);
         searchBox.addTextChangedListener(new SearchBoxTextWatcher(adapter));

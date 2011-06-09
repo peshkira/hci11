@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -15,8 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import com.questo.android.common.Constants;
+import com.questo.android.helper.QuestoFieldFocusListener;
 import com.questo.android.model.Place;
 import com.questo.android.model.PossibleAnswer;
 import com.questo.android.model.PossibleAnswerMultipleChoice;
@@ -99,6 +103,9 @@ public class AddQuestion extends Activity {
 	private void initView() {
 		setContentView(R.layout.add_question);
 
+		ScrollView background = (ScrollView) findViewById(R.id.add_qtn_scroll);
+		background.setOnTouchListener(new QuestoFieldFocusListener((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)));
+		
 		Button createButton = (Button) findViewById(R.id.AddQuestionCreateBtn);
 		Button cancelButton = (Button) findViewById(R.id.AddQuestionCancelBtn);
 		Button addMultipleChoiceBtn = (Button) findViewById(R.id.MultipleChoiceAddBtn);
