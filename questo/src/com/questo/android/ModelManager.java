@@ -136,6 +136,10 @@ public class ModelManager {
         return null;
     }
     
+    public boolean getUserHasCompanionshipRequests(User user) {
+    	return getCompanionshipRequestsForUser(user).size() > 0;
+    }
+    
     public List<Companionship> getCompanionshipRequestsForUser(User user) {
         try {
             QueryBuilder<Companionship, Integer> requests = queryBuilder(Companionship.class);
@@ -479,6 +483,11 @@ public class ModelManager {
     	return new ArrayList<Place>();
     }
 
+    public boolean getUserHasTournamentRequests(User user) {
+    	// maybe there is a more elegant way, e.g. native count(*) query?
+        return getTournamentRequestsForUser(user).size() > 0;
+    }
+    
     public List<TournamentRequest> getTournamentRequestsForUser(User user) {
         try {
             QueryBuilder<TournamentRequest, Integer> tournamentRequests = queryBuilder(TournamentRequest.class);

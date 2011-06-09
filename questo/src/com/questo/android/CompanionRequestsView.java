@@ -40,7 +40,7 @@ public class CompanionRequestsView extends Activity {
     private void init() {
         this.app = (App) getApplicationContext();
         TopBar topbar = (TopBar) findViewById(R.id.topbar);
-        Button requestButton = topbar.addToggleButtonLeftMost(this, "Requests", true);//topbar.addImageToggleButtonLeftMost(this, R.drawable.img_request, true);
+        Button requestButton = topbar.addToggleButtonLeftMost(this, "Requests", true);
         requestButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

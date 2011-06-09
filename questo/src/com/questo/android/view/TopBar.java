@@ -118,4 +118,9 @@ public class TopBar extends LinearLayout {
 		TextView labelView = (TextView) findViewById(R.id.label);
 		labelView.setText(label);
 	}
+	
+	public static void setButtonHighlighted(Button button) {
+		// Inner padding is already taken care of by the layer-drawable:
+		button.setBackgroundResource(R.drawable.btnstate_topbar_highlighted);
+	}
 }
