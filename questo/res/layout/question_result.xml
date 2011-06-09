@@ -33,16 +33,20 @@
 				android:layout_height="wrap_content" android:layout_width="wrap_content"
 				android:layout_marginTop="30dip" style="@style/BigRoundButton"
 				android:text="Next Question" />
-			<LinearLayout android:layout_width="fill_parent"
-				android:layout_height="fill_parent" android:layout_gravity="bottom"
-				android:gravity="center_horizontal|bottom" android:layout_marginTop="30dip"
-				android:layout_marginBottom="10dip">
-				<ImageView android:id="@+id/btn_report"
+			<LinearLayout android:id="@+id/layout_report"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:gravity="center_vertical|center_horizontal"
+				android:layout_marginTop="30dip" android:layout_marginBottom="10dip"
+				android:background="@drawable/img_shadowed_border"
+				android:paddingLeft="12dp" android:paddingRight="12dp" android:paddingTop="2dp" android:paddingBottom="2dp">
+				<com.questo.android.view.FlexibleImageView
+					android:id="@+id/img_report" android:layout_width="35dp"
+					android:layout_height="35dp" android:background="@drawable/img_thumbsdown" />
+				<TextView android:id="@+id/txt_report_btn"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:background="@drawable/imgstate_report" />
-				<TextView android:id="@+id/txt_report_btn" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:text=" report this question"
-					android:textColor="#000" />
+					android:text="Bad Question" style="@style/BlackShadowedFont"
+					android:textStyle="bold" android:textSize="18sp"
+					android:layout_marginLeft="10dp" />
 			</LinearLayout>
 		</LinearLayout>
 	</ScrollView>
