@@ -12,6 +12,7 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".HomeView" android:screenOrientation="portrait"></activity>
+		<activity android:name=".TutorialView" android:screenOrientation="portrait"></activity>
 		<activity android:name=".ProfileView"></activity>
 		<activity android:name=".view.ProfileTabThrophies"></activity>
 		<activity android:name=".view.ProfileTabTournaments"></activity>

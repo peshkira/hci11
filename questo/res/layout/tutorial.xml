@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="fill_parent"
+	android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:questo="http://schemas.android.com/apk/res/com.questo.android"
+	android:background="#FFF">
+	<com.questo.android.view.TopBar
+		android:id="@+id/topbar" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" questo:label_centered="true"
+		questo:label="Tutorial" />
+	<!-- <ScrollView android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:fillViewport="true"> -->
+		<LinearLayout android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+			<TextView android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:text="Welcome to Questo!"
+				style="@style/BlackShadowedFont" android:textSize="35sp"
+				android:id="@+id/welcome_banner" android:layout_marginBottom="15dp" android:gravity="center_horizontal"/>
+			<TextView android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:id="@+id/greet" android:textColor="#FFF"/>
+		</LinearLayout>
+	<!-- </ScrollView> -->
+</LinearLayout>

@@ -58,7 +58,12 @@ public class LoginView extends Activity {
 	
 	
 	private void gotoHomeScreen() {
-		startActivity(new Intent(getBaseContext(), HomeView.class));
+	    App app = (App) getApplicationContext();
+	    if (app.isFirstLogin()) {
+	        startActivity(new Intent(this, TutorialView.class));
+	    } else {
+	        startActivity(new Intent(getBaseContext(), HomeView.class));
+	    }
 	}
 	
 }

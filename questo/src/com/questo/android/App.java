@@ -90,6 +90,15 @@ public class App extends Application {
     public User getLoggedinUser() {
         return loggedinUser;
     }
+    
+    public boolean isFirstLogin() {
+        if (settings.getFirstLogin() == null || settings.getFirstLogin().equals("yes")) {
+            settings.setFirstLogin("no");
+            return true;
+        }
+        
+        return false;
+    }
 
     public LoginError login(String email, String password) {
         User user = getModelManager().getUserByEmail(email);
@@ -104,7 +113,7 @@ public class App extends Application {
             return null;
         }
     }
-
+    
     public void logout() {
         if (this.getLoggedinUser() != null) {
             loggedinUser = null;
@@ -117,6 +126,7 @@ public class App extends Application {
         public static final String EMAIL = "EMAIL";
         public static final String PASSWORD = "PASSWORD";
         public static final String TESTDATA = "TESTDATA_INSERTED";
+        public static final String FIRST_LOGIN = "FIRST_LOGIN";
         
 
         @Override
@@ -171,11 +181,19 @@ public class App extends Application {
         }
         
         public void setInserted(String inserted) {
-            this.put(TESTDATA, "inserted");
+            this.put(TESTDATA, inserted);
         }
         
         public String isInserted() {
             return (String) this.get(TESTDATA);
+        }
+        
+        public void setFirstLogin(String login) {
+            this.put(FIRST_LOGIN + "_" + App.this.loggedinUser.getName(), login);
+        }
+        
+        public String getFirstLogin() {
+            return (String) this.get(FIRST_LOGIN + "_" + App.this.loggedinUser.getName());
         }
         
 
