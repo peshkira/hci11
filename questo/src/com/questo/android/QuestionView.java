@@ -114,7 +114,7 @@ public class QuestionView extends Activity {
 
         final Button counter = this.topbar.addButtonLeftMost(getApplicationContext(), "30");
         counter.setClickable(false);
-        counter.setTextSize(18.0f);
+        counter.setTextSize(14.0f);
         counter.setBackgroundResource(R.drawable.img_counter1);
 
         ScrollView background = (ScrollView) findViewById(R.id.qtn_scroll);
