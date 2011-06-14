@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.questo.android.common.Constants;
 import com.questo.android.model.Place;
@@ -164,6 +165,9 @@ public class QuestMapView extends MapActivity {
 			public boolean onMenuItemClick(MenuItem item) {
 				Intent addPlaceIntent = new Intent(QuestMapView.this,
 						AddPlace.class);
+				GeoPoint position = questMap.getLastPosition();
+				addPlaceIntent.putExtra(Constants.EXTRA_ADD_PLACE_LAT, position.getLatitudeE6());
+				addPlaceIntent.putExtra(Constants.EXTRA_ADD_PLACE_LON, position.getLongitudeE6());
 				startActivityForResult(addPlaceIntent, ADD_PLACE_REQUEST_CODE);
 				return true;
 			}

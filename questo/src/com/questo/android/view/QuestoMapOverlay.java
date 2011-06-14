@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;
+import com.questo.android.AddPlace;
 import com.questo.android.App;
 import com.questo.android.ModelManager;
 import com.questo.android.PlaceDetailsView;
@@ -51,6 +52,7 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 	private Drawable done;
 	private boolean selectable;
 	private boolean showDetails;
+	private MotionEvent lastEvent;
 
 	public QuestoMapOverlay(Context context, QuestoMapView map,
 			Drawable defaultMarker) {
@@ -280,6 +282,10 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 		questionCountText.setText("Questions: "
 				+ Integer.toString(questionCount));
 	}
+	
+	public MotionEvent getLastEvent(){
+		return lastEvent;
+	}
 
 	@Override
 	public synchronized int size() {
@@ -300,6 +306,7 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 		@Override
 		public void onLongPress(MotionEvent evt){
 			setShowDetails(false);
+			lastEvent = evt;
 			activity.openContextMenu(map);
 		}
 	}

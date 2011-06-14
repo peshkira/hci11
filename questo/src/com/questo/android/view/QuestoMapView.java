@@ -32,8 +32,6 @@ import com.questo.android.model.Tournament;
 
 public class QuestoMapView extends MapView {
 
-	
-	
 	private GeoPoint currentLocation;
 	private ModelManager manager;
 	private App application;
@@ -137,14 +135,14 @@ public class QuestoMapView extends MapView {
 		overlay.refreshPlaces();
 	}
 
-	public void setActivity(Activity activity){
+	public void setActivity(Activity activity) {
 		overlay.setActivity(activity);
 	}
-	
-	public void onContextMenuClosed(Menu menu){
+
+	public void onContextMenuClosed(Menu menu) {
 		overlay.setShowDetails(true);
 	}
-	
+
 	public synchronized void refreshWhenViewChanged() {
 		boolean doRefresh = false;
 		if (getZoomLevel() != oldZoomLevel)
@@ -165,15 +163,20 @@ public class QuestoMapView extends MapView {
 		}
 	}
 
-	
 	public void restrictToPlacesFromTournament(Tournament tournament) {
-		List<Place> donePlaces = manager.getTournamentTasksDonePlaces(application.getLoggedinUser(), tournament);
+		List<Place> donePlaces = manager.getTournamentTasksDonePlaces(
+				application.getLoggedinUser(), tournament);
 		cache = new TournamentMapCacheImpl(manager, tournament, donePlaces);
 	}
-	
+
 	public void showAllPlaces() {
 		cache = new MapCacheImpl(manager);
-	}	
+	}
+
+	public GeoPoint getLastPosition() {
+		return getProjection().fromPixels((int) overlay.getLastEvent().getX(),
+				(int) overlay.getLastEvent().getY());
+	}
 
 	@Override
 	public boolean onTouchEvent(android.view.MotionEvent ev) {
@@ -206,9 +209,9 @@ public class QuestoMapView extends MapView {
 		}
 		return super.onTouchEvent(ev);
 	}
-	
+
 	@Override
-	protected void onSizeChanged (int w, int h, int oldw, int oldh){
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 		this.refresh();
 	}
@@ -217,13 +220,13 @@ public class QuestoMapView extends MapView {
 
 		@Override
 		public void onLocationChanged(Location location) {
-//			GeoPoint current = new GeoPoint(
-//					(int) (location.getLatitude() * 1e6),
-//					(int) (location.getLongitude() * 1e6));
-//			QuestoMapView.this.getController().setCenter(current);
-//			QuestoMapView.this.currentLocation = current;
-//			QuestoMapView.this.overlay.setLocation(current);
-//			QuestoMapView.this.overlay.refreshPlaces();
+			// GeoPoint current = new GeoPoint(
+			// (int) (location.getLatitude() * 1e6),
+			// (int) (location.getLongitude() * 1e6));
+			// QuestoMapView.this.getController().setCenter(current);
+			// QuestoMapView.this.currentLocation = current;
+			// QuestoMapView.this.overlay.setLocation(current);
+			// QuestoMapView.this.overlay.refreshPlaces();
 		}
 
 		@Override
