@@ -20,6 +20,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.questo.android.common.Constants;
 import com.questo.android.helper.QuestoFieldFocusListener;
 import com.questo.android.helper.UUIDgen;
 import com.questo.android.model.Place;
@@ -43,9 +44,10 @@ public class AddPlace extends MapActivity {
 
 	private void initView() {
 		this.setContentView(R.layout.add_place);
-		
+
 		this.map = (MapView) findViewById(R.id.AddPlaceMap);
-		this.map.setOnTouchListener(new QuestoFieldFocusListener((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)));
+		this.map.setOnTouchListener(new QuestoFieldFocusListener(
+				(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)));
 
 		this.map.setBuiltInZoomControls(true);
 		List<Overlay> mapOverlays = map.getOverlays();
@@ -61,11 +63,17 @@ public class AddPlace extends MapActivity {
 		cancelBtn.setOnClickListener(this.listener);
 		createBtn.setOnClickListener(this.listener);
 
-//		this.map.getController().setZoom(18);
+		Bundle extras = getIntent().getExtras();
+		GeoPoint location = new GeoPoint(
+				extras.getInt(Constants.EXTRA_ADD_PLACE_LAT),
+				extras.getInt(Constants.EXTRA_ADD_PLACE_LON));
+		overlay.refresh(location);
+		
+		// this.map.getController().setZoom(18);
 	}
 
 	private void refreshObject() {
-		this.place = new Place(UUIDgen.getUUID(), "");		
+		this.place = new Place(UUIDgen.getUUID(), "");
 		EditText nameEdit = (EditText) findViewById(R.id.AddPlaceName);
 		if (nameEdit != null) {
 			this.place.setName(nameEdit.getText().toString());
@@ -81,11 +89,13 @@ public class AddPlace extends MapActivity {
 		public void onClick(View v) {
 			if (v.getId() == R.id.AddPlaceCreateBtn) {
 				AddPlace.this.refreshObject();
-				if(AddPlace.this.place.getName().length()==0){
-					Toast noNameToast = Toast.makeText(AddPlace.this, R.string.error_add_place_no_name, Toast.LENGTH_LONG);
+				if (AddPlace.this.place.getName().length() == 0) {
+					Toast noNameToast = Toast
+							.makeText(AddPlace.this,
+									R.string.error_add_place_no_name,
+									Toast.LENGTH_LONG);
 					noNameToast.show();
-				}
-				else{
+				} else {
 					AddPlace.this.modelManager.create(AddPlace.this.place,
 							Place.class);
 					AddPlace.this.finish();
