@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
@@ -137,6 +138,8 @@ public class QuestMapView extends MapActivity {
 		questMap.getZoomButtonsController().getContainer().removeView(zoomView);
 		zoomLayout.addView(zoomView, new LinearLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		registerForContextMenu(questMap);
+		questMap.setActivity(this);
 	}
 
 	@Override
@@ -181,6 +184,10 @@ public class QuestMapView extends MapActivity {
 		});
 	}
 	
+	@Override
+	public void onContextMenuClosed(Menu menu){
+		questMap.onContextMenuClosed(menu);
+	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
