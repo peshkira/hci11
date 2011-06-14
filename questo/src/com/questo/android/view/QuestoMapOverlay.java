@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
@@ -38,6 +42,8 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 	private List<Place> nearbyPlaces;
 	private GeoPoint currentLocation;
 	private QuestoMapView map;
+	private GestureDetector gestures;
+	private Activity activity;
 
 	private RelativeLayout placeDetails;
 	private Drawable normal;
@@ -74,6 +80,10 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 		return this.selectedPlaces;
 	}
 
+	public void setActivity(Activity activity) {
+		this.activity = activity;
+	}
+
 	public void setSelectedPlaces(String[] uuids) {
 		for (String uuid : uuids) {
 			Place place = manager.getGenericObjectByUuid(uuid, Place.class);
@@ -101,6 +111,7 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 	private void init(Context context, QuestoMapView map) {
 		this.context = context;
 		this.map = map;
+		this.gestures = new GestureDetector(new MapGestures());
 		App application = (App) context.getApplicationContext();
 		manager = application.getModelManager();
 		items = new ArrayList<QuestoOverlayItem>();
@@ -154,7 +165,15 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 		setLastFocusedIndex(-1);
 		populate();
 	}
-
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent evt, MapView view){
+		if(gestures.onTouchEvent(evt))
+			return true;
+		else
+			return false;
+	}
+	
 	@Override
 	protected boolean onTap(int index) {
 		if (selectable) {
@@ -274,5 +293,14 @@ public class QuestoMapOverlay extends ItemizedOverlay<QuestoOverlayItem> {
 	@Override
 	protected synchronized QuestoOverlayItem createItem(int index) {
 		return this.items.get(index);
+	}
+	
+	
+	private class MapGestures extends SimpleOnGestureListener{
+		@Override
+		public void onLongPress(MotionEvent evt){
+			setShowDetails(false);
+			activity.openContextMenu(map);
+		}
 	}
 }

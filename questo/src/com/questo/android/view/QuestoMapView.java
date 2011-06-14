@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Timer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -13,6 +14,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MotionEvent;
 
 import com.google.android.maps.GeoPoint;
@@ -67,6 +69,7 @@ public class QuestoMapView extends MapView {
 			mapListener = new QuestoMapListener();
 			initLocationUpdates();
 			setBuiltInZoomControls(true);
+			getController().setZoom(17);
 		} catch (Exception e) {
 			Log.e(TAG, "Could not initialize questo map view");
 			e.printStackTrace();
@@ -134,6 +137,14 @@ public class QuestoMapView extends MapView {
 		overlay.refreshPlaces();
 	}
 
+	public void setActivity(Activity activity){
+		overlay.setActivity(activity);
+	}
+	
+	public void onContextMenuClosed(Menu menu){
+		overlay.setShowDetails(true);
+	}
+	
 	public synchronized void refreshWhenViewChanged() {
 		boolean doRefresh = false;
 		if (getZoomLevel() != oldZoomLevel)
@@ -162,7 +173,7 @@ public class QuestoMapView extends MapView {
 	
 	public void showAllPlaces() {
 		cache = new MapCacheImpl(manager);
-	}
+	}	
 
 	@Override
 	public boolean onTouchEvent(android.view.MotionEvent ev) {
